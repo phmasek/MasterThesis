@@ -1,0 +1,38 @@
+
+*Introduction
+-> high level descriptions of context/usage/benefits
+** Problem
+** Previous Work
+** Goal
+
+
+*Real Time Systems
+-> definition
+** Latencies (what we actually measure)
+** PREEMPTIVE-Patch
+
+
+*Deployment Enviroment
+**Linux Native
+-> type of scheduler used
+
+**Linux RT Preempt
+-> how that is a kernel patch
+
+**Docker Deployment Enviroment
+-> benefits, draw backs
+-> picture that we have as an example (proposal)
+
+**Jailhouse Deploymeny Enviroment
+-> benefits, draw backs
+-> how it would work in the context of vehicle or whatever
+
+
+*Methdology
+**Experimental Enviroments
+
+
+
+**STRESS-NG
+-> what it does, go through all paths 
+
