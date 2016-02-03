@@ -1,4 +1,5 @@
 \chapter{Deployment Environment}
+ 
 
 \section{Linux}
 Linux as a deployment environment
@@ -8,5 +9,8 @@ Linux without preemptive kernel patch
 Present the preempt kernel patch
 
 \section{Docker}
+Docker is a container virtualization technology \cite{anderson2015docker} which utilizes the advantages, while mitigating the performance bottleneck of virtual machines. Illustrated in [figure], VMs are fully contained operating systems running on top of a hypervisor, which in terms are running on top of the host OS \cite{bernstein2014containers}. This creates additional layers between the hardware and application which results in a decrease in performance. Comparing the performance of Virtual Machines and Docker it becomes evident that the containers performs considerably better than VMs. However having a marginal performance loss compared to running an application natively on the host OS \cite{vmvscontainers}.\\\\
+
+Although Docker generates a performance loss compared to native, it expands the spectra of work flows and development performance. [Write about workflow gains]
 
 \section{Jailhouse}
