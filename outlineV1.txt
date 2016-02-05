@@ -1,3 +1,11 @@
+Title – Have a really good title increases the interest
+
+
+(Abstract)
+(-> Context)
+(-> Problem)
+(-> Method)
+(-> Brief Result)
 
 *Introduction
 -> high level descriptions of context/usage/benefits
@@ -5,12 +13,13 @@
 ** Previous Work
 ** Goal
 
-
 *Real Time Systems
 -> definition
 ** Latencies (what we actually measure)
 ** PREEMPTIVE-Patch
 
+
+::APPLICATION DOMAIN::
 
 *Deployment Enviroment
 **Linux Native

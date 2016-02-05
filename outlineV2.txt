@@ -1,0 +1,34 @@
+Title – Have a really good title increases the interest
+
+
+Abstract
+-> Context
+-> Problem
+-> Method
+-> Brief Result
+
+1. Introduction
+1.1 Background
+1.2 Problem domain & Motivation: What is the problem, why is it important and relevant?
+1.3 Research goal Just one & Research questions (If something is not clear here, move that to 1.1)
+1.4 Contributions
+1.5 Scope Contributions are only applicable in these conditions
+1.6 Structure of the article
+
+(2. Background: Introduce key terminology)
+
+3. Related work – May be here or later. If later then it might show that you are very confident with the contribution. Explain the process of gathering the related work.
+-> SLR: Time consuming
+-> SMS
+
+4. Methodology: What we did to get the answers for the research questions
+
+5. Results
+
+6. Analysis and Discussion: Addressing the research goal using the results and method
+
+7. Threats to validity: Potential weaknesses we are aware of
+-> Runeson & Höst
+-> Feldt & Magazinius
+
+8. Conclusion & Future Work

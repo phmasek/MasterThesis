@@ -1,0 +1,5 @@
+Docker: One process (load) with IO
+Docker: Two processes (load) sharing memory or communicating via UDP
+
+Jailhouse: One process (load) with IO
+Jailhouse: Two processes (load) sharing memory or communicating via UDP
