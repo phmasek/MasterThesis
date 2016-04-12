@@ -18,5 +18,5 @@
 *.idx
 *.pdf
 *.sty
-#.DS_Store
-#Icon?
+.DS_Store
+Icon?
