@@ -1,0 +1,65 @@
+\iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
+\chapter{Methodology}
+
+In order to answer the research questions, an experiment was carried out following the guidelines presented by \cite{Andreas}. 
+
+Two sets of runs for each RQ where 1 is without load and 1 is with load. 
+	- we want to find wether there is a correlation between enviroment and performance depending on load 
+Why not memory? Because is a RT system you allocate static memory to each component before execution. 
+
+\section{Experiment}
+The aim 
+
+\subsection{Goals}
+The goal of the experiment is to systematically evaluate the scheduling precision of running three sample applications in different execution enviroments. The execution enviroments are. 
+
+Running application A in Linux using VanillaKernel version 3.18.25
+Running application A within a Docker container using Vanilla Kernel version 3.18.25
+Running application A in Linux using RT kernel 
+Running application A within a Docker container using RT Kernel 
+
+\subsection{Preparing the Target System}
+Before the test can be carried out, the target system needs to be perpared with different systems. 
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Component} & \textbf{Specification} 			\\ \hline
+Processor          & Intel® Core™ i7 3517UE 1.7 GHz 	\\ \hline
+Memory             & 4GB DDR3 1333/1600 SODIMM          \\ \hline
+Video              &                                    \\ \hline
+Storage Device     & 2.5" SATA HDD x 1                  \\ \hline
+Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4\\ Isolated Digital Input/Output x 10 pins (DI x 4, DO x 4)(3KV) \\ Isolated DB-9 x 2 for RS-232/422/485 x 2 (3KV, jumper selection)\end{tabular} \\ \hline
+\end{tabular}
+\caption{Target System Hardware Specification}
+\label{table:test}
+\end{table}
+
+
+\subsubsection{Hardware}
+The tests presented in this report will be executed on a Aaeon AEC 6950 embedded personal computer. The hardware specification for the target systems can be found in table~\ref{table:test}. 
+
+
+
+
+\subsubsection{Building GNU/Linux}
+\subsubsection{Configuring the Kernel}
+
+\subsection{Experimental Units}
+RQ1 - Pi Component, RQ2 Pi/IO Component (measurement points)
+
+\subsection{Experimental Material}
+
+\subsection{Hypotheses, Parameters and Variables}
+
+
+\subsection{Design}
+Quasi design
+
+
+\subsection{Procedure}
+RPI data collector 
+
+\subsection{Analysis Procedure}
