@@ -10,6 +10,28 @@ Failing to meet the real-time requirements for autonomous self-driving vehicles 
 
 \section{Background}
 
+The engineering challenge for this research is to identify the runtime overhead in deployment of various virtual environments. Current literature \cite{vmvscontainers} presents results on the overhead in the environments of Docker and KVM. However there exists a research gap in the contexts of real time system and how the utilization of software containers affects the performance of such systems. The results of this study will be used to identify the overhead costs of utilizing virtual environments, such as Docker, on standard and patched operating systems (Ubuntu and Ubuntu RT-Preempt) in the context of a real time system.\\
+
+The paper of C. Berger \cite{cberger} presents an exploration of the deployment workflow in the context of self-driving vehicles. However, it does not look to explore the performance differences of (execution environments) multiple software setups, and X86-64 and ARM architectures, to identify an optimal solution to minimize overhead cost for virtual containers. Whereas the proposed topic builds on the paper presented by C. Berger, the research seeks to fulfill the gap in current literature by identifying such costs through exploring multiple software and hardware alternatives. With a goal to identify the possibility of applying real-time systems within virtual containers and the time cost impact of such containers. Prior research paper \cite{cberger} also addresses the need for future work being done within the topic of this research.\\
+
+Current literature \cite{vmvscontainers} presents compelling evidence for the existence of overhead in virtualization environments and linux containers. This evidence is based on an exploration of docker, KVM, and native environments without exploring the impact of such environments on time critical software. This further enhances the underlying need of understanding what delay-impact virtual containers have on time critical systems such as software for self-driving vehicles, which requires minimal delays to allow real-time computations for enabling safe autonomous driving. As minimal time-delay is a fundamental concern for allowing lane-following, decision making, and other computations.\\
+
+While the research bases its merits on a narrow field of interest (self-driving vehicles, OpenDaVinci), its application can be used for a broad audience within the research community, as well as for organizations relying on the deployment of real-time systems. As more parts of society are becoming automated and reliant on software decision making, real-time systems are an integral part of this development. Financial, aviation, and vehicle systems are just a few examples of domains with systems that are highly sensitive to time delays, as all of them require an I/O time delay as close to zero as possible for functioning. A self-driving vehicle has to interpret its environment, in real-time for safety reasons. Similarly, applications in the financial domain have to react to market fluctuations within nanoseconds \cite{wallstreetjournal}, to avoid loss on investment. \\
+
+
+\begin{figure}[ht]
+\centering
+     \includegraphics[width=1.0\textwidth]{./figure/containers.png}
+      \caption{Run-time environment using Docker.}
+       \label{containers}
+\end{figure}
+
+
+Figure \ref{containers} displays the utilization of docker in the context of a self-driving vehicle. The responsibilities are broken up into three computational nodes in which docker containers are running instances of the code separately. Further, the colored docker containers represents different versions of the separate nodes, where the interpretation node have three versions running separately. V1 in each node represent the latest working configuration while other versions are ran to test code which is under development. Aforementioned, this allows for safe and simple roll-backs as there will always be one working configuration as well as allowing for A/B testing between different containers. With an always working configuration, the development team can demonstrate the current status to stakeholders at any point in the development cycle. \\
+
+
+
+
 \section{Problem Domain \& Motivation}
 Our current society is increasingly depending upon real-time systems and automated solutions for many of the fundamental building blocks to the modern world. Such as systems used within financial, aviation, and automotive sectors. Sectors where these systems play an integral role in enabling automation to provide the services we all depend on today. With these industries advancing rapidly there is a need in understanding how software engineers and data scientists should best work while developing the systems that drives the progress. With work, we specifically imply the way the work flow of these software projects is structured in terms of integration- and deployment strategies.\\
 
