@@ -55,7 +55,7 @@ Tracing through all possible code paths of the kernel is not an option to uncove
 \label{section:exp-units}
 % participants (experimental units) need to be described in detail. Sampling strategy, the number of participants, the kind of participants and the population they were drawn from. 
 
-The experimental units consist of two components that have be realised by utilising the open source library OpenDaVINCI \cite{OpenDaVINCI}. OpenDaVINCI is a development architecture of virtual, networked and cyber-physical infrastructures and has been used to realise a number of self-driving vehicles through research projects in academia \cite{OpenDaVINCI}. Using OpenDaVINCI as a development architecture for the experimental units allows the experiment to mimic the middleware one can expect in the production of autonomous systems. \todo{We made changes to OpenDaVinci, we shall specify that here.}
+The experimental units consist of two components that have be realised by utilising the open source library OpenDaVINCI \cite{OpenDaVINCI}. OpenDaVINCI is a development architecture of virtual, networked and cyber-physical infrastructures and has been used to realise a number of self-driving vehicles through research projects in academia \cite{OpenDaVINCI}. Using OpenDaVINCI as a development architecture for the experimental units allows the experiment to mimic the middleware one can expect in the autonomous systems. \todo{We made changes to OpenDaVinci, we shall specify that here.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Pi Component}
@@ -99,7 +99,7 @@ Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB
 \end{table}
 
 \subsubsection{Preparing the Operating System}
-The operating system chosen for the experiment is Ubuntu Server 14.04.1 LTS which stands for long term support. Long term supported operating systems by Ubuntu ensure that the operating system stays up to date with current software versions and that defects that are reported are fixed. The specific version for the operating system, mainline vanilla kernel and RT\_PREEMPT patch is found in table~\ref{table:execution-version}.
+The operating system chosen for the experiment is Ubuntu Server 14.04.1 LTS (Long Term Support). Long term supported operating systems ensure that the operating system stays up to date with current software versions and that defects are attended to. The specific version for the operating system, mainline vanilla kernel and RT\_PREEMPT patch is found in table~\ref{table:execution-version}.
 
 \begin{table}[h]
 \begin{tabular}{|l|l|l|}
@@ -113,7 +113,7 @@ Ubuntu Server 14.04.1     & 3.18.25                  &  3.18.25-rt23            
 \end{table}
 
 \subsubsection{Preparing the Linux Kernel}
-The Linux vanilla kernel version 3.18.25 is chosen to be used in the experiment. The main motivation behind utilising this specific Linux kernel is that it is both supported by the RT\_PREEMPT patch as well as Docker. At the time of writing the RT\_PREEMPT patch for 3.18.25 is actively maintained. In order to patch the vanilla kernel with the RT\_PREEMPT patch, a configuration file used by Open Source Automation Development Lab \cite{OSADL}.
+The Linux vanilla kernel version 3.18.25 is chosen to be used in the experiment. The main motivation behind utilising this specific Linux kernel is that it is both supported by the RT\_PREEMPT patch as well as Docker. At the time of writing the RT\_PREEMPT patch for 3.18.25 is actively maintained and supported. A configuration file used by the Open Source Automation Development Lab \cite{OSADL} is used to patch the vanilla kernel with RT\_PREEMPT.
 
 \subsubsection{Stressing the Target System}
 A software tool \textit{stress-ng} is used to apply load to the target system. Specifically, the stress workers that are used are:  
@@ -127,24 +127,48 @@ A software tool \textit{stress-ng} is used to apply load to the target system. S
 
 \subsection{Hypotheses, Parameters and Variables}
 % there is a difference / there is no difference 
+%$H_{0i_{j}}$
 
-To answer Research Question 1: 
-\begin{hypothesis} Deployment context has an influence on the scheduling precision		\end{hypothesis}
-\begin{hypothesis} Kernel version has an influence on the scheduling precision			\end{hypothesis}
-\begin{hypothesis} Execution environment has an influence on the scheduling precision\\	\end{hypothesis}
 
-To answer Research Question 2: 
-\begin{hypothesis} Deployment context has an influence on the camera IO performance 	\end{hypothesis}
-\begin{hypothesis} Kernel version has an influence on the camera IO performance			\end{hypothesis}
-\begin{hypothesis} Execution environment has an influence on the camera IO performance	\end{hypothesis}
+The hypotheses to achieve goal one of the experiment are:
+\begin{itemize}
+% For RQ1 
+\item $H_{01_{1}}$ - The deployment context has no influence on scheduling precision.
+\item $H_{11_{1}}$ - The deployment context has an influence on scheduling precision.
+\item $H_{01_{2}}$ - The Linux kernels has no influence on scheduling precision.
+\item $H_{11_{2}}$ - The Linux kernels has an influence on scheduling precision.
+\item $H_{01_{3}}$ - The execution environment has no influence on scheduling precision.
+\item $H_{11_{3}}$ - The execution environment has an influence on scheduling precision.\\
+\end{itemize}
 
-\begin{hypothesis} Deployment context has an influence on the disk IO performance		\end{hypothesis}
-\begin{hypothesis} Kernel version has an influence on the disk IO performance			\end{hypothesis}
-\begin{hypothesis} Execution environment has an influence on the disk IO performance	\end{hypothesis}
+
+The hypotheses to achieve goal two of the experiment are:
+\begin{itemize}
+% For RQ2
+\item $H_{02_{1}}$ - The deployment context has no influence on camera IO performance.
+\item $H_{12_{1}}$ - The deployment context has an influence on on camera IO performance.
+\item $H_{02_{2}}$ - The Linux kernels has no influence on camera IO performance.
+\item $H_{12_{2}}$ - The Linux kernels has an influence on camera IO performance.
+\item $H_{02_{3}}$ - The execution environment has no influence on camera IO performance.
+\item $H_{12_{3}}$ - The execution environment has an influence on camera IO performance.
+\item $H_{02_{4}}$ - The deployment context has no influence on disk IO performance.
+\item $H_{12_{4}}$ - The deployment context has an influence on on disk IO performance.
+\item $H_{02_{5}}$ - The Linux kernels has no influence on disk IO performance.
+\item $H_{12_{5}}$ - The Linux kernels has an influence on disk IO performance.
+\item $H_{02_{6}}$ - The execution environment has no influence on disk IO performance.
+\item $H_{12_{6}}$ - The execution environment has an influence on disk IO performance.
+\end{itemize}
 
 \todo{define influence,disk IO performance,camera IO performance}
 
+\subsubsection{Dependent Variable}
+%variable that is measured to ascertain whether the independent variable has an effect on the outcome
+\subsubsection{Independent Variable}
+%manipulated variable to influence dependent variable
+
 \subsection{Design}
+A Quasi experiment design is used since random assignment is not applicable in this case. The experimental units, being the Pi and Pi/IO components, are
+formally categorized as two independent components. A Quasi experiment is useful when random assignment to treatment groups is impossible \cite{juristo2003lecture}. The experiment is not aimed to establish a cause and effect relationship, but rather an observation on how the experimental units perform.
 \subsection{Procedure}
 % exactly what happens to the participants from the moment they arrive to the moment they leave. Schedule for the experiment (how long did we run it for), how was the data collected and with what support (tools)
 % used a script that automated the entire test
