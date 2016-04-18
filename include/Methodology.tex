@@ -1,25 +1,87 @@
+%Analyse <..> for the purpose of <..> with respect to their <..> from the point of view of the <..> in the context of <..>
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Methodology}
 
-In order to answer the research questions, an experiment was carried out following the guidelines presented by \cite{Andreas}. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiment Planning}
+% all information that is necessary to replicate the study 
+To answer the research questions, an experiment is carried out following the guidelines presented by Jedlitschka et al. \cite{Andreas}. All material for the experiment is available online\footnote{github.com/Pletron/ODVpi}. 
 
-Two sets of runs for each RQ where 1 is without load and 1 is with load. 
-	- we want to find wether there is a correlation between enviroment and performance depending on load 
-Why not memory? Because is a RT system you allocate static memory to each component before execution. 
 
-\section{Experiment}
-The aim 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Goals}
-The goal of the experiment is to systematically evaluate the scheduling precision of running three sample applications in different execution enviroments. The execution enviroments are. 
+% refine the main research questions, describe and motivate them to allow for traceability down to the hypotheses. 
+%How does the respective execution context influence the scheduling precision of the respective application?
+%How does the respective execution context influence the input/output performance of the respective application?
 
-Running application A in Linux using VanillaKernel version 3.18.25
-Running application A within a Docker container using Vanilla Kernel version 3.18.25
-Running application A in Linux using RT kernel 
-Running application A within a Docker container using RT Kernel 
+The aim of the experiment is to systematically evaluate the scheduling precision of the experimental units running in different execution environments. The goals of the experiment are described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section.  
 
-\subsection{Preparing the Target System}
-Before the test can be carried out, the target system needs to be perpared with different systems. 
+% execution environment: complete system 
+% deployment context: docker non-docker 
+
+\begin{table}[ht]
+\begin{tabular}{l|p{12cm}}
+Goal 1 & Analyse the scheduling precision of the Pi Component for the purpose of understanding how deterministic the system is with respect to the execution environment and system load. \\
+Goal 2 & Analyse the input and output performance of the Pi/IO Component for the purpose of understanding how deterministic the system is with respect to the execution environment and system load.
+\end{tabular}
+\centering
+\caption{Experiment Goals}
+\label{table:exp-goals}
+\end{table}
+
+
+\subsubsection{Execution Environment}
+The execution environment describes the context in which the execution of the experimental units take place. Specifically, the execution environment is the configuration of the target system, where an alternation between Linux kernels and an alternation between deployment contexts take place. The deployment context refers to the runtime context of the experimental units. The deployment context is either running the experimental units in a Docker container or running the experimental units \textit{natively} on the target system. The execution environments are precisely specified in table~\ref{table:exe-env}.
+
+\begin{table}[ht]
+\begin{tabular}{l|p{14cm}}
+1. & Running the experimental units natively on the target system running a mainline vanilla Linux kernel.                               \\
+2. & Running the experimental units natively on the target system running a mainline Linux kernel patched with RT\_PREEMPT.              \\
+3. & Running the experimental units in a Docker container on the target system running a mainline vanilla Linux kernel.                  \\
+4. & Running the experimental units in a Docker container on the target system running a mainline Linux kernel patched with RT\_PREEMPT.
+\end{tabular}
+\centering
+\caption{Execution Enviroments}
+\label{table:exe-env}
+\end{table}
+
+
+\subsubsection{System Load}
+Tracing through all possible code paths of the kernel is not an option to uncover how deterministic a system is. In order to get a achieve an estimation, a tool is required to traverse as many of these as possible. Stress offers a way to induce several different kinds of system load, therefore it interacts with many components of the kernel and should be able to expose some of the longer code paths through the kernel. Stress is a user-space application that can spawn a number of worker threads that perform useless tasks with the only purpose of submitting the system on which it runs to heavy load. Putting the system under load also enables the experiment to be executed in an environment that mimics a real-life scenario. One would expect a computer system in production to run at 80\% load, leaving a 20\% buffer for extreme circumstances and to avoid overloading the system.  
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimental Units}
+\label{section:exp-units}
+% participants (experimental units) need to be described in detail. Sampling strategy, the number of participants, the kind of participants and the population they were drawn from. 
+
+The experimental units consist of two components that have be realised by utilising the open source library OpenDaVINCI \cite{OpenDaVINCI}. OpenDaVINCI is a development architecture of virtual, networked and cyber-physical infrastructures and has been used to realise a number of self-driving vehicles through research projects in academia \cite{OpenDaVINCI}. Using OpenDaVINCI as a development architecture for the experimental units allows the experiment to mimic the middleware one can expect in the autonomous systems. \todo{We made changes to OpenDaVinci, we shall specify that here.}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Pi Component}
+% why is it calculating pi? 
+
+The Pi Component is responsible for calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping. 
+
+%why 80%? why pi? which pi algorithm? measurement points 
+
+
+See Appendix~\ref{code:pi}, on page ~\pageref{code:pi}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Pi/IO Component}
+See Appendix~\ref{code:pi-io}, on page ~\pageref{code:pi-io}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Experimental Material}
+% all experimental material and equipment should be described. all characteristics that might have an impact on the results should be mentioned here as formally as possible. 
+In order for the experiment to begin, the target system needs to be prepared and configured with software. This section identifies the preparation of the target system to ensure reproducibility of the experiment.
+ 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Preparing the Target System}
+The experiment presented in this report will be executed on a Aaeon AEC 6950 embedded personal computer.  The hardware specification for the target system can be found in table~\ref{table:test}. 
 
 \begin{table}[H]
 \centering
@@ -27,9 +89,8 @@ Before the test can be carried out, the target system needs to be perpared with 
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Component} & \textbf{Specification} 			\\ \hline
-Processor          & Intel® Core™ i7 3517UE 1.7 GHz 	\\ \hline
+Processor          & Intel Core i7 3517UE 1.7 GHz 		\\ \hline
 Memory             & 4GB DDR3 1333/1600 SODIMM          \\ \hline
-Video              &                                    \\ \hline
 Storage Device     & 2.5" SATA HDD x 1                  \\ \hline
 Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4\\ Isolated Digital Input/Output x 10 pins (DI x 4, DO x 4)(3KV) \\ Isolated DB-9 x 2 for RS-232/422/485 x 2 (3KV, jumper selection)\end{tabular} \\ \hline
 \end{tabular}
@@ -37,29 +98,108 @@ Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB
 \label{table:test}
 \end{table}
 
+\subsubsection{Preparing the Operating System}
+The operating system chosen for the experiment is Ubuntu Server 14.04.1 LTS (Long Term Support). Long term supported operating systems ensure that the operating system stays up to date with current software versions and that defects are attended to. The specific version for the operating system, mainline vanilla kernel and RT\_PREEMPT patch is found in table~\ref{table:execution-version}.
 
-\subsubsection{Hardware}
-The tests presented in this report will be executed on a Aaeon AEC 6950 embedded personal computer. The hardware specification for the target systems can be found in table~\ref{table:test}. 
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Operating System} & \textbf{Mainline Kernel} & \textbf{RT\_PREEMPT Patch} \\ \hline
+Ubuntu Server 14.04.1     & 3.18.25                  &  3.18.25-rt23               \\ \hline
+\end{tabular}
+\centering
+\caption{Execution Enviroment Versioning}
+\label{table:execution-version}
+\end{table}
+
+\subsubsection{Preparing the Linux Kernel}
+The Linux vanilla kernel version 3.18.25 is chosen to be used in the experiment. The main motivation behind utilising this specific Linux kernel is that it is both supported by the RT\_PREEMPT patch as well as Docker. At the time of writing the RT\_PREEMPT patch for 3.18.25 is actively maintained and supported. A configuration file used by the Open Source Automation Development Lab \cite{OSADL} is used to patch the vanilla kernel with RT\_PREEMPT.
+
+\subsubsection{Stressing the Target System}
+A software tool \textit{stress-ng} is used to apply load to the target system. Specifically, the stress workers that are used are:  
 
 
 
+\subsection{Tasks}
+% what should be here when we have already spoken about the pi/io or pi component
+% tasks performed by the participants should be described in enough detail so that replication is possible
 
-\subsubsection{Building GNU/Linux}
-\subsubsection{Configuring the Kernel}
-
-\subsection{Experimental Units}
-RQ1 - Pi Component, RQ2 Pi/IO Component (measurement points)
-
-\subsection{Experimental Material}
 
 \subsection{Hypotheses, Parameters and Variables}
+% there is a difference / there is no difference 
+%$H_{0i_{j}}$
 
+
+The hypotheses to achieve goal one of the experiment are:
+\begin{itemize}
+% For RQ1 
+\item $H_{01_{1}}$ - The deployment context has no influence on scheduling precision.
+\item $H_{11_{1}}$ - The deployment context has an influence on scheduling precision.
+\item $H_{01_{2}}$ - The Linux kernels has no influence on scheduling precision.
+\item $H_{11_{2}}$ - The Linux kernels has an influence on scheduling precision.
+\item $H_{01_{3}}$ - The execution environment has no influence on scheduling precision.
+\item $H_{11_{3}}$ - The execution environment has an influence on scheduling precision.\\
+\end{itemize}
+
+
+The hypotheses to achieve goal two of the experiment are:
+\begin{itemize}
+% For RQ2
+\item $H_{02_{1}}$ - The deployment context has no influence on camera IO performance.
+\item $H_{12_{1}}$ - The deployment context has an influence on on camera IO performance.
+\item $H_{02_{2}}$ - The Linux kernels has no influence on camera IO performance.
+\item $H_{12_{2}}$ - The Linux kernels has an influence on camera IO performance.
+\item $H_{02_{3}}$ - The execution environment has no influence on camera IO performance.
+\item $H_{12_{3}}$ - The execution environment has an influence on camera IO performance.
+\item $H_{02_{4}}$ - The deployment context has no influence on disk IO performance.
+\item $H_{12_{4}}$ - The deployment context has an influence on on disk IO performance.
+\item $H_{02_{5}}$ - The Linux kernels has no influence on disk IO performance.
+\item $H_{12_{5}}$ - The Linux kernels has an influence on disk IO performance.
+\item $H_{02_{6}}$ - The execution environment has no influence on disk IO performance.
+\item $H_{12_{6}}$ - The execution environment has an influence on disk IO performance.
+\end{itemize}
+
+\todo{define influence,disk IO performance,camera IO performance}
+
+\subsubsection{Dependent Variable}
+%variable that is measured to ascertain whether the independent variable has an effect on the outcome
+\subsubsection{Independent Variable}
+%manipulated variable to influence dependent variable
 
 \subsection{Design}
-Quasi design
-
-
+A Quasi experiment design is used since random assignment is not applicable in this case. The experimental units, being the Pi and Pi/IO components, are
+formally categorized as two independent components. A Quasi experiment is useful when random assignment to treatment groups is impossible \cite{juristo2003lecture}. The experiment is not aimed to establish a cause and effect relationship, but rather an observation on how the experimental units perform.
 \subsection{Procedure}
-RPI data collector 
+% exactly what happens to the participants from the moment they arrive to the moment they leave. Schedule for the experiment (how long did we run it for), how was the data collected and with what support (tools)
+% used a script that automated the entire test
+% boot system, rest for x ammount of time, disable networking start the supercomponent ... ... 
+
+The execution of the experiment run is carried out by using a script to automate the entire process. The steps in which the script perform are:\\
+
+\begin{enumerate}  
+\item Boot the operating system and wait for five minutes.  
+\item Start the supercomponent of OpenDaVINCI.
+\item Start the experimental unit and run for one hour.
+\item On completion of the hour, wait for five minutes.
+\item Switch the kernel and reboot.\\ 
+\end{enumerate}
+
+While the experimental unit is running, data is sent via serial communication to a Raspberry Pi which stores the measurement data. 
+
 
 \subsection{Analysis Procedure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
