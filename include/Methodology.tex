@@ -56,7 +56,7 @@ Tracing through all possible code paths of the kernel is not an option to uncove
 \label{section:exp-units}
 % participants (experimental units) need to be described in detail. Sampling strategy, the number of participants, the kind of participants and the population they were drawn from. 
 
-The experimental units consist of two components that have be realised by utilising the open source library OpenDaVINCI \cite{OpenDaVINCI}. OpenDaVINCI is a development architecture of virtual, networked and cyber-physical infrastructures and has been used to realise a number of self-driving vehicles through research projects in academia \cite{OpenDaVINCI}. Using OpenDaVINCI as a development architecture for the experimental units allows the experiment to mimic the middleware one can expect in the autonomous systems. The implementation of OpenDaVinci has been altered to enable full measurement of the system during runtime. Further extensions to the were done to make sure the measurements were as precise as possible by enabling Nanosecond precision. Lastly, Timestamp was altered to enable writing the data of the measurement points to a serial port, the code added can be found in the appendix \ref{code:serialtime}.\\
+The experimental units consist of two components that have be realised by utilising the open source library OpenDaVINCI \cite{OpenDaVINCI}. OpenDaVINCI is a development architecture of virtual, networked and cyber-physical infrastructures and has been used to realise a number of self-driving vehicles through research projects in academia \cite{OpenDaVINCI}. Using OpenDaVINCI as a development architecture for the experimental units allows the experiment to mimic the middleware one can expect in a autonomous vehicle. The implementation of OpenDaVINCI has been altered to enable full measurement of the system during runtime. Further extensions were made to make sure the measurements were as precise as possible by enabling nanosecond precision. Lastly, Timestamp was altered to enable writing the data of the measurement points to a serial port, the code added can be found in the appendix \ref{code:serialtime}.\\
 The measurement points are simply timestamps of when the application reaches some points in the execution. An example of a measurement point within the Pi Component can be found in the appendix \ref{code:pi} at line \#3.\\
 
 % \todo{We made changes to OpenDaVinci, we shall specify that here.}
@@ -65,7 +65,7 @@ The measurement points are simply timestamps of when the application reaches som
 \subsubsection{Pi Component}
 % why is it calculating pi? 
 
-The Pi Component is responsible for calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping. The rationale of why it is specifically 80\% is due to the ability to have a buffer for sleeping to simulate a realistic scenario of code running for a particular time of the time-slice. Further, an approach of limiting to a certain amount of pi-digits was investigated. However it would prove to be difficult to predict whether the amount of pi digits calculated would not occupy more than the specified time deadline. Therefore an approach to limit the pi calculation to a specific time of a time-slice was chosen as it provides a more controlled environment. The pi calculations are merely there to simulate some load and not to intrude on other components of the application, such as the overhead added by OpenDaVinci and the accuracy of the system sleep. With the approach of limiting to pi-digits would be chosen, it may intrude on the actual overhead that the experiment set out to measure.\\
+The Pi Component is responsible for calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping. The rationale of why it is specifically 80\% is due to the ability to have a buffer for sleeping to simulate a realistic scenario of code running for a particular time of the time-slice. Further, an approach of limiting to a certain amount of pi-digits was investigated. However it would prove to be difficult to predict whether the amount of pi digits calculated would not occupy more than the specified time deadline. Therefore an approach to limit the pi calculation to a specific time of a time-slice was chosen as it provides a more controlled environment. The pi calculations are merely there to simulate some load and not to intrude on other components of the application, such as the overhead added by OpenDaVINCI and the accuracy of the system sleep. With the approach of limiting to pi-digits would be chosen, it may intrude on the actual overhead that the experiment sets out to measure.\\
 
 %why 80%? why pi? which pi algorithm? measurement points 
 See Appendix~\ref{code:pi}, on page ~\pageref{code:pi}
@@ -73,7 +73,7 @@ See Appendix~\ref{code:pi}, on page ~\pageref{code:pi}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Pi/IO Component}
 
-Pi/IO Component is responsible for the scenario which is setup to answer RQ2 (\ref{section:rqs}). The component extends the Pi component by adding two additional factors to its time-slice execution, the factors of: camera IO and disk IO. The code implementation of the camera component is a direct copy of code utilized by ReVeRe lab in a real-life scenario of a self-driving truck. This was copied to mimic real-life to ensure the relevance of the data captured. Furthermore, the code implementation for disk IO is also a direct copy used by ReVeRe lab for logging the system during runtime. Between these two additional factors, two measurement points are set to measure the overhead added by capturing an image and dumping that image to the disk.\\
+Pi/IO Component is responsible for the measuring input/output in order to answer RQ2 (\ref{section:rqs}). The component extends the Pi Component by adding two additional factors to its time-slice execution. The factors are camera IO and disk IO. The code implementation of the camera component is a direct copy of code utilized by ReVeRe lab in a real-life scenario of a self-driving truck\footnote{https://github.com/chalmers-revere/opendlv}. This was copied to mimic real-life to ensure the relevance of the data captured. Furthermore, the code implementation for disk IO is also a direct copy used by ReVeRe lab for logging the system during runtime. Between these two additional factors, two measurement points are set to measure the overhead added by capturing an image and dumping that image to the disk.\\
 
 See Appendix~\ref{code:pi-io}, on page ~\pageref{code:pi-io}
 
@@ -103,7 +103,7 @@ Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB
 \end{table}
 
 \subsubsection{Preparing the Operating System}
-The operating system chosen for the experiment is Ubuntu Server 14.04.1 LTS (Long Term Support). Long term supported operating systems ensure that the operating system stays up to date with current software versions and that defects are attended to. The specific version for the operating system, mainline vanilla kernel and RT\_PREEMPT patch is found in table~\ref{table:execution-version}.
+The operating system chosen for the experiment is Ubuntu Server 14.04.1 LTS (Long Term Support). Long term supported operating systems ensure that the operating system stays up to date with current software versions and that defects are attended to. The specific version for the operating system, mainline vanilla kernel and RT\_PREEMPT patch is found in table~\ref{table:execution-version}. All software packages installed on the target system is made possible through an offline package manager. Installation and configuration of all required software packages are executed by a script to ensure reproducibility each time the operating system is reinstalled. 
 
 \begin{table}[h]
 \begin{tabular}{|l|l|l|}
@@ -120,19 +120,18 @@ Ubuntu Server 14.04.1     & 3.18.25                  &  3.18.25-rt23            
 The Linux vanilla kernel version 3.18.25 is chosen to be used in the experiment. The main motivation behind utilising this specific Linux kernel is that it is both supported by the RT\_PREEMPT patch as well as Docker. At the time of writing the RT\_PREEMPT patch for 3.18.25 is actively maintained and supported. A configuration file used by the Open Source Automation Development Lab \cite{OSADL} is used to patch the vanilla kernel with RT\_PREEMPT.
 
 \subsubsection{Stressing the Target System}
-A software tool \textit{stress-ng} is used to apply load to the target system. Specifically, the stress workers that are used are:  
+\textit{Summary: The specific stress tool is still being finalised}
 
 
 
 \subsection{Tasks}
-% what should be here when we have already spoken about the pi/io or pi component
-% tasks performed by the participants should be described in enough detail so that replication is possible
+The experimental units are tasked with capturing measurement points and sending the measurement data via serial communication where they are stored. The specific measurement points that is captured can be found in section~\ref{section:dependent}.
 
 
 \subsection{Hypotheses, Parameters and Variables}
 % there is a difference / there is no difference 
 %$H_{0i_{j}}$
-This section aims to present all hypotheses that will be analysed and answered to understand how the different execution environments impact the performance of the real-time application.\\
+This section presents all hypotheses that will be analysed and answered in order to understand how the specified execution environments impact the performance of the real-time application.\\
 
 The hypotheses to achieve goal one of the experiment are:
 \begin{itemize}
@@ -165,7 +164,7 @@ The hypotheses to achieve goal two of the experiment are:
 
 \todo{define influence,disk IO performance,camera IO performance}
 
-\subsubsection{Dependent Variables}
+\subsubsection{Dependent Variables} \label{section:dependent}
 %variable that is measured to ascertain whether the independent variable has an effect on the outcome
 There exists three separate dependent variables that will be used for measuring how each is impacted by the independent variables. The dependent variables are namely; 1) \textit{scheduling precision}, 2) \textit{camera IO}, and 3) \textit{disk IO}. Where \textit{scheduling precision} refers to how accurately in terms of time the system performs the executions within the time-slice. Measured by timing the duration between four measurement points for the Pi Component and six points for the Pi/IO Component.\\ 
 
@@ -197,6 +196,9 @@ The treatments that will be used for assessing the impact are the factors mentio
 \subsection{Design}
 A Quasi experiment design is used since random assignment is not applicable in this case. The experimental units, being the Pi and Pi/IO components, are
 formally categorized as two independent components. A Quasi experiment is useful when random assignment to treatment groups is impossible \cite{juristo2003lecture}. The experiment is not aimed to establish a cause and effect relationship, but rather an observation on how the experimental units perform.
+
+
+
 \subsection{Procedure}
 % exactly what happens to the participants from the moment they arrive to the moment they leave. Schedule for the experiment (how long did we run it for), how was the data collected and with what support (tools)
 % used a script that automated the entire test
@@ -206,14 +208,13 @@ The execution of the experiment run is carried out by using a script to automate
 
 \begin{enumerate}  
 \item Boot the operating system and wait for five minutes.  
-\item Start the supercomponent of OpenDaVINCI.
+\item Start the \textit{supercomponent} of OpenDaVINCI.
 \item Start the experimental unit and run for one hour.
-\item On completion of the hour, wait for five minutes.
+\item On completion of the experimental unit, wait for five minutes.
 \item Switch the kernel and reboot.\\ 
 \end{enumerate}
 
-While the experimental unit is running, data is sent via serial communication to a Raspberry Pi which stores the measurement data. 
-
+While the data capturer is storing all measurement data received by the experiment units over serial communication. 
 
 \subsection{Analysis Procedure}
 
