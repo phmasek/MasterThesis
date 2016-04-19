@@ -14,6 +14,7 @@ To answer the research questions, an experiment is carried out following the gui
 %How does the respective execution context influence the scheduling precision of the respective application?
 %How does the respective execution context influence the input/output performance of the respective application?
 
+
 The aim of the experiment is to systematically evaluate the scheduling precision of the experimental units running in different execution environments. The goals of the experiment are described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section.  
 
 % execution environment: complete system 
@@ -84,7 +85,7 @@ In order for the experiment to begin, the target system needs to be prepared and
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Preparing the Target System}
-The experiment presented in this report will be executed on a Aaeon AEC 6950 embedded personal computer.  The hardware specification for the target system can be found in table~\ref{table:test}. 
+The experiment presented in this report will be executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon.   The hardware specification for the target system can be found in table~\ref{table:test}. 
 
 \begin{table}[H]
 \centering
@@ -138,8 +139,8 @@ The hypotheses to achieve goal one of the experiment are:
 % For RQ1 
 \item $H_{01_{1}}$ - The deployment context has no impact on scheduling precision.
 \item $H_{11_{1}}$ - The deployment context has an impact on scheduling precision.
-\item $H_{01_{2}}$ - The Linux kernels has no impact on scheduling precision.
-\item $H_{11_{2}}$ - The Linux kernels has an impact on scheduling precision.
+\item $H_{01_{2}}$ - The Linux kernels used in the experiment has no impact on scheduling precision.
+\item $H_{11_{2}}$ - The Linux kernels used in the experiment has an impact on scheduling precision.
 \item $H_{01_{3}}$ - The execution environment has no impact on scheduling precision.
 \item $H_{11_{3}}$ - The execution environment has an impact on scheduling precision.\\
 \end{itemize}
@@ -150,14 +151,14 @@ The hypotheses to achieve goal two of the experiment are:
 % For RQ2
 \item $H_{02_{1}}$ - The deployment context has no impact on camera IO performance.
 \item $H_{12_{1}}$ - The deployment context has an impact on on camera IO performance.
-\item $H_{02_{2}}$ - The Linux kernels has no impact on camera IO performance.
-\item $H_{12_{2}}$ - The Linux kernels has an impact on camera IO performance.
+\item $H_{02_{2}}$ - The Linux kernels used in the experiment has no impact on camera IO performance.
+\item $H_{12_{2}}$ - The Linux kernels used in the experiment has an impact on camera IO performance.
 \item $H_{02_{3}}$ - The execution environment has no impact on camera IO performance.
 \item $H_{12_{3}}$ - The execution environment has an impact on camera IO performance.
 \item $H_{02_{4}}$ - The deployment context has no impact on disk IO performance.
 \item $H_{12_{4}}$ - The deployment context has an impact on disk IO performance.
-\item $H_{02_{5}}$ - The Linux kernels has no impact on disk IO performance.
-\item $H_{12_{5}}$ - The Linux kernels has an impact on disk IO performance.
+\item $H_{02_{5}}$ - The Linux kernels used in the experiment has no impact on disk IO performance.
+\item $H_{12_{5}}$ - The Linux kernels used in the experiment has an impact on disk IO performance.
 \item $H_{02_{6}}$ - The execution environment has no impact on disk IO performance.
 \item $H_{12_{6}}$ - The execution environment has an impact on disk IO performance.
 \end{itemize}
