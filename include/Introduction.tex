@@ -1,102 +1,102 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 
 % {\fontfamily{qcr}\selectfont
-\chapter{Progress log}
+% \section{Progress log}
 
-\section{Achieved}
-\begin{enumerate}[label=\protect\circled{\arabic*}]
-\itemsep0.5em
-\item Grasping the research subject domain
-\item Investigating the implementation possibilities of Jailhouse
-	\begin{itemize}
-		\item{Analysed how an implementation could be achieved by porting OpenDaVINCI to Jailhouse}
-	\end{itemize}
-\item Related work to identify the existing research gap
-	\begin{itemize}
-		\item{Gathering literature regarding the domain}
-	\end{itemize}
-\item Add implementations to OpenDaVINCI for enabling measurement
-	\begin{itemize}
-		\item{Writing additional functions for Serial writing + Nanosecond timestamping}
-	\end{itemize}
-\item Preparing target system
-	\begin{itemize}
-		\item{Target system installation/configuration script}
-		\item{Build RT-preempt and generic kernel}
-	\end{itemize}
-\item Creating the Pi Component (Experimental Unit 1)
-	\begin{itemize}
-		\item{Explore and understand the implementation of OpenDaVINCI.}
-		\item{Setup serial IO for data collection}
-		\item{Initial testing and data gathering}
-		\item{Build Dockerized execution}
-	\end{itemize}
-\item Implement automated test scenarios (switching execution environments)
-	\begin{itemize}
-		\item{Includes initial stress testing using stress-ng}
-		\item{Running 16 test scenarios}
-	\end{itemize}
-\item Creating the Pi/IO Component (Experimental Unit 2)
-	\begin{itemize}
-		\item{Added 16 test scenarios}
-		\item{Running 32 test scenarios}
-		\item{Build Dockerized execution}
-	\end{itemize}
-\item Data processing
-	\begin{itemize}
-		\item{Writing python script for generating readable data from RAW data}
-	\end{itemize}
-\item Outlining analysis procedures
-	\begin{itemize}
-		\item{Setup ANOVA testing}
-		\item{Interpreting initial results}
-		\item{Defining the hypotheses tests}
-	\end{itemize}
-\item Writing
-\end{enumerate}
-
-\section{Future tasks}
-\begin{enumerate}[label=\protect\circled{\arabic*}]
-\itemsep0.5em
-\item Final result section depend on:
-	\begin{itemize}
-		\label{current-issues}
-		\item Resolving current implementation issues regarding recording data to disk
-		\item Resolving current implementation issues regarding stress scenarios
-	\end{itemize}
-\item When issues \ref{current-issues} are resolved all tests must be rerun for the official data.
-	\begin{itemize}
-		\item All 32 scenarios must be run to cover the hypothesis tests
-	\end{itemize}
-\item Implementing the experiments to an autonomous self-driving Volvo truck
-\item Writing missing items
-	\begin{itemize}
-		\item Parts of background 
-		\begin{itemize}
-			\item \textit{Defining terminology}
-			\item \textit{Presenting and defining RT-preempt}
-			\item \textit{Presenting and defining OpenDaVINCI}
-			\item \textit{Presenting and defining Operating System Schedulers}
-		\end{itemize}
-		\item Full contribution
-		\item Full scope
-		\item Full related work
-		\item Full structure of the paper
-		\item Full results
-			\begin{itemize}
-				\item \textit{As results are dependent on the full implementation to be completed, we expect to finish it for the final report. This due to the unresolved implementation issues mentioned earlier in \ref{current-issues}.}
-			\end{itemize}
-		\item Full analysis
-			\begin{itemize}
-				\item \textit{Dependent on the results}
-			\end{itemize}
-		\item Full conclusion/discussion
-			\begin{itemize}
-				\item \textit{Dependent on the results and analysis}
-			\end{itemize}
-		\item Full threat to validity
-	\end{itemize}
-\end{enumerate}
+% \subsection{Achieved}
+% \begin{enumerate}[label=\protect\circled{\arabic*}]
+% \itemsep0.5em
+% \item Grasping the research subject domain
+% \item Investigating the implementation possibilities of Jailhouse
+% 	\begin{itemize}
+% 		\item{Analysed how an implementation could be achieved by porting OpenDaVINCI to Jailhouse}
+% 	\end{itemize}
+% \item Related work to identify the existing research gap
+% 	\begin{itemize}
+% 		\item{Gathering literature regarding the domain}
+% 	\end{itemize}
+% \item Add implementations to OpenDaVINCI for enabling measurement
+% 	\begin{itemize}
+% 		\item{Writing additional functions for Serial writing + Nanosecond timestamping}
+% 	\end{itemize}
+% \item Preparing target system
+% 	\begin{itemize}
+% 		\item{Target system installation/configuration script}
+% 		\item{Build RT-preempt and generic kernel}
+% 	\end{itemize}
+% \item Creating the Pi Component (Experimental Unit 1)
+% 	\begin{itemize}
+% 		\item{Explore and understand the implementation of OpenDaVINCI.}
+% 		\item{Setup serial IO for data collection}
+% 		\item{Initial testing and data gathering}
+% 		\item{Build Dockerized execution}
+% 	\end{itemize}
+% \item Implement automated test scenarios (switching execution environments)
+% 	\begin{itemize}
+% 		\item{Includes initial stress testing using stress-ng}
+% 		\item{Running 16 test scenarios}
+% 	\end{itemize}
+% \item Creating the Pi/IO Component (Experimental Unit 2)
+% 	\begin{itemize}
+% 		\item{Added 16 test scenarios}
+% 		\item{Running 32 test scenarios}
+% 		\item{Build Dockerized execution}
+% 	\end{itemize}
+% \item Data processing
+% 	\begin{itemize}
+% 		\item{Writing python script for generating readable data from RAW data}
+% 	\end{itemize}
+% \item Outlining analysis procedures
+% 	\begin{itemize}
+% 		\item{Setup ANOVA testing}
+% 		\item{Interpreting initial results}
+% 		\item{Defining the hypotheses tests}
+% 	\end{itemize}
+% \item Writing
+% \end{enumerate}
+% \newpage
+% \subsection{Future tasks}
+% \begin{enumerate}[label=\protect\circled{\arabic*}]
+% \itemsep0.5em
+% \item Final result section depend on:
+% 	\begin{itemize}
+% 		\label{current-issues}
+% 		\item Resolving current implementation issues regarding recording data to disk
+% 		\item Resolving current implementation issues regarding stress scenarios
+% 	\end{itemize}
+% \item When issues \ref{current-issues} are resolved all tests must be rerun for the official data.
+% 	\begin{itemize}
+% 		\item All 32 scenarios must be run to cover the hypothesis tests
+% 	\end{itemize}
+% \item Implementing the experiments to an autonomous self-driving Volvo truck
+% \item Writing missing items
+% 	\begin{itemize}
+% 		\item Parts of background 
+% 		\begin{itemize}
+% 			\item \textit{Defining terminology}
+% 			\item \textit{Presenting and defining RT-preempt}
+% 			\item \textit{Presenting and defining OpenDaVINCI}
+% 			\item \textit{Presenting and defining Operating System Schedulers}
+% 		\end{itemize}
+% 		\item Full contribution
+% 		\item Full scope
+% 		\item Full related work
+% 		\item Full structure of the paper
+% 		\item Full results
+% 			\begin{itemize}
+% 				\item \textit{As results are dependent on the full implementation to be completed, we expect to finish it for the final report. This due to the unresolved implementation issues mentioned earlier in \ref{current-issues}.}
+% 			\end{itemize}
+% 		\item Full analysis
+% 			\begin{itemize}
+% 				\item \textit{Dependent on the results}
+% 			\end{itemize}
+% 		\item Full conclusion/discussion
+% 			\begin{itemize}
+% 				\item \textit{Dependent on the results and analysis}
+% 			\end{itemize}
+% 		\item Full threat to validity
+% 	\end{itemize}
+% \end{enumerate}
 
 % }
 
@@ -139,7 +139,7 @@ Scheduling precision refers to how accurately the application executes the speci
 
 The limitations of each execution environment can be identified by understanding how much time each part of the required code occupies the time-slice. The less time required for executing the code outside of the assigned algorithm the more deterministic a system is said to be. In a scenario where the assigned algorithm requires 80\% of the time-slice to execute the code, it is assumed that the application will sleep for the remaining 20\%. However, as there exists additional operations surrounding the algorithm the application might sleep 18\% whereas 2\% is required for the surrounding code to execute. If the application still sleeps 20\%, executes the algorithm for 80\%, and uses 2\% for the required code it will overstay its time-slice by 2\% thus rendering the application less deterministic. It is the time available for the algorithm the experiments will seek to identify to inform software engineers of how much of the time-slice can be used for effective computations i.e. time available for generating a result.\\
 
-\textit{Summary: This section will provide additional information on the RT\_PREEMPT Patch, OpenDaVINCI, Operating System Schedulers, what is means to be a deterministic and include terminology that readers may not be familiar with.}
+% \textit{Summary: This section will provide additional information on the RT\_PREEMPT Patch, OpenDaVINCI, Operating System Schedulers, what is means to be a deterministic and include terminology that readers may not be familiar with.}
 
 
 
@@ -161,15 +161,15 @@ This research seeks to understand the performance impact Docker has on real-time
 
 
 \section{Contributions}
-\textit{Summary: The contribution made to the research community by answering the RQs.} 
+% \textit{Summary: The contribution made to the research community by answering the RQs.} 
 
 
 \section{Scope}
-\textit{Summary: In this section we will introduce the scope which is self-driving vehicles. The hardware we are using is in-line with actual hardware used in autonomous vehicles. The software development architecture used for our experimental units have been adopted in research projects involving the actual development of autonomous vehicles. We do not aim for our results to be valid in other types of autonomous systems, such as drones. }
+% \textit{Summary: In this section we will introduce the scope which is self-driving vehicles. The hardware we are using is in-line with actual hardware used in autonomous vehicles. The software development architecture used for our experimental units have been adopted in research projects involving the actual development of autonomous vehicles. We do not aim for our results to be valid in other types of autonomous systems, such as drones. }
 
 \section{Structure of the article}
 
-\textit{Summary: In this section we will introduce a typical outline of the paper.}
+% \textit{Summary: In this section we will introduce a typical outline of the paper.}
 
 
 % information on:
