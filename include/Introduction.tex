@@ -1,4 +1,105 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
+
+% {\fontfamily{qcr}\selectfont
+\chapter{Progress log}
+
+\section{Achieved}
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\itemsep0.5em
+\item Grasping the research subject domain
+\item Investigating the implementation possibilities of Jailhouse
+	\begin{itemize}
+		\item{Analysed how an implementation could be achieved by porting OpenDaVINCI to Jailhouse}
+	\end{itemize}
+\item Related work to identify the existing research gap
+	\begin{itemize}
+		\item{Gathering literature regarding the domain}
+	\end{itemize}
+\item Add implementations to OpenDaVINCI for enabling measurement
+	\begin{itemize}
+		\item{Writing additional functions for Serial writing + Nanosecond timestamping}
+	\end{itemize}
+\item Preparing target system
+	\begin{itemize}
+		\item{Target system installation/configuration script}
+		\item{Build RT-preempt and generic kernel}
+	\end{itemize}
+\item Creating the Pi Component (Experimental Unit 1)
+	\begin{itemize}
+		\item{Explore and understand the implementation of OpenDaVINCI.}
+		\item{Setup serial IO for data collection}
+		\item{Initial testing and data gathering}
+		\item{Build Dockerized execution}
+	\end{itemize}
+\item Implement automated test scenarios (switching execution environments)
+	\begin{itemize}
+		\item{Includes initial stress testing using stress-ng}
+		\item{Running 16 test scenarios}
+	\end{itemize}
+\item Creating the Pi/IO Component (Experimental Unit 2)
+	\begin{itemize}
+		\item{Added 16 test scenarios}
+		\item{Running 32 test scenarios}
+		\item{Build Dockerized execution}
+	\end{itemize}
+\item Data processing
+	\begin{itemize}
+		\item{Writing python script for generating readable data from RAW data}
+	\end{itemize}
+\item Outlining analysis procedures
+	\begin{itemize}
+		\item{Setup ANOVA testing}
+		\item{Interpreting initial results}
+		\item{Defining the hypotheses tests}
+	\end{itemize}
+\item Writing
+\end{enumerate}
+
+\section{Future tasks}
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+\itemsep0.5em
+\item Final result section depend on:
+	\begin{itemize}
+		\label{current-issues}
+		\item Resolving current implementation issues regarding recording data to disk
+		\item Resolving current implementation issues regarding stress scenarios
+	\end{itemize}
+\item When issues \ref{current-issues} are resolved all tests must be rerun for the official data.
+	\begin{itemize}
+		\item All 32 scenarios must be run to cover the hypothesis tests
+	\end{itemize}
+\item Implementing the experiments to an autonomous self-driving Volvo truck
+\item Writing missing items
+	\begin{itemize}
+		\item Parts of background 
+		\begin{itemize}
+			\item \textit{Defining terminology}
+			\item \textit{Presenting and defining RT-preempt}
+			\item \textit{Presenting and defining OpenDaVINCI}
+			\item \textit{Presenting and defining Operating System Schedulers}
+		\end{itemize}
+		\item Full contribution
+		\item Full scope
+		\item Full related work
+		\item Full structure of the paper
+		\item Full results
+			\begin{itemize}
+				\item \textit{As results are dependent on the full implementation to be completed, we expect to finish it for the final report. This due to the unresolved implementation issues mentioned earlier in \ref{current-issues}.}
+			\end{itemize}
+		\item Full analysis
+			\begin{itemize}
+				\item \textit{Dependent on the results}
+			\end{itemize}
+		\item Full conclusion/discussion
+			\begin{itemize}
+				\item \textit{Dependent on the results and analysis}
+			\end{itemize}
+		\item Full threat to validity
+	\end{itemize}
+\end{enumerate}
+
+% }
+
 \chapter{Introduction}
 In order for organisations to remain competitive, there is a need to continuously improve time to market for new features and services. The societal transformation of moving from a product economy to a service economy has affected the way organisations deliver software \cite{mckinsey}. Cloud computing is a direct response to the need of agility and has increasingly earned the reputation of being the holy grail of application deployment \cite{7034713}. Products are required to move from business requirements to delivery as fast as possible. What allows organisations to remain competitive by managing to release new services with such agility is a new software development methodology named DevOps. The aim of DevOps is to break the wall between developers and operations professionals in order to minimize deployment delays and to streamline the delivery process \cite{Httermann:2012:DD:2380958}. New tools and new methodologies that help automate the entire release process are required in order to pursue a successful delivery process.\\
 
