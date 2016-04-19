@@ -1,19 +1,24 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Threats to Validity}
+%\textit{Summary: In this section we will introduce potential weakenesses we are aware of by following the guidelines of Runeson \& Höst, Feldt \& Magazinius.}
 
-
-\textit{Summary: In this section we will introduce potential weakenesses we are aware of by following the guidelines of Runeson \& Höst, Feldt \& Magazinius.}
+\section{Threats to Construct Validity}
+\section{Threats to Internal Validity}
+\section{Threats to External Validity}
+\section{Threats to Conclusion Validity}
 
 % How did we validate the results? 
 	% statistical analysis is powerful 
 	% according to the one paper "an updated performance.." running with no load results in no difference between. Our results are inline with those findings 
 	% there exists papers that state using docker for IO should be taken with caution. How did our results perform? 
-	% every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same
+	% every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same. Ensures equal versioning between all enviroments
+	% systematic checklist: ensures equal treatment across all enviroments
 
 % How was the data actually validated?
 	% we store data over serial line that uses a dedicated interrupt line so that storing the results does not have an effect on the experimental units
 	% for the RT kernel, we ran the same test with our kernel and with Capocasa to see if there is a difference. Also, we use OSADL configuration file which is a organisation that benchmarks Linux RT kernel 
 
+%clock monotonic
 
 
 % Some papers say that operating systems are not good for measuring time, however, there are many other papers that use the same method as us but in a more simplistic way (without using any form of middleware (ODV))
@@ -22,3 +27,6 @@
 
 % Data comming from the RPI is valid since we know how many measurement points we expect 
 % 
+
+
+% every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same. Ensures equal versioning between all enviroments
