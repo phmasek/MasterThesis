@@ -127,5 +127,8 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 % Supress warning from Texmaker about headheight
 \setlength{\headheight}{15pt}		
 
-
+% Enable circled numbering for LOG
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 
