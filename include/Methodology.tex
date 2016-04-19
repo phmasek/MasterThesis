@@ -15,7 +15,7 @@ To answer the research questions, an experiment is carried out following the gui
 %How does the respective execution context influence the input/output performance of the respective application?
 
 
-The aim of the experiment is to systematically evaluate the scheduling precision of the experimental units running in different execution environments. The goals of the experiment are described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section.  
+The aim of the experiment is to systematically evaluate the scheduling precision of the experimental units running in different execution environments with respect to the deployment context. The goals of the experiment are described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section.  
 
 % execution environment: complete system 
 % deployment context: docker non-docker 
@@ -120,7 +120,7 @@ Ubuntu Server 14.04.1     & 3.18.25                  &  3.18.25-rt23            
 The Linux vanilla kernel version 3.18.25 is chosen to be used in the experiment. The main motivation behind utilising this specific Linux kernel is that it is both supported by the RT\_PREEMPT patch as well as Docker. At the time of writing the RT\_PREEMPT patch for 3.18.25 is actively maintained and supported. A configuration file used by the Open Source Automation Development Lab \cite{OSADL} is used to patch the vanilla kernel with RT\_PREEMPT.
 
 \subsubsection{Stressing the Target System}
-\textit{Summary: The specific stress tool is still being finalised}
+%\textit{Summary: The specific stress tool is still being finalised}
 
 
 

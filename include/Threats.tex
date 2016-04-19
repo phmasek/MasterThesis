@@ -1,19 +1,34 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Threats to Validity}
+In this section, the four perspective of validity threats presented by Runeson and H\"{o}st \cite{runeson} are discussed.
+%\textit{Summary: In this section we will introduce potential weakenesses we are aware of by following the guidelines of Runeson \& Höst, Feldt \& Magazinius.}
 
+\section{Threats to Construct Validity}
+\section{Threats to Internal Validity}
+Internal validity refers to the extent to which an unknown factor has an effect on the factor under invesigtation or may refer to the issues that may affect the relationship between treatment and outcome. In order to mitigate the risk of an unknown factor interfering with the data being captured a number of strategies is used, namely: \\
+\begin{enumerate}
+\item{A script is used to execute the installation of all software packages requried for the experiment to run. All software packages that is installed on the target system is installed from an offline package manager. This ensure that all software packages installed on the system has equal versions when preparing the target system, and that precisely each step of the installation process is documented and available for review.}
+\item{The configuration file used to prepare the specific kernels used in this study are from reputable sources. These sources are from Ubuntu and the OSADL laboratory open source configuration files. This ensures that the kernels were configured in a correct and complete manner.}
+\item{A systematic checklist is used prior to executing the experiment. This ensures that the runtime configuration of the target system is documented and never altered until the experiment is completed.}
+\end{enumerate}
 
-\textit{Summary: In this section we will introduce potential weakenesses we are aware of by following the guidelines of Runeson \& Höst, Feldt \& Magazinius.}
+% dealing with operating systesm are complex beasts and so we can expect that random things happen, but we need a source for this.
+
+\section{Threats to External Validity}
+\section{Threats to Conclusion Validity}
 
 % How did we validate the results? 
 	% statistical analysis is powerful 
 	% according to the one paper "an updated performance.." running with no load results in no difference between. Our results are inline with those findings 
 	% there exists papers that state using docker for IO should be taken with caution. How did our results perform? 
-	% every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same
+	% every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same. Ensures equal versioning between all enviroments
+	% systematic checklist: ensures equal treatment across all enviroments
 
 % How was the data actually validated?
 	% we store data over serial line that uses a dedicated interrupt line so that storing the results does not have an effect on the experimental units
 	% for the RT kernel, we ran the same test with our kernel and with Capocasa to see if there is a difference. Also, we use OSADL configuration file which is a organisation that benchmarks Linux RT kernel 
 
+%clock monotonic
 
 
 % Some papers say that operating systems are not good for measuring time, however, there are many other papers that use the same method as us but in a more simplistic way (without using any form of middleware (ODV))
@@ -22,3 +37,6 @@
 
 % Data comming from the RPI is valid since we know how many measurement points we expect 
 % 
+
+
+% every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same. Ensures equal versioning between all enviroments
