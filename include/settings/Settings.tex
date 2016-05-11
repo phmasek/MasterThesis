@@ -46,6 +46,11 @@ stringstyle=\color[rgb]{0.627,0.126,0.941},
 numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 }
 
+\def\bsq#1{%both single quotes
+\lq{#1}\rq}
+
+\newcommand*{\mybox}[2]{\colorbox{#1!30}{\parbox{.98\linewidth}{#2}}}
+
 \newtheorem{hypothesis}{Hypothesis}
 \newtheorem{nullhypothesis}{Null Hypothesis}
 \setsvg{svgpath = figure/}
@@ -94,6 +99,9 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
   {\Huge\bfseries\filcenter}
   {{\fontsize{50pt}{1em}\vspace{-4.2ex}\selectfont \textnormal{\thechapter}}}{1ex}{}[]
 
+\usepackage{framed}
+
+\usepackage{csquotes}
 
 % Header and footer settings (Select TWOSIDE or ONESIDE layout below)
 \usepackage{fancyhdr}								
