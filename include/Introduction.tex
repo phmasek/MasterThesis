@@ -50,7 +50,12 @@ All these activities differ in how they are executed depending on the software e
 
 Figure \ref{containers} displays a deployment strategy design utilising Docker in the context of self-driving vehicles. The responsibilities are broken down into three computational nodes in which Docker containers are running instances of the code base independently. Each Docker container can run different versions of the separate nodes, where the interpretation node has three versions running separately. Version one (denoted V1) in each node represents the latest working configuration while other versions are run to test code which is still under development. Aforementioned, this allows for safe and simple roll-backs in the event of buggy code or degraded performance. Furthermore, multiple versioning of the same Docker container allows for split testing between different containers to take place. With an always functioning configuration, the development team can demonstrate the current status to stakeholders at any point in the development cycle. The ability to demonstrate the product at any point in the development phase adds to the business value as possible investors or stakeholders can see a functioning product even though it is currently under development. With current approaches this is possible, however it is not as straightforward and easily implemented as in cases which utilizes Docker for its deployment strategy.\\
 
-\subsection{Kernel and scheduler}
+\subsection{Kernel and CPU scheduler}
+
+An operating system handles the communication between the software and the hardware, more specifically the operating system kernel acts as the interface between hardware and software. As an operating system is running a vast amount of processes simultaneously there is a need to prioritise and select which processes to run at what time. Each process utilises the CPU to make the computations required for the process to operate. The CPU is a powerful piece of hardware which can handle the same number of processes as it has cores and threads, i.e. an general Intel Core i7 processor has 4 cores and two threads per core amounting to 8 total processes simultaneously. However an operating system may run more processes than the CPU can process simultaneously. To manage this flood of processes a software component referred to as the \textit{CPU scheduler} which is configured by the kernel and is implemented to ensure that there is a queuing system set up for all processes running on the system. The \textit{CPU scheduler} acts as a traffic police in a busy intersection, handling a queue of all the processes running on the system by prioritising some processes ahead of other processes. The \textit{CPU scheduler} may act and prioritise differently depending on what rules have been set for it to follow.\\
+
+The Linux OS CPU scheduler implements a FIFO (first-in-first-out) approach with two process scheduler algorithms, namely a time-sharing algorithm and a real-time algorithm. Where the former is a \textit{fair} scheduler algorithm trying to distribute the system's CPU resources equally over all processes in the queue ensuring that no process is completely starved. The later is an algorithm which prioritises the processes based on their set importance, where a higher prioritised process is provided more resources in comparison with a lower process. However, the generic Linux kernel version does not allow for any resource cut-off for processes utilising the CPU. A higher prioritised process will therefore not be able to utilise 100\% of the CPU's resources if there are other processes already using the CPU. This is not remarkable for a general purpose operating system running non-time sensitive applications. For a RT system it is crucial to ensure that the highest level process can interrupt any running processes at any point in time. An RT\_preempt kernel may be implemented to cope with such a design. This kernel design allows the scheduler to preempt any running process of lower priority than the requested process. Furthermore, the RT\_preempt kernel locks any resource utilised by a RT prioritised process.\\
+
 \subsection{Middleware}
 
 
@@ -84,8 +89,8 @@ This research seeks to systematically study the impact of various execution cont
 
 \begin{enumerate}[label=\textbf{RQ\arabic*}]
 \label{section:rqs}
-	\item How does the respective execution environment influence the scheduling precision of the respective application?
-	\item How does the respective execution environment influence the input/output performance of the respective application?\\
+	\item Does the respective execution environment influence the scheduling precision of the respective application?
+	\item Does the respective execution environment influence the input/output performance of the respective application?\\
 \end{enumerate}
 
 
