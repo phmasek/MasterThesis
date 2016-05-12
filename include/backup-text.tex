@@ -1,0 +1,43 @@
+OpenDaVINCI is a development architecture of virtual, networked and cyber-physical infrastructures and has been used to realise a number of self-driving vehicles through research projects in academia \cite{OpenDaVINCI}. 
+
+
+\subsubsection*{Preparing the Target System}
+The experiment presented in this report will be executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon.   The hardware specification for the target system can be found in table~\ref{table:test}. 
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Component} & \textbf{Specification} 			\\ \hline
+Processor          & Intel Core i7 3517UE 1.7 GHz 		\\ \hline
+Memory             & 4GB DDR3 1333/1600 SODIMM          \\ \hline
+Storage Device     & 2.5" SATA HDD x 1                  \\ \hline
+Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4\\ Isolated Digital Input/Output x 10 pins (DI x 4, DO x 4)(3KV) \\ Isolated DB-9 x 2 for RS-232/422/485 x 2 (3KV, jumper selection)\end{tabular} \\ \hline
+\end{tabular}
+\caption{Target System Hardware Specification}
+\label{table:test}
+\end{table}
+
+\subsubsection*{Preparing the Operating System}
+The operating system chosen for the experiment is Ubuntu Server 14.04.1 LTS (Long Term Support). Long term supported operating systems ensure that the operating system stays up to date with current software versions and that defects are attended to. The specific version for the operating system, mainline vanilla kernel and RT\_PREEMPT patch is found in table~\ref{table:execution-version}. All software packages installed on the target system is made possible through an offline package manager. Installation and configuration of all required software packages are executed by a script to ensure reproducibility each time the operating system is reinstalled. 
+
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Operating System} & \textbf{Mainline Kernel} & \textbf{RT\_PREEMPT Patch} \\ \hline
+Ubuntu Server 14.04 LTS     & 3.18.25                  &  3.18.25-rt23               \\ \hline
+\end{tabular}
+\centering
+\caption{Execution Enviroment Versioning}
+\label{table:execution-version}
+\end{table}
+
+\subsubsection*{Preparing the Linux Kernel}
+The Linux vanilla kernel version 3.18.25 is chosen to be used in the experiment. The main motivation behind utilising this specific Linux kernel is that it is both supported by the RT\_PREEMPT patch as well as Docker. At the time of writing the RT\_PREEMPT patch for 3.18.25 is actively maintained and supported. A configuration file used by the Open Source Automation Development Lab \cite{OSADL} is used to patch the vanilla kernel with RT\_PREEMPT.
+
+\subsubsection*{Stressing the Target System}
+%\textit{Summary: The specific stress tool is still being finalised}
+\begin{center}\fbox{\parbox{11cm}{\texttt{stress-ng --cpu 2 --cpu-load 80 --cpu-method pi --sched fifo --sched-prio 48}}}\end{center}
+
+
