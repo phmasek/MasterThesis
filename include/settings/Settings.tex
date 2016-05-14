@@ -138,7 +138,18 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 \setlength{\headheight}{15pt}		
 
 % Enable circled numbering for LOG
+\usepackage{pgf}
+\usepackage{pgfplots}
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\usetikzlibrary{arrows,automata}
 
+\usepackage[flushleft]{threeparttable}
+
+
+\definecolor{blues1}{RGB}{198, 219, 239}
+\definecolor{blues2}{RGB}{158, 202, 225}
+\definecolor{blues3}{RGB}{107, 174, 214}
+\definecolor{blues4}{RGB}{49, 130, 189}
+\definecolor{blues5}{RGB}{8, 81, 156}
