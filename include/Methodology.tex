@@ -30,7 +30,7 @@ Goal 2 & Analyse the input and output performance of the Pi/IO Component for the
 
 
 \subsection{Execution Environment}
-The execution environment describes the setting in which the execution of the experimental units take place. Specifically, the execution environment refers to all components that make up a complete system: the processors, operating system, software packages and so on. There are four execution environments used in this experiment. The execution environments are configured the same but with two main differences. The difference being (1) an alternation of two Linux kernels and (2) an alternation of the deployment context. In this case, the deployment context is running the experiment units bare-metal on the target system or running the experimental units in a Docker container. The execution environments are precisely specified in table~\ref{table:exe-env}, where the configuration of the execution environment is later described in section~\ref{section:exp-material}.
+The execution environment describes the setting in which the execution of the experimental units take place. Specifically, the execution environment refers to all components that make up a complete system: the processors, operating system, software packages and so on. There are four execution environments used in this experiment. The execution environments are configured the same but with two main differences. The difference being (1) an alternation of two Linux kernels and (2) an alternation of the deployment context. In this case, the deployment context is running the experiment units natively on the target system or running the experimental units in a Docker container. The execution environments are precisely specified in table~\ref{table:exe-env}, where the configuration of the execution environment is later described in section~\ref{section:exp-material}.
 
 
 \begin{table}[ht]
@@ -91,12 +91,13 @@ The Pi/IO Component is utilised for measuring input and output performance in or
 \section{Experimental Material}
 \label{section:exp-material}
 % all experimental material and equipment should be described. all characteristics that might have an impact on the results should be mentioned here as formally as possible. 
-In order for the experiment to begin, the target system needs to be prepared and configured with software. This section identifies the preparation of the target systems execution environment to ensure transparency and reproducibility of the experiment.
+In order for the experiment to begin, the target system needs to be prepared and configured with software. This section identifies the preparation of the target systems execution environment to ensure transparency and reproducibility of the experiment. This section introduces the hardware used in the experiment, the software environment and the runtime properties of the experimental units in respect to the deployment context. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 \subsection{Hardware Environment}
-The experiment presented in this report will be executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon. The AEC 6950 is an industrial computer marketed for data processing, machine control and fleet management applications \cite{aaeon}. The hardware specification for the target system can be found in table~\ref{table:hardware}. 
-\begin{table}[ht]
+The experiment presented in this report will be executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon. The AEC 6950 is an industrial computer marketed for data processing, machine control and fleet management applications \cite{aaeon}. The hardware specification for the target system can be found in table~\ref{table:hardware}. The hardware used to capture measurement data from the Aaeon AEC 6950 is a Raspberry Pi 1 Model B+\footnote{https://www.raspberrypi.org/products/model-b-plus/}. The data is collected from the target system via RS-232 serial communication by using a serial to USB converter.  
+
+\begin{table}[]
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -104,30 +105,32 @@ The experiment presented in this report will be executed on a AEC 6950\footnote{
 Processor          & Intel Core i7 3517UE 1.7 GHz 		\\ \hline
 Memory             & 4GB DDR3 1333/1600 SODIMM          \\ \hline
 Storage Device     & 2.5" SATA HDD x 1                  \\ \hline
-Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4\\ Isolated Digital Input/Output x 10 pins (DI x 4, DO x 4)(3KV) \\ Isolated DB-9 x 2 for RS-232/422/485 x 2 (3KV, jumper selection)\end{tabular} \\ \hline
+Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4 \\ Isolated DB-9 x 2 for RS-232/422/485 x 2
+\end{tabular} \\ \hline
 \end{tabular}
 \caption{Target System Hardware Specification}
 \label{table:hardware}
 \end{table}
 
-The hardware used to capture measurement data from the Aaeon AEC 6950 is a Raspberry Pi 1 Model B+\footnote{https://www.raspberrypi.org/products/model-b-plus/}. The data is collected from the target system via RS-232 serial communication by using a serial to USB converter.  
 
-\subsection{Software Environment}
-The operating system used in the experiment is Ubuntu Server 14.04 Long Term Support. A long term supported version of Ubuntu Server is chosen due to its stability and balance between performance and advanced features. The Linux 3.18.25 kernel is selected for the operating system due a number of factors involving performance and software dependencies. Namely, Docker requires a kernel version greater than 3.10, limiting a large number of potential kernels. Secondly, Docker currently ships with \texttt{aufs} as the default back-end storage driver. However, the \texttt{aufs} storage driver has become depreciated in the Linux kernel and is therefore no longer available in current versions. Other options for the Docker storage-driver include \texttt{devicemapper}, \texttt{zfs}, \texttt{btrfs} and \texttt{overlayfs}. The \texttt{devicemapper} driver is known to have significant performance issues and the storage drivers \texttt{zfs} and \texttt{btrfs} currently have stability issues, so they are all disqualified. The remaining choice for the storage driver boils down to \texttt{overlayfs}, which requires a kernel version greater than 3.18. At the time of writing, the latest RT\_Preempt patch for kernel 3.18 which is actively maintained and supported is 3.18.25-rt23. Therefore, the RT\_Preempt patch 3.18.25-rt23 and kernel 3.18.25-generic is selected for this experiment. 
+\subsection{Software Environment} \label{soft-env}
+The operating system used in the experiment is Ubuntu Server 14.04 Long Term Support. A long term supported version of Ubuntu Server is chosen due to its stability and balance between performance and advanced features. The Linux 3.18.25 kernel is selected for the operating system due a number of factors involving performance and software dependencies. Namely, Docker requires a kernel version greater than 3.10, limiting a large number of potential kernels. Secondly, Docker currently ships with \texttt{aufs} as the default back-end storage driver. However, the \texttt{aufs} storage driver has become depreciated in the Linux kernel and is therefore no longer available in current versions. Other options for the Docker storage-driver include \texttt{devicemapper}, \texttt{zfs}, \texttt{btrfs} and \texttt{overlayfs}. The \texttt{devicemapper} driver is known to have significant performance issues and the storage drivers \texttt{zfs} and \texttt{btrfs} currently have stability issues, so they are all disqualified. The remaining choice for the storage driver boils down to \texttt{overlayfs}, which requires a kernel version greater than 3.18. At the time of writing, the latest RT\_Preempt patch for kernel 3.18 which is actively maintained and supported is 3.18.25-rt23. Therefore, the RT\_Preempt patch 3.18.25-rt23 and kernel 3.18.25-generic is selected for this experiment. \\
+
+All software packages that are required for the experiment are installed via the tool \texttt{Apt-clone}. \texttt{Apt-clone} is used to clone and restore all software packages that are installed on a computer via the Linux Advanced Package Tool (APT). For the experiment, utilising \texttt{Apt-clone} ensures that all software packages installed on the target system have the same version when reinstalling the operating system, and can also be used as a form of documentation. The installation of software packages and subsequent configuration is executed via a script to document the changes that are made to the target system and to ensure precise reproducibility. The installation script can be found in \cite{to-come}. 
 
 
 \subsubsection{Kernel Configuration} \todo{double check the stock kernel version on the golden pc and the rt patch}
-In order to patch the generic kernel with RT\_Preempt, a specific set of kernel configurations is applied during the kernel build process. The generic kernel 3.18.25 is downloaded from \cite{kernel}, the official Ubuntu Kernel package archive. The default configuration file (\texttt{.config}) for the generic kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modification made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
+In order to patch the generic kernel with RT\_Preempt, a specific set of kernel configurations are applied during the kernel build process. The generic kernel 3.18.25 is downloaded from the official Ubuntu Kernel package archive \cite{kernel}. The default configuration file (\texttt{.config}) for the generic kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modification made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
 
 \begin{table}[]
 \begin{tabular}{|l|c|l|}
 \hline
-Parameter           & \multicolumn{1}{l|}{Setting} & Description \\ \hline
-CONFIG\_PREEMPT\_RT & \textit{y}                   &             \\ \hline
-                    & \textit{}                    &             \\ \hline
-                    & \textit{}                    &             \\ \hline
-                    & \textit{}                    &             \\ \hline
-                    & \textit{}                    &             \\ \hline
+Parameter             & \multicolumn{1}{l|}{Setting} & Description \\ \hline
+CONFIG\_PREEMPT\_RT   & \textit{y}                   &             \\ \hline
+\textit{more to come} & \textit{}                    &             \\ \hline
+                      & \textit{}                    &             \\ \hline
+                      & \textit{}                    &             \\ \hline
+                      & \textit{}                    &             \\ \hline
 \end{tabular}
 \centering
 \caption{Kernel Configuration Modifications}
@@ -135,22 +138,36 @@ CONFIG\_PREEMPT\_RT & \textit{y}                   &             \\ \hline
 \end{table}
 
 
-\subsubsection{Software Packages}
-Software packages that are required for the experiment are installed via the tool \texttt{Apt-clone}. \texttt{Apt-clone} is used to clone and restore all software packages that are installed on a computer via the Linux Advanced Package Tool (APT). For the experiment, utilising \texttt{Apt-clone} ensures that all software packages installed on the target system have the same version when reinstalling the operating system, and can also be used as a form of documentation. The installation of software packages and subsequent configuration is executed via a script to document the changes that are made to the target system and to ensure precise reproducability. The installation script can be found in \cite{to-come}. 
+\subsubsection{Docker Parameters} \todo{double check runtime docker parameters}
+The back-end manager for controlling Docker containers is performed by the \texttt{docker daemon}. The \texttt{docker daemon} is in charge of setting up the software environment for the containers as well as managing and controlling the container's resources. As mentioned in section~\ref{soft-env}, the \texttt{docker daemon} configuration file is changed to persistently use the \texttt{overlayfs} storage driver.\\
 
-\subsubsection{Docker Parameters}
-here we talk about: building docker images, runtime docker parameters (nethost, capsys)
+In order to build Docker images, a recipe in the form of a \texttt{DockerFile} is used when executing the \texttt{docker build} command line tool. The recipe contains instructions that construct the image, where each instruction that is executed is stored in a new subsequent storage layer. The relationship between a Docker image and container is similar to the relationship between a program and process. The runtime execution of a Docker image is a container, where any changes made in the container do not affect the parent image. Rather, changes that are made are stored within the container itself. The Docker images built for the experiment are all based on the official Ubuntu 14.04 LTS Docker image. The Ubuntu 14.04 LTS image is chosen to ensure a consistent environment between the native execution of the experimental units and that of the Docker containers. The software packages installed in the Docker images are all of equal versions to the packages that exist on the host. \\
 
-%\subsubsection{Stressing the Target System}
+To run a image the Docker \texttt{run} command is used which instantiates a container from the image. The runtime properties for containers executing the experimental units are specified in table~\ref{docker-parameters}.
+
+\begin{table}[]
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Parameter}  & \textbf{Description}                                            \\ \hline
+-d                  & Run the container in detached mode.                             \\ \hline
+--net=host          & The networking configuration is derived from the host.          \\ \hline
+--cap-add=sys\_nice & Allow access to devices such as the Webcam and the Serial port. \\ \hline
+\end{tabular}
+\centering
+\caption{Docker Image Runtime Properties}
+\label{docker-parameters}
+\end{table}
+
+
+\subsubsection{Native Execution Parameters} \todo{we may need to update this section depending on user-level}
+here we talk about how we run the native execution by using screen.
 
 
 \section{Tasks}
-% what tasks have to be performed by the subjects 
-
-The experimental units are tasked with capturing measurement points and sending the measurement data via serial communication where they are stored. The specific measurement points that is captured can be found in section~\ref{section:dependent}.
+The experimental units are executed in different execution environments with respect to the deployment context. The experimental units are tasked with capturing specified measurement points and send the measurement data via serial communication to the data capturer where they are stored. Further details on the experimental units is found in section \ref{section:exp-units} and the specific measurement points that are captured can be found in section~\ref{section:dependent}.
 
 
-\section{Hypotheses, Parameters and Variables}
+\section{Variables and Hypotheses} \todo{do we have any parameters?}
 Two types of variables are defined for the experiment: dependent and independent. 	
 %This section presents all hypotheses that will be analysed and answered in order to understand how the specified execution environments impact the performance of the experimental units.\\
 
@@ -193,21 +210,18 @@ The dependent variables are analysed to evaluate the hypotheses of the experimen
 \multicolumn{2}{l}{The hypotheses to achieve goal one of the experiment are:} \\
 $H_{11_{1}}$ & The deployment context has an impact on scheduling precision. \\
 $H_{11_{2}}$ & The Linux kernel has an impact on scheduling precision. \\
-$H_{11_{3}}$ & The execution environment has an impact on scheduling precision.                                                             
-\end{tabular}
-\end{table}
-
-\begin{table}[ht]
-\begin{tabular}{l|p{13.5cm}}
+$H_{11_{3}}$ & The execution environment has an impact on scheduling precision. \\          
+\multicolumn{2}{l}{} \\
 \multicolumn{2}{l}{The hypotheses to achieve goal two of the experiment are:} \\
 $H_{12_{1}}$ & The deployment context has an impact on input performance.\\
 $H_{12_{2}}$ & The Linux kernel has an impact on input performance.\\
 $H_{12_{3}}$ & The execution environment has an impact on input performance.\\
 $H_{12_{4}}$ & The deployment context has an impact on output performance.\\
 $H_{12_{5}}$ & The Linux kernel has an impact on output performance.\\
-$H_{12_{6}}$ & The execution environment has an impact on output performance.                                                            
+$H_{12_{6}}$ & The execution environment has an impact on output performance.                                                          
 \end{tabular}
 \end{table}
+
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Design}
