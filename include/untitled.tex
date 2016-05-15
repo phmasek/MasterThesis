@@ -99,7 +99,7 @@ The experiment presented in this report will be executed on a AEC 6950\footnote{
 
 \begin{table}[]
 \centering
-\begin{tabular}{|l|l|}
+\begin{tabular}{|l|p{9cm}|}
 \hline
 \textbf{Component} & \textbf{Specification} 			\\ \hline
 Processor          & Intel Core i7 3517UE 1.7 GHz 		\\ \hline
@@ -123,14 +123,12 @@ All software packages that are required for the experiment are installed via the
 In order to patch the generic kernel with RT\_Preempt, a specific set of kernel configurations are applied during the kernel build process. The generic kernel 3.18.25 is downloaded from the official Ubuntu Kernel package archive \cite{kernel}. The default configuration file (\texttt{.config}) for the generic kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modification made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
 
 \begin{table}[]
-\begin{tabular}{|l|c|l|}
+\begin{tabular}{|l|l|}
 \hline
-Parameter             & \multicolumn{1}{l|}{Setting} & Description \\ \hline
-CONFIG\_PREEMPT\_RT   & \textit{y}                   &             \\ \hline
-\textit{more to come} & \textit{}                    &             \\ \hline
-                      & \textit{}                    &             \\ \hline
-                      & \textit{}                    &             \\ \hline
-                      & \textit{}                    &             \\ \hline
+\textbf{Parameter}  & \textbf{Description}                                            \\ \hline
+-d                  & Run the container in detached mode.                             \\ \hline
+--net=host          & The networking configuration is derived from the host.          \\ \hline
+--cap-add=sys\_nice & Allow access to devices such as the Webcam and the Serial port. \\ \hline
 \end{tabular}
 \centering
 \caption{Kernel Configuration Modifications}
