@@ -81,7 +81,7 @@ The Pi Component is utilised for measuring scheduling precision in order to answ
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pi/IO Component}
-The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV. OpenDLV, at the time of writing, is software under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Utilising source code from the OpenDLV project adds credibility to the experiment. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}, on page~\pageref{code:pi-io}.
+The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV \cite{opendlv}. OpenDLV, at the time of writing, is software under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Utilising source code from the OpenDLV project adds credibility to the experiment. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}, on page~\pageref{code:pi-io}.
 
 %The Pi/IO Component is responsible for the measuring input/output performance in order to answer RQ2 (\ref{section:rqs}). The component extends the Pi Component by adding two additional factors to its time-slice execution. The factors are camera IO and disk IO. The code implementation of the camera component is a direct copy of code utilized by ReVeRe lab in a real-life scenario of a self-driving truck\footnote{https://github.com/chalmers-revere/opendlv}. This was copied to mimic real-life to ensure the relevance of the data captured. Furthermore, the code implementation for disk IO is also a direct copy used by ReVeRe lab for logging the system during runtime. Between these two additional factors, two measurement points are set to measure the overhead added by capturing an image and dumping that image to the disk.\\
 
@@ -113,25 +113,33 @@ Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB
 The hardware used to capture measurement data from the Aaeon AEC 6950 is a Raspberry Pi 1 Model B+\footnote{https://www.raspberrypi.org/products/model-b-plus/}. The data is collected from the target system via RS-232 serial communication by using a serial to USB converter.  
 
 \subsection{Software Environment}
-The operating system used in the experiment is Ubuntu Server 14.04 Long Term Support. A long term supported version of Ubuntu Server is chosen due to its stability and balance between performance and advanced features. The Linux 3.18.25 kernel is selected for the operating system due a number of factors involving performance and software dependencies. Namely, Docker requires a kernel version greater than 3.10, limiting a large number of potential kernels. Secondly, Docker currently ships with \texttt{aufs} as the default back-end storage driver. However, the \texttt{aufs} storage driver has become depreciated in the Linux kernel and is therefore no longer available in current versions. Other options for the Docker storage-driver include \texttt{devicemapper}, \texttt{zfs}, \texttt{btrfs} and \texttt{overlayfs}. The \texttt{devicemapper} driver is known to have significant performance issues and the storage drivers \texttt{zfs} and \texttt{btrfs} currently have stability issues, so they are all disqualified. The remaining choice for the storage driver boils down to \texttt{overlayfs}, which requires a kernel version greater than 3.18. At the time of writing, the latest RT\_Preempt patch for kernel 3.18 which is actively maintained and supported is kernel version 3.18.25. Therefore, the RT\_Preempt patch 3.18.25 for kernel version 3.18.25 is selected. 
+The operating system used in the experiment is Ubuntu Server 14.04 Long Term Support. A long term supported version of Ubuntu Server is chosen due to its stability and balance between performance and advanced features. The Linux 3.18.25 kernel is selected for the operating system due a number of factors involving performance and software dependencies. Namely, Docker requires a kernel version greater than 3.10, limiting a large number of potential kernels. Secondly, Docker currently ships with \texttt{aufs} as the default back-end storage driver. However, the \texttt{aufs} storage driver has become depreciated in the Linux kernel and is therefore no longer available in current versions. Other options for the Docker storage-driver include \texttt{devicemapper}, \texttt{zfs}, \texttt{btrfs} and \texttt{overlayfs}. The \texttt{devicemapper} driver is known to have significant performance issues and the storage drivers \texttt{zfs} and \texttt{btrfs} currently have stability issues, so they are all disqualified. The remaining choice for the storage driver boils down to \texttt{overlayfs}, which requires a kernel version greater than 3.18. At the time of writing, the latest RT\_Preempt patch for kernel 3.18 which is actively maintained and supported is 3.18.25-rt23. Therefore, the RT\_Preempt patch 3.18.25-rt23 and kernel 3.18.25-generic is selected for this experiment. 
 
 
-\subsubsection{Kernel Configuration}
-Ubuntu Server 14.04 ships with kernel version 4.2. In order to downgrade the kernel to 3.18.25, the kernel is downloaded from the offical ubuntu kernel website. 
+\subsubsection{Kernel Configuration} \todo{double check the stock kernel version on the golden pc and the rt patch}
+In order to patch the generic kernel with RT\_Preempt, a specific set of kernel configurations is applied during the kernel build process. The generic kernel 3.18.25 is downloaded from \cite{kernel}, the official Ubuntu Kernel package archive. The default configuration file (\texttt{.config}) for the generic kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modification made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
 
-
-% vanilla kernel http://kernel.ubuntu.com/~kernel-ppa/mainline/v3.18.25-vivid/
-
-Configuring a Linux kernel is a bitch. For the generic kernel  for the rt kernel 
-
+\begin{table}[]
+\begin{tabular}{|l|c|l|}
+\hline
+Parameter           & \multicolumn{1}{l|}{Setting} & Description \\ \hline
+CONFIG\_PREEMPT\_RT & \textit{y}                   &             \\ \hline
+                    & \textit{}                    &             \\ \hline
+                    & \textit{}                    &             \\ \hline
+                    & \textit{}                    &             \\ \hline
+                    & \textit{}                    &             \\ \hline
+\end{tabular}
+\centering
+\caption{Kernel Configuration Modifications}
+\label{kernel-config}
+\end{table}
 
 
 \subsubsection{Software Packages}
-Software packages are required to build OpenDaVINCI etc. All software packages are installed via apt-get. However, we used apt-clone to clone the exact versions for each package installed so that if we needed to reinstall the operating system, we can restore all software packages. The installation and saving of package-data is executed by a bash script in order to precisely document everything that was done to the machine, and so that it can be executed again if needed. 
+Software packages that are required for the experiment are installed via the tool \texttt{Apt-clone}. \texttt{Apt-clone} is used to clone and restore all software packages that are installed on a computer via the Linux Advanced Package Tool (APT). For the experiment, utilising \texttt{Apt-clone} ensures that all software packages installed on the target system have the same version when reinstalling the operating system, and can also be used as a form of documentation. The installation of software packages and subsequent configuration is executed via a script to document the changes that are made to the target system and to ensure precise reproducability. The installation script can be found in \cite{to-come}. 
 
-\subsubsection{Docker Build}
-building images
-how did we copy the image to the target-machine
+\subsubsection{Docker Parameters}
+here we talk about: building docker images, runtime docker parameters (net=host, cap_sys)
 
 %\subsubsection{Stressing the Target System}
 
@@ -142,47 +150,12 @@ how did we copy the image to the target-machine
 The experimental units are tasked with capturing measurement points and sending the measurement data via serial communication where they are stored. The specific measurement points that is captured can be found in section~\ref{section:dependent}.
 
 
-
 \section{Hypotheses, Parameters and Variables}
-% there is a difference / there is no difference 
-%$H_{0i_{j}}$
-This section presents all hypotheses that will be analysed and answered in order to understand how the specified execution environments impact the performance of the real-time application.\\
+Two types of variables are defined for the experiment: dependent and independent. 	
+%This section presents all hypotheses that will be analysed and answered in order to understand how the specified execution environments impact the performance of the experimental units.\\
 
-\todo{disk IO refers to reading and writing to the disk}
-
-The hypotheses to achieve goal one of the experiment are:
-\begin{itemize}
-% For RQ1 
-\item $H_{01_{1}}$ - The deployment context has no impact on scheduling precision.
-\item $H_{11_{1}}$ - The deployment context has an impact on scheduling precision.
-\item $H_{01_{2}}$ - The Linux kernels used in the experiment has no impact on scheduling precision.
-\item $H_{11_{2}}$ - The Linux kernels used in the experiment has an impact on scheduling precision.
-\item $H_{01_{3}}$ - The execution environment has no impact on scheduling precision.
-\item $H_{11_{3}}$ - The execution environment has an impact on scheduling precision.\\
-\end{itemize}
-
-
-The hypotheses to achieve goal two of the experiment are:
-\begin{itemize}
-% For RQ2
-\item $H_{02_{1}}$ - The deployment context has no impact on camera IO performance.
-\item $H_{12_{1}}$ - The deployment context has an impact on on camera IO performance.
-\item $H_{02_{2}}$ - The Linux kernels used in the experiment has no impact on camera IO performance.
-\item $H_{12_{2}}$ - The Linux kernels used in the experiment has an impact on camera IO performance.
-\item $H_{02_{3}}$ - The execution environment has no impact on camera IO performance.
-\item $H_{12_{3}}$ - The execution environment has an impact on camera IO performance.
-\item $H_{02_{4}}$ - The deployment context has no impact on disk IO performance.
-\item $H_{12_{4}}$ - The deployment context has an impact on disk IO performance.
-\item $H_{02_{5}}$ - The Linux kernels used in the experiment has no impact on disk IO performance.
-\item $H_{12_{5}}$ - The Linux kernels used in the experiment has an impact on disk IO performance.
-\item $H_{02_{6}}$ - The execution environment has no impact on disk IO performance.
-\item $H_{12_{6}}$ - The execution environment has an impact on disk IO performance.
-\end{itemize}
-
-%\todo{define influence,disk IO performance,camera IO performance}
-
+%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dependent Variables} \label{section:dependent}
-%variable that is measured to ascertain whether the independent variable has an effect on the outcome
 There exists three separate dependent variables that will be used for measuring how each is impacted by the independent variables. The dependent variables are namely; 1) \textit{scheduling precision}, 2) \textit{camera IO}, and 3) \textit{disk IO}. Where \textit{scheduling precision} refers to how accurately in terms of time the system performs the executions within the time-slice. Measured by timing the duration between four measurement points for the Pi Component and six points for the Pi/IO Component.\\ 
 
 Figure \ref{pi_measure} displays the four measurement points of the Pi Component time-slice, where the duration between measurement points \#1 and \#2, and between \#3 and \#4 reveals the necessary overhead of OpenDaVinci. While the duration between \#4 and \#1 (next time-slice) reveals the sleep precision of the execution environment.\\
@@ -206,25 +179,48 @@ Figure \ref{piio_measure} displays the six measurement points of the Pi/IO Compo
 
  \textit{Camera IO} refers to how much time is required for the application to capture an image from a camera. \textit{Disk IO} refers to how much time is required for the application to dump the image data to the disk. These three variables will be used separately to answer the two sets of hypotheses that addresses the two research goals. 
 
+%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Independent Variables}
-%manipulated variable to influence dependent variable
 The treatments that will be used for assessing the impact are the factors mentioned earlier, namely: 1) Kernel version (RT-preempt patch or Generic) and 2) Deployment context (Docker or natively). These variables will be the variables upon which the research questions will be answered.
 
+
+%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Hypotheses}
+The dependent variables are analysed to evaluate the hypotheses of the experiment. The alternative hypotheses are stated below, denoted $H_{1i_{j}}$. The \textit{i} corresponds to the goal identifier of the experiment where \textit{j} is a counter when more than one hypothesis is formulated per goal.  
+
+\begin{table}[ht]
+\begin{tabular}{l|l}
+\multicolumn{2}{l}{The hypotheses to achieve goal one of the experiment are:} \\
+$H_{11_{1}}$ & The deployment context has an impact on scheduling precision. \\
+$H_{11_{2}}$ & The Linux kernel has an impact on scheduling precision. \\
+$H_{11_{3}}$ & The execution environment has an impact on scheduling precision.                                                             
+\end{tabular}
+\end{table}
+
+\begin{table}[ht]
+\begin{tabular}{l|p{13.5cm}}
+\multicolumn{2}{l}{The hypotheses to achieve goal two of the experiment are:} \\
+$H_{12_{1}}$ & The deployment context has an impact on input performance.\\
+$H_{12_{2}}$ & The Linux kernel has an impact on input performance.\\
+$H_{12_{3}}$ & The execution environment has an impact on input performance.\\
+$H_{12_{4}}$ & The deployment context has an impact on output performance.\\
+$H_{12_{5}}$ & The Linux kernel has an impact on output performance.\\
+$H_{12_{6}}$ & The execution environment has an impact on output performance.                                                            
+\end{tabular}
+\end{table}
+
+%%%%%%%%%%%%%%%%%%%%%%
 \section{Design}
 A Quasi experiment design is used since random assignment is not applicable in this case. The experimental units, being the Pi and Pi/IO components, are formally categorized as two independent components. \todo{more details to come}
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%
 \section{Procedure}
 % How will the experiment (i.e data collection) be performed? What instruments, materials, tools will be used and how
+Running the 2 experimental units on all 4 execution enviroment, submitting each run to load and with no load (2), results in 16 experimental runs. Run at 100hz and 10hz 
 
-Running the 2 experimental units on all 4 execution enviroment, submitting each run to load and with no load (2), results in 16 experimental runs. 
 
-Run at 100hz and 10hz 
-
-\begin{center}\fbox{\parbox{11cm}{\texttt{stress-ng --cpu 2 --cpu-load 80 --cpu-method pi --sched fifo --sched-prio 48}}}\end{center}
-
-The execution of the experiment run is carried out by using a script to automate the entire process. The steps in which the script perform are:\\
+The execution of the experiment run is carried out by using a script to automate the entire process. The steps in which the script perform are:
 
 \begin{enumerate}  
 \item Boot the operating system and wait for five minutes.  
@@ -234,8 +230,10 @@ The execution of the experiment run is carried out by using a script to automate
 \item Switch the kernel and reboot.\\ 
 \end{enumerate}
 
-While the data capturer is storing all measurement data received by the experiment units over serial communication. 
+\begin{center}\fbox{\parbox{11cm}{\texttt{stress-ng --cpu 2 --cpu-load 80 --cpu-method pi --sched fifo --sched-prio 48}}}\end{center}
 
+
+%%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}
 To address both research questions and to ensure full coverage, the experiment results will be analysed through an analysis of variance (ANOVA) to understand the impact the different treatments have on the dependent variable.\\
 
