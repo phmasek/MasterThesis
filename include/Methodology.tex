@@ -182,18 +182,6 @@ Two types of variables are defined for the experiment: dependent and independent
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dependent Variables} \label{section:dependent}
-The dependent variables are based on a data format referred as accumulative overhead. The accumulative overhead is the sum of a measurement point within all time-slices. The sum is divided by the expected total run duration which is calculated by the amount of time-slices in the dataset and the $hz$ that dataset was captured in. Equation \ref{eq:accover} and \ref{eq:duration} presents how the dependent variables were calculated.\todo{Make this clearer}
-
-\begin{figure}[H]
-\begin{equation}\label{eq:accover}
-accumulative\ overhead = \frac{\sum_{measurement\ point}}{expected\ total\ run\ duration}
-\end{equation}
-\begin{equation}\label{eq:duration}
-expected\ total\ run\ duration = \frac{no.\ time\-slices\ in\ dataset}{hz}
-\end{equation}
-\end{figure}
-
-
 There exists groups of dependent variables which are all impacted by switching treatment. It is important to look both at the aggregated view of the variables, as well as at each of the variables independently. The sets of the dependent variables are namely; 1) \textit{scheduling precision}, 2) \textit{camera IO}, and 3) \textit{disk IO}. \textit{Scheduling precision} refers to how accurately, in terms of time, the system performs the executions within the time-slice. Where the data points are the duration between four measurement points for the Pi Component.\\
 
 Figure \ref{pi_measure} displays the four measurement points of the Pi Component time-slice, where the duration between measurement points \#1 and \#2, and between \#3 and \#4 reveals the necessary overhead of OpenDaVinci. While the duration between \#4 and \#1 (next time-slice) reveals the sleep precision of the execution environment.\\
@@ -277,6 +265,17 @@ The overall procedure of the experiment is to execute the experimental units in 
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}
+The dependent variables are based on a data format referred as accumulative overhead. The accumulative overhead is the sum of a measurement point within all time-slices. The sum is divided by the expected total run duration which is calculated by the amount of time-slices in the dataset and the $hz$ that dataset was captured in. Equation \ref{eq:accover} and \ref{eq:duration} presents how the dependent variables were calculated.\todo{Make this clearer and link it with the python script}
+
+\begin{figure}[H]
+\begin{equation}\label{eq:accover}
+accumulative\ overhead = \frac{\sum_{measurement\ point}}{expected\ total\ run\ duration}
+\end{equation}
+\begin{equation}\label{eq:duration}
+expected\ total\ run\ duration = \frac{no.\ time\-slices\ in\ dataset}{hz}
+\end{equation}
+\end{figure}
+
 To address both research questions and to ensure full coverage, the experiment results will be analysed through an analysis of variance (ANOVA) to understand the impact the different treatments have on the dependent variable.\\\todo{Write about the python code and how the data was processed for the analysis}
 
 
