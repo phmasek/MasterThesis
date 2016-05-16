@@ -182,7 +182,19 @@ Two types of variables are defined for the experiment: dependent and independent
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dependent Variables} \label{section:dependent}
-There exists three separate dependent variables that will be used for measuring how each is impacted by the independent variables. The dependent variables are namely; 1) \textit{scheduling precision}, 2) \textit{camera IO}, and 3) \textit{disk IO}. Where \textit{scheduling precision} refers to how accurately in terms of time the system performs the executions within the time-slice. Measured by timing the duration between four measurement points for the Pi Component and six points for the Pi/IO Component.\\ 
+The dependent variables are based on a data format referred as accumulative overhead. The accumulative overhead is the sum of a measurement point within all time-slices. The sum is divided by the expected total run duration which is calculated by the amount of time-slices in the dataset and the $hz$ that dataset was captured in. Equation \ref{eq:accover} and \ref{eq:duration} presents how the dependent variables were calculated.
+
+\begin{figure}[H]
+\begin{equation}\label{eq:accover}
+accumulative\ overhead = \frac{\sum_{measurement\ point}}{expected\ total\ run\ duration}
+\end{equation}
+\begin{equation}\label{eq:duration}
+expected\ total\ run\ duration = \frac{no.\ time\-slices\ in\ dataset}{hz}
+\end{equation}
+\end{figure}
+
+
+There exists groups of dependent variables which are all impacted by switching treatment. It is important to look both at the aggregated view of the variables, as well as at each of the variables independently. The sets of the dependent variables are namely; 1) \textit{scheduling precision}, 2) \textit{camera IO}, and 3) \textit{disk IO}. \textit{Scheduling precision} refers to how accurately, in terms of time, the system performs the executions within the time-slice. Where the data points are the duration between four measurement points for the Pi Component.\\
 
 Figure \ref{pi_measure} displays the four measurement points of the Pi Component time-slice, where the duration between measurement points \#1 and \#2, and between \#3 and \#4 reveals the necessary overhead of OpenDaVinci. While the duration between \#4 and \#1 (next time-slice) reveals the sleep precision of the execution environment.\\
 
@@ -207,7 +219,7 @@ Figure \ref{piio_measure} displays the six measurement points of the Pi/IO Compo
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Independent Variables}
-The treatments that will be used for assessing the impact are the factors mentioned earlier, namely: 1) Kernel (vanilla and RT\_PREEMPT patched kernel) and 2) Deployment context (Docker or natively). These variables will be the variables upon which the research questions will be answered.
+The treatments that will be used for assessing the impact are the factors mentioned earlier, namely: 1) Kernel (vanilla and RT\_PREEMPT patched kernel) and 2) Deployment context (Docker or natively). These variables will be the variables upon which the research questions will be answered. By analysing how each of the independent variables affect the dependent variables during two different types of load.
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -265,6 +277,7 @@ The overall procedure of the experiment is to execute the experimental units in 
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}
+Initial raw data is processed using a python script to gather the accumulative overhead for each of the measurement points. 
 To address both research questions and to ensure full coverage, the experiment results will be analysed through an analysis of variance (ANOVA) to understand the impact the different treatments have on the dependent variable.\\
 
 
