@@ -47,9 +47,11 @@ The execution environment describes the setting in which the execution of the ex
 
 
 \subsection{System Load}
-Submitting the target system to heavy load is required in order to (1) traverse as many code paths of the kernel as possible and (2) mimic the run-time load of a real-time system. Stress-ng \cite{stress-ng} is a user-space application that interacts with many components of the kernel. It can spawn a number of worker threads that perform useless tasks in order to apply load to the target system. The type of worker thread can vary from CPU load to disk intensive load. Applying heavy load to the target system enables the experiment to be executed in an environment that mimics a real-life scenario. One would expect a real-time system to consume 80\% of the system's resources, leaving a 20\% buffer for extreme circumstances to circumvent system overload. \\
+Submitting the target system to heavy load is required in order to (1) traverse as many code paths of the kernel as possible and (2) mimic the run-time load of a real-time system. Stress-ng \cite{stress-ng} is a user-space application that interacts with many components of the kernel. It can spawn a number of worker threads that perform useless tasks in order to apply load to the target system. The type of worker thread can vary from processor load to disk intensive load. Applying heavy load to the target system enables the experiment to be executed in an environment that mimics a real-life scenario. One would expect a real-time system to consume 80\% of the system's resources, leaving a 20\% buffer for extreme circumstances to circumvent system overload. \\
 
-The experiment is performed in two scenarios: applying no-load and apply high-load to the system. Having the two scenarios allows us to make a fair comparison by identifying how the experimental units perform in a perfect environment versus a more realistic environment.  
+The experiment is performed in two scenarios: applying no-load and apply high-load to the system. Having the two scenarios allows us to make a fair comparison by identifying how the experimental units perform in a perfect environment versus a more realistic environment. 
+
+
 
 %Tracing through all possible code paths of the kernel is not an option to uncover how deterministic a system is. In order to get a reliable estimation, a tool is required to traverse as many of these as possible. Stress offers a way to induce several different kinds of system load, therefore it interacts with many components of the kernel and should be able to expose some of the longer code paths through the kernel. Stress is a user-space application that can spawn a number of worker threads that perform useless tasks with the only purpose of submitting the system on which it runs to heavy load. Putting the system under load also enables the experiment to be executed in an environment that mimics a real-life scenario. One would expect a computer system in production to run at 80\% load, leaving a 20\% buffer for extreme circumstances and to avoid overloading the system.  
 
@@ -120,7 +122,7 @@ All software packages that are required for the experiment are installed via the
 
 
 \subsubsection{Kernel Configuration} \todo{double check the stock kernel version on the golden pc and the rt patch}
-In order to patch the generic kernel with RT\_Preempt, a specific set of kernel configurations are applied during the kernel build process. The generic kernel 3.18.25 is downloaded from the official Ubuntu Kernel package archive \cite{kernel}. The default configuration file (\texttt{.config}) for the generic kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modification made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
+The vanilla Linux kernel 3.18.25-generic is downloaded from the official Ubuntu Kernel package archive \cite{kernel}. In order to patch the vanilla kernel with RT\_PREEMPT, a specific set of kernel configurations are applied during the kernel build process. The default configuration file (\texttt{.config}) for the vanilla kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modification made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
 
 \begin{table}[]
 \begin{tabular}{|l|c|l|}
@@ -143,15 +145,15 @@ The back-end manager for controlling Docker containers is performed by the \text
 
 In order to build Docker images, a recipe in the form of a \texttt{DockerFile} is used when executing the \texttt{docker build} command line tool. The recipe contains instructions that construct the image, where each instruction that is executed is stored in a new subsequent storage layer. The relationship between a Docker image and container is similar to the relationship between a program and process. The runtime execution of a Docker image is a container, where any changes made in the container do not affect the parent image. Rather, changes that are made are stored within the container itself. The Docker images built for the experiment are all based on the official Ubuntu 14.04 LTS Docker image. The Ubuntu 14.04 LTS image is chosen to ensure a consistent environment between the native execution of the experimental units and that of the Docker containers. The software packages installed in the Docker images are all of equal versions to the packages that exist on the host. \\
 
-To run a image the Docker \texttt{run} command is used which instantiates a container from the image. The runtime properties for containers executing the experimental units are specified in table~\ref{docker-parameters}.
+To run a image the Docker \texttt{run} command is used which instantiates a container from the image. The experimental units are executed with real-time scheduling priority 49. The runtime properties for containers that execute the experimental units are specified in table~\ref{docker-parameters}.
 
 \begin{table}[]
 \begin{tabular}{|l|p{10cm}|}
 \hline
 \textbf{Parameter}  & \textbf{Description}                                            \\ \hline
--d                  & Run the container in detached mode.                             \\ \hline
---net=host          & The networking configuration is derived from the host.          \\ \hline
---cap-add=sys\_nice & Allow access to devices such as the Webcam and the Serial port. \\ \hline
+\texttt{-d}                  & Run the container in detached mode.                             \\ \hline
+\texttt{--net=host}          & The networking configuration is derived from the host.          \\ \hline
+\texttt{--cap-add=sys\_nice} & Allow access to devices such as the Webcam and the Serial port. \\ \hline
 \end{tabular}
 \centering
 \caption{Docker Image Runtime Properties}
@@ -160,11 +162,18 @@ To run a image the Docker \texttt{run} command is used which instantiates a cont
 
 
 \subsubsection{Native Execution Parameters} \todo{we may need to update this section depending on user-level}
-here we talk about how we run the native execution by using screen.
+The native execution of the experimental units is performed by running executable binary files in a \texttt{screen} session. The experimental units are executed with real-time scheduling priority 49. Linux screen is a full-screen window manager that, when called, creates a single window with a interactive shell session in it that can be used to execute programs. Multiple windows can be create, destroyed, detached and activated. Screen is used for the native execution for being able to run and control multiple processes as well as being able to receive log output in the case of something goes wrong. 
+
+
+\subsubsection{Stress Parameters}
+When applying load to the target system, two processor worker threads are started that calculate pi with a set load of 80\%. Since the experimental units are run with real-time scheduling priority 49, the stress worker threads a set at priority 48 to ensure the experimental units are not pre-empted by the scheduler. The precise execution of the \texttt{stress-ng} application is: \\
+
+\begin{center}\fbox{\parbox{11cm}{\texttt{stress-ng --cpu 2 --cpu-load 80 --cpu-method pi --sched fifo --sched-prio 48}}}\end{center}
+
 
 
 \section{Tasks}
-The experimental units are executed in different execution environments with respect to the deployment context. The experimental units are tasked with capturing specified measurement points and send the measurement data via serial communication to the data capturer where they are stored. Further details on the experimental units is found in section \ref{section:exp-units} and the specific measurement points that are captured can be found in section~\ref{section:dependent}.
+The experimental units are executed in different execution environments with respect to the deployment context. The experimental units are tasked with capturing specified measurement points and sending the measurement data via serial communication to the data capturer where they are stored. A description of the experimental units is found in section \ref{section:exp-units} where the specific measurement points that are captured is found in section~\ref{section:dependent}.
 
 
 \section{Variables and Hypotheses} \todo{do we have any parameters?}
@@ -198,7 +207,7 @@ Figure \ref{piio_measure} displays the six measurement points of the Pi/IO Compo
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Independent Variables}
-The treatments that will be used for assessing the impact are the factors mentioned earlier, namely: 1) Kernel version (RT-preempt patch or Generic) and 2) Deployment context (Docker or natively). These variables will be the variables upon which the research questions will be answered.
+The treatments that will be used for assessing the impact are the factors mentioned earlier, namely: 1) Kernel (vanilla and RT\_PREEMPT patched kernel) and 2) Deployment context (Docker or natively). These variables will be the variables upon which the research questions will be answered.
 
 
 %%%%%%%%%%%%%%%%%%%%%%
@@ -231,21 +240,29 @@ A Quasi experiment design is used since random assignment is not applicable in t
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Procedure}
 % How will the experiment (i.e data collection) be performed? What instruments, materials, tools will be used and how
-Running the 2 experimental units on all 4 execution enviroment, submitting each run to load and with no load (2), results in 16 experimental runs. Run at 100hz and 10hz 
+The overall procedure of the experiment is to execute the experimental units in 8 different scenarios. The scenarios consist of alternating two Linux kernels (vanilla and RT\_PREEMPT patched kernel), alternating two deployment contexts (executing in a Docker container or natively) and alternating between applying load and applying no-load to the target system. Executing the experiment run for each scenario is controlled from a bash script. The bash script is started automatically when booting the system and is responsible for selecting a scenario, configuring the system for that particular scenario and executing the experimental unit. The experimental units are executed five times per scenario, totalling 80 runs for the entire experiment: \(2_{e} \times 2_{d} \times{} 2_{k}  \times{} 2_{l} \times{} 5 \) where $_{e}$ represents the two experiment units, $_{d}$ represents the deployment context, $_{k}$ represents the two kernels and $_{l}$ represents the two types of load. An overview of the procedure carried out by the execution script is depicted in figure~\ref{procedure-state}.
 
 
-The execution of the experiment run is carried out by using a script to automate the entire process. The steps in which the script perform are:
+\begin{figure}[]
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+                    semithick,initial distance=1cm,every initial by arrow/.style={*->}]
+\tikzstyle{every state}=[fill=white,draw=black,text=black]
+\node[initial,state] (A)                    {boot};
+\node[state]         (B) [above right of=A] {wait};
+\node[state]         (C) [below right of=B] {run};
+  \path (A) edge [bend left]  node {} (B)
+  		(A) edge [bend left]  node {\scriptsize id++} (B)
+  		(B) edge [loop above] node {\scriptsize 60s} (B)
+  		(C) edge [loop right] node {\scriptsize 3600s} (C)
+  		(B) edge [bend left]  node {\scriptsize startScenario(id)} (C)
+  		(C) edge [bend left]  node {\scriptsize switchKernel()} (A);
+\end{tikzpicture}
+\centering
+\caption{State Machine Diagram of the Execution Script }
+\label{procedure-state}
+\end{figure}
 
-\begin{enumerate}  
-\item Boot the operating system and wait for five minutes.  
-\item Start the \textit{supercomponent} of OpenDaVINCI.
-\item Start the experimental unit and run for one hour.
-\item On completion of the experimental unit, wait for five minutes.
-\item Switch the kernel and reboot.\\ 
-\end{enumerate}
-
-\begin{center}\fbox{\parbox{11cm}{\texttt{stress-ng --cpu 2 --cpu-load 80 --cpu-method pi --sched fifo --sched-prio 48}}}\end{center}
-
+	
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}

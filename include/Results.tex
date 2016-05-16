@@ -4,21 +4,6 @@
 The conducted experiments resulted in a series of datasets which are used to answer the research questions seperately. 
 
 
-\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
-                    semithick,initial distance=1cm,every initial by arrow/.style={*->}]
-  \tikzstyle{every state}=[fill=white,draw=black,text=black]
-
-  \node[initial,state] (A)                    {boot};
-  \node[state]         (B) [above right of=A] {wait};
-  \node[state]         (C) [below right of=B] {run};
-
-  \path (A) edge [bend left]  node {} (B)
-  		(A) edge [bend left]  node {\scriptsize id++} (B)
-  		(B) edge [loop above] node {\scriptsize 60s} (B)
-  		(C) edge [loop right] node {\scriptsize 3600s} (C)
-  		(B) edge [bend left]  node {\scriptsize startScenario(id)} (C)
-  		(C) edge [bend left]  node {\scriptsize switchKernel()} (A);
-\end{tikzpicture}
 
 
 \begin{table}[]
