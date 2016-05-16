@@ -31,7 +31,7 @@ Table \ref{tab:scen-table} displays the configrations for all scenarios run duri
 \subsection{Pi Component}
 
 
-Figure \ref{fig:pi-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi component running with a speed of $100hz$. This results is intended to answer RQ1. Each scenario was run 5 times to ensure validity to the data. Scenario 3 and 7 are the only two configurations that overstepped the time deadline violating it by 8\% respectively. Observations can be made on the pi algorithm where the pi calculation overstepped its intended occupation time during the scenarios with CPU load. The algorithm violated its occupation time with approximately 3\% each of the four scenarios. The results show that the overhead of the middle ware (\texttt{odv\_oh1} and \texttt{odv\_oh2}) is minimal during all the scenarios.
+Figure \ref{fig:pi-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi component running with a speed of $100hz$. This results is intended to answer RQ1. Each scenario was run 5 times to ensure validity to the data. Scenario 3 and 7 are the only two configurations that overstepped the time deadline violating it by 8\% respectively. Observations can be made on the pi algorithm where the pi calculation overstepped its intended occupation time during the scenarios with CPU load. The algorithm violated its occupation time with approximately 3\% each of the four scenarios. The results show that the overhead of the middle ware (\texttt{odv\_oh1} and \texttt{odv\_oh2}) is minimal during all the scenarios. \todo{add final data and rewrite if found different results}
 
 \pgfplotstableread[col sep = semicolon]{data/R13-all-runs-parsed.csv}\mydata
 \begin{figure}
@@ -79,7 +79,7 @@ Figure \ref{fig:pi-chart} presents the descriptive results extracted for each of
 
 \subsection{Pi/IO Component}
 
-Figure \ref{fig:piio-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi/IO component running with a speed of $10hz$. This results is intended to answer RQ2. Each scenario was, as previous chart, run 5 times to ensure validity to the data. None of the scenarios violated their time deadline. \todo{add actual data and rewrite}
+Figure \ref{fig:piio-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi/IO component running with a speed of $10hz$. This results is intended to answer RQ2. Each scenario was, as previous chart, run 5 times to ensure validity to the data. None of the scenarios violated their time deadline. \todo{add final data and rewrite}
 
 \pgfplotstableread[col sep = semicolon]{data/R13-camera-runs-parsed.csv}\mycamdata
 \begin{figure}
