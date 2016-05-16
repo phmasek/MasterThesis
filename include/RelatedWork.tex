@@ -8,7 +8,10 @@ The snowballing search approach for systematic literature studies is used to fin
 \subsection{Start Set}
 In order to begin the snowballing search approach, a collection of papers are required. In order to identify a start set of papers, keywords are extracted from the research questions, taking synonyms into account. Formulating a search-string from keywords that are broad and cover multiple areas of research may result in collecting a vast amount of literature. For that reason, broad keywords are broken down into more specific and detailed keywords specific to this study. The resulting search string used for a provisional start-set is found in table~\ref{search-string}. \\
 
-The search string was applied to the Scopus \cite{scopus} database which resulted in finding 298 papers. The documents were then limited by subject area resulting in 215 papers. A screening process was then applied to the provisional start-set. The screen process included reading the title and if necessary the abstract to determine if the paper is relevant to this study. 
+
+The search string was applied to the Scopus \cite{scopus} database which resulted in finding 215 papers. A screening process was then applied to the provisional start-set. The screen process included reading the title and abstract to determine if the paper is relevant to this study. The screening process resulted in finding 10 papers related to this study.
+
+In total, 9 candidates for inclusion are identified. The 9 papers are:
 
 \begin{table}[h]
 \centering
@@ -19,77 +22,92 @@ TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Ba
 \label{search-string}
 \end{table}
 
-\todo{now i will do backwards and forwards snowballing, and the write about the related work.}
+\begin{table}[]
+\begin{tabular}{lp{13cm}}
+{[}C1{]}  & C. N. Mao, M. H. Huang, S. Padhy, S. T. Wang, W. C. Chung, Y. C. Chung, and C. H. Hsu, “Minimizing latency of real-time container cloud for software radio access networks,” in 2015 IEEE 7th International Conference on Cloud Computing Technology and Science (CloudCom), Nov 2015, pp. 611–616.                                  \\
+{[}C2{]}  & A. Krylovskiy, “Internet of things gateways meet linux containers: Performance evaluation and discussion,” in Internet of Things (WF-IoT), 2015 IEEE 2nd World Forum on, Dec 2015, pp. 222–227.                                                                                                                                      \\
+{[}C3{]}  & M. Raho, A. Spyridakis, M. Paolino, and D. Raho, “Kvm, xen and docker: A performance analysis for arm based nfv and cloud computing,” in Information,Electronic and Electrical Engineering (AIEEE), 2015 IEEE 3rd Workshop onAdvances in, Nov 2015, pp. 1–8.                                                                         \\
+{[}C4{]}  & R. Morabito, J. Kj\"allman, and M. Komu, “Hypervisors vs. lightweight virtual-ization: A performance comparison,” in Proceedings of the 2015 IEEE Interational Conference on Cloud Engineering, ser. IC2E ’15. Washington, DC, USA: IEEE Computer Society, 2015, pp. 386–393.                                                      \\
+{[}C5{]}  & M. G. Xavier, I. C. D. Oliveira, F. D. Rossi, R. D. D. Passos, K. J. Matteussi, and C. A. F. D. Rose, “A performance isolation analysis of disk-intensive workoads on container-based clouds,” in 2015 23rd Euromicro International Conference on Parallel, Distributed, and Network-Based Processing, March 2015, pp. 253–260. \\
+{[}C6{]}  & W. Felter, A. Ferreira, R. Rajamony, and J. Rubio, “An updated performance comparison of virtual machines and linux containers,” in Performance Analysis of Systems and Software (ISPASS), 2015 IEEE International Symposium on, March 2015, pp. 171–172.                                                                            \\
+{[}C7{]}  & C. Ruiz, E. Jeanvoine, and L. Nussbaum, “Europar 2015: Parallel processing workshops: Europar 2015 international workshops, vienna, austria, august 24-25, 2015, revised selected papers.” Cham: Springer International Publishing, 2015, pp. 813–824.  \\
+{[}C8{]}  & R. Wu, Y. Chen, E. Blasch, B. Liu, G. Chen, and D. Shen, “A container-based elastic cloud architecture for real-time full-motion video (fmv) target tracking,” in 2014 IEEE Applied Imagery Pattern Recognition Workshop (AIPR), Oct 2014, pp. 1–8.                                                                                  \\
+{[}C9{]} & Z. Estrada, F. Deng, Z. Stephens, C. Pham, Z. Kalbarczyk, and R. Iyer, “Performance comparison and tuning of virtual machines for sequence alignment software,” Scalable Computing, vol. 16, no. 1, pp. 71–84, 2015.                                                                                                              
+\end{tabular}
+\centering
+\caption{Start Set}
+\label{lr-startset}
+\end{table}
+
 
 %-------------------------------------------------------------------%
-%Minimizing latency of real-time container cloud for software radio access networks
-%Internet of Things gateways meet linux containers: Performance evaluation and discussion
-%KVM, Xen and Docker: A performance analysis for ARM based NFV and cloud computing
-%Hypervisors vs. Lightweight Virtualization: a Performance Comparison
-%A performance isolation analysis of disk-intensive workloads on container-based clouds
-
-%Accelerating Regression Testing for Scaled Self-Driving Cars with Lightweight Virtualization-A Case Study  **
-%An updated performance comparison of virtual machines and Linux containers **
-%Performance evaluation of containers for HPC **
-%A Container-based Elastic Cloud Architecture for Real-Time Full-Motion Video (FMV) Target Tracking **
-
-%Performance comparison and tuning of virtual machines for sequence alignment software  (Article) *** some performance results
-
-%ocker reference
-%http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=7036275
+%[C1] C. N. Mao, M. H. Huang, S. Padhy, S. T. Wang, W. C. Chung, Y. C. Chung,
+%		and C. H. Hsu, “Minimizing latency of real-time container cloud for software radio access networks,” in 2015 IEEE 7th International 
+%		Conference on Cloud Computing Technology and Science (CloudCom), Nov 2015, pp. 611–616.
+%[C2] A. Krylovskiy, “Internet of things gateways meet linux containers: Performance evaluation and discussion,” in Internet of Things (WF-IoT), 
+%		2015 IEEE 2nd World Forum on, Dec 2015, pp. 222–227.
+%[C3] M. Raho, A. Spyridakis, M. Paolino, and D. Raho, “Kvm, xen and docker: A performance analysis for arm based nfv and cloud computing,” in 	
+%		Information,Electronic and Electrical Engineering (AIEEE), 2015 IEEE 3rd Workshop on
+%		Advances in, Nov 2015, pp. 1–8.
+%[C4] R. Morabito, J. Kjällman, and M. Komu, “Hypervisors vs. lightweight virtual-
+%		ization: A performance comparison,” in Proceedings of the 2015 IEEE Inter- national Conference on Cloud Engineering, ser. IC2E ’15. 
+%		Washington, DC, USA: IEEE Computer Society, 2015, pp. 386–393.
+%[C5] M. G. Xavier, I. C. D. Oliveira, F. D. Rossi, R. D. D. Passos, K. J. Matteussi, and C. A. F. D. Rose, “A performance isolation analysis 
+%		of disk-intensive work- loads on container-based clouds,” in 2015 23rd Euromicro International Con- ference on Parallel, Distributed, 
+%		and Network-Based Processing, March 2015, pp. 253–260.
+%[C6] W. Felter, A. Ferreira, R. Rajamony, and J. Rubio, “An updated performance comparison of virtual machines and linux containers,” in 
+%		Performance Evaluation of Containers for HPC, Performance Analysis of Systems and Software (ISPASS), 2015 IEEE International Symposium on, March 2015, pp. 171–172.
+%[C7] C. Ruiz, E. Jeanvoine, and L. Nussbaum, “Euro-par 2015: Parallel processing workshops: Euro-par 2015 international workshops, vienna, 
+%		austria, august 24-25, 2015, revised selected papers.” Cham: Springer International Publishing, 2015, pp. 813–824. 
+%[C8] R. Wu, Y. Chen, E. Blasch, B. Liu, G. Chen, and D. Shen, “A container-based elastic cloud architecture for real-time full-motion video (
+%		fmv) target tracking,” in 2014 IEEE Applied Imagery Pattern Recognition Workshop (AIPR), Oct 2014, pp. 1–8.
+%[C9] Z. Estrada, F. Deng, Z. Stephens, C. Pham, Z. Kalbarczyk, and R. Iyer, “Performance comparison and tuning of virtual machines for 
+%		sequence alignment software,” Scalable Computing, vol. 16, no. 1, pp. 71–84, 2015.
 %-------------------------------------------------------------------%
 
 
 
 
-%Start Set: 
-%In order find papers, we applied the following technique. 
-
-%Constructing Search String: In order to formulate a search string, major terms were derived from the research questions. For these major terms, alternative spelling and snynonyms were included. 
-
-%Resources to be Searched: Scopus
-
-%Search Constraints: We will search all papers related to the research questions and applied no search constrainsts.
-
-
-%Backward Snowballing: 
-
-%orwards Snowballing: 
-
-%Inclusion and Exclusion: 
-
-%-> Resulting x ammount of papers. 
-
-%Then we being the related work section. 
-
-
-
-%This section uses some of the processes from a systematic mapping study (http://www.bcs.org/upload/pdf/ewic_ea08_paper8.pdf)
-
-%Snowballing is used to prepare related work. 
-
-%First step is to set up a search string. The search string is derived from the research questions, but with more detail. 
-
-%The search string is as follows: \textit{TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Based OR Linux Containers OR Lightweight Virtualization OR Container Cloud OR Docker )}
-
-%The search string was applied to Scopus database. It retrieved 298 documents. 
-
-%Screening was then done on the 298 papers where relevant papers were extracted 
-
-%Keywording abstracts was then applied 
-
-%Since the author of \cite{Wohlin} states there is no silver bullet for identifying a good start set, steps from the systematic mapping process \cite{Petersen} are used. 
- 
-%\begin{figure}[ht]
-%\centering
-%     \includegraphics[width=1.0\textwidth]{./figure/sms.png}
-%      \caption{The Systematic Mapping Process \cite{Petersen}}
-%       \label{mapping-study}
-%\end{figure}
-
-
-\subsection{Iterations}
+\subsection{Iteration 1}\todo{this whole section is in the early stages}
 
 We then applied techniques from snowballing, to go forward and backwards 
+
+\subsubsection{Backward Snowballing}
+\begin{labeling}{[{[}C10{]}]}
+\item [{[}C1{]}]  	Contains 26 references and reference to C6. Found: P1
+\item [{[}C2{]}]  	Contains 21 references and reference to C6 C4.
+\item [{[}C3{]}]    Contains 47 references (reference check needed, maybe remove this one since its about ARM).
+\item [{[}C4{]}]  	Contains 42 references and reference to C6, C2. Found: P1
+\item [{[}C5{]}]  	Contains 46 references. Found: P1
+\item [{[}C6{]}]  	Contains 50 references. Found: P1
+\item [{[}C7{]}]  	Contains 19 references and reference to C6. Found: P1
+\item [{[}C8{]}]  	Contains 18 references
+\item [{[}C9{]}]  	Contains 31 references. Found C6, Found: P1
+\end{labeling}
+
+P1: Performance evaluation of container-based virtualization for highperformance computing environments, (same author as C5)
+
+\subsubsection{Forward Snowballing}
+We use Google scholar here (seems better than scopus) 
+
+
+\begin{labeling}{[{[}C10{]}]} 
+\item [{[}C1{]}]  	Scopus Cited by 0
+\item [{[}C2{]}]  	Scopus Cited by 0
+\item [{[}C3{]}]    Scopus Cited by 0
+\item [{[}C4{]}]  	Scopus Cited by 4 Google Scholar Cited by 7
+%https://www.scopus.com/results/citedbyresults.uri?sort=plf-f&cite=2-s2.0-84944351058&src=s&imp=t&sid=651AE361FEC58E5CB44C1CE87571686E.53bsOu7mi7A1NSY7fPJf1g%3a280&sot=cite&sdt=a&sl=0&origin=resultslist&editSaveSearch=&txGid=0
+\item [{[}C5{]}]  	Scopus Cited by 1  Google Scholar Cited by 2
+%https://www.scopus.com/results/citedbyresults.uri?sort=plf-f&cite=2-s2.0-84962802494&src=s&imp=t&sid=651AE361FEC58E5CB44C1CE87571686E.53bsOu7mi7A1NSY7fPJf1g%3a560&sot=cite&sdt=a&sl=0&origin=resultslist&editSaveSearch=&txGid=0
+\item [{[}C6{]}]  	Scopus Cited by 3  Google Scholar Cited by 81
+\item [{[}C7{]}]	Scopus Cited by 0
+\item [{[}C8{]}]	Scopus Cited by 0  Google Scholar Cited by 4
+\item [{[}C9{]}]	Scopus Cited by 0  Google Scholar Cited by 1
+\end{labeling}
+
+
+
+
+
 
 
