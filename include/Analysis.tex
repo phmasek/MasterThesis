@@ -1,3 +1,133 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
-\chapter{Analysis \& Discussion}
-%\textit{Summary: In this section we will address the research goal using the results and methodology}
+\chapter{Analysis}
+
+The conducted experiments resulted in a series of datasets which are used to answer the research questions seperately. This section seek to present the results in their purest form. 
+
+
+
+\section{Descriptive Statistics}
+
+Table \ref{tab:scen-table} displays the configrations for all scenarios run during the experiment. The scenario numbers depicted in the table reflects the scenario numbers presented in this section.
+
+\begin{table}[H]
+\centering
+\caption{Scenario specification}
+\label{tab:scen-table}
+\begin{tabular}{|c|l|l|l|c|}
+\hline
+\textbf{scenario} & \textbf{deployment} & \textbf{kernel} & \textbf{load} & \textbf{N} \\ \hline
+1                 & native              & generic         & noload        & 5        \\
+2                 & native              & rt              & noload        & 5        \\
+3                 & native              & generic         & cpuload       & 5        \\
+4                 & native              & rt              & cpuload       & 5        \\
+5                 & docker              & generic         & noload        & 5        \\
+6                 & docker              & rt              & noload        & 5        \\
+7                 & docker              & generic         & cpuload       & 5        \\
+8                 & docker              & rt              & cpuload       & 5        \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Pi Component}
+
+
+Figure \ref{fig:pi-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi component running with a speed of $100hz$. This results is intended to answer RQ1. Each scenario was run 5 times to ensure validity to the data. Scenario 3 and 7 are the only two configurations that overstepped the time deadline violating it by 8\% respectively. Observations can be made on the pi algorithm where the pi calculation overstepped its intended occupation time during the scenarios with CPU load. The algorithm violated its occupation time with approximately 3\% each of the four scenarios. The results show that the overhead of the middle ware (\texttt{odv\_oh1} and \texttt{odv\_oh2}) is minimal during all the scenarios.
+
+\pgfplotstableread[col sep = semicolon]{data/R13-all-runs-parsed.csv}\mydata
+\begin{figure}
+\caption{Accumulated average time spent in time-slice $100hz$}
+\label{fig:pi-chart}
+\begin{tikzpicture}
+\begin{axis}[
+		xbar stacked,
+		width=\textwidth,
+	    height=7cm,
+	    xlabel={},
+	    ytick=data,
+	    xmin=0,
+	    xmax=1.15,
+      	y dir=reverse,
+	    ylabel={scenario},
+    	xlabel={$\%$ of time-slice},
+		x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	    xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+	    point meta={x*100},
+	    legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydata};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydata};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection{Pi/IO Component}
+
+Figure \ref{fig:piio-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi/IO component running with a speed of $10hz$. This results is intended to answer RQ2. Each scenario was, as previous chart, run 5 times to ensure validity to the data. None of the scenarios violated their time deadline. \todo{add actual data and rewrite}
+
+\pgfplotstableread[col sep = semicolon]{data/R13-camera-runs-parsed.csv}\mycamdata
+\begin{figure}
+\caption{Accumulated average time spent in time-slice $10hz$}
+\label{fig:piio-chart}
+\begin{tikzpicture}
+\begin{axis}[
+		xbar stacked,
+		width=\textwidth,
+	    height=7cm,
+	    xlabel={},
+	    ytick=data,
+	    xmin=0,
+	    xmax=1.15,
+      	y dir=reverse,
+	    ylabel={scenario},
+    	xlabel={$\%$ of time-slice},
+		  x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	    xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+	    point meta={x*100},
+	    legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=3,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues4,xbar,area legend] table[y=scenario,x=camio]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues2,xbar,area legend] table[y=scenario,x=diskio]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mycamdata};
+
+\legend{\scriptsize Overhead 1,\scriptsize Camera IO,\scriptsize Disk IO,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\section{Hypothesis Testing}
+\subsection{Pi Component}
+\subsection{Pi/IO Component}
+
