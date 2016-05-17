@@ -1,6 +1,6 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Related Work}
-In this section we introduce (1) the process of identifying current literature and (2) outline current research on the performance overhead of utilising Docker.
+In this section we introduce (1) the process of identifying current literature and (2) outline current research on scope of this study.
 
 \section{Gathering Related Work}
 The snowballing search approach for systematic literature studies is used to find relevant literature on the topic of this paper. The snowballing approach is the process of using the reference list or citations of a paper in order to identify additional papers. The guidelines for conducting a snowballing search approach, presented by Wohlin \cite{Wohlin}, are followed. 
@@ -9,9 +9,7 @@ The snowballing search approach for systematic literature studies is used to fin
 In order to begin the snowballing search approach, a collection of papers are required. In order to identify a start set of papers, keywords are extracted from the research questions, taking synonyms into account. Formulating a search-string from keywords that are broad and cover multiple areas of research may result in collecting a vast amount of literature. For that reason, broad keywords are broken down into more specific and detailed keywords specific to this study. The resulting search string used for a provisional start-set is found in table~\ref{search-string}. \\
 
 
-The search string was applied to the Scopus \cite{scopus} database which resulted in finding 215 papers. A screening process was then applied to the provisional start-set. The screen process included reading the title and abstract to determine if the paper is relevant to this study. The screening process resulted in finding 10 papers related to this study.
-
-In total, 9 candidates for inclusion are identified. The 9 papers are:
+The search string was applied to the Scopus \cite{scopus} database which resulted in finding 215 papers. The actual search was conducted May 10, 2016. The Scopus database was chosen to avoid publisher bias and to only search for published papers. A screening process was then applied to the provisional start-set. The screening process included reading the title and abstract to determine if the paper is relevant to this study. In total, 10 candidates for inclusion are identified. The 10 papers are identified in table~\ref{lr-startset}.
 
 \begin{table}[h]
 \centering
@@ -32,10 +30,12 @@ TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Ba
 {[}C6{]}  & W. Felter, A. Ferreira, R. Rajamony, and J. Rubio, “An updated performance comparison of virtual machines and linux containers,” in Performance Analysis of Systems and Software (ISPASS), 2015 IEEE International Symposium on, March 2015, pp. 171–172.                                                                            \\
 {[}C7{]}  & C. Ruiz, E. Jeanvoine, and L. Nussbaum, “Europar 2015: Parallel processing workshops: Europar 2015 international workshops, vienna, austria, august 24-25, 2015, revised selected papers.” Cham: Springer International Publishing, 2015, pp. 813–824.  \\
 {[}C8{]}  & R. Wu, Y. Chen, E. Blasch, B. Liu, G. Chen, and D. Shen, “A container-based elastic cloud architecture for real-time full-motion video (fmv) target tracking,” in 2014 IEEE Applied Imagery Pattern Recognition Workshop (AIPR), Oct 2014, pp. 1–8.                                                                                  \\
-{[}C9{]} & Z. Estrada, F. Deng, Z. Stephens, C. Pham, Z. Kalbarczyk, and R. Iyer, “Performance comparison and tuning of virtual machines for sequence alignment software,” Scalable Computing, vol. 16, no. 1, pp. 71–84, 2015.                                                                                                              
+{[}C9{]} & Z. Estrada, F. Deng, Z. Stephens, C. Pham, Z. Kalbarczyk, and R. Iyer, “Performance comparison and tuning of virtual machines for sequence alignment software,” Scalable Computing, vol. 16, no. 1, pp. 71–84, 2015.
+%{[}C10{]} & C. Berger, “Accelerating regression testing for scaled self-driving cars with lightweight virtualization – a case study,” in Software Engineering for Smart Cyber-Physical Systems (SEsCPS), 2015 IEEE/ACM 1st International Work- shop on, May 2015, pp. 2–7.
+
 \end{tabular}
 \centering
-\caption{Start Set}
+\caption{Provisional Start Set}
 \label{lr-startset}
 \end{table}
 
@@ -66,44 +66,110 @@ TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Ba
 %-------------------------------------------------------------------%
 
 
-
-
-\subsection{Iteration 1}\todo{this whole section is in the early stages}
-
-We then applied techniques from snowballing, to go forward and backwards 
+\subsection{Iteration 1}
+Backward and forward snowballing is conducted on the start set consisting of nine papers. 
 
 \subsubsection{Backward Snowballing}
-\begin{labeling}{[{[}C10{]}]}
-\item [{[}C1{]}]  	Contains 26 references and reference to C6. Found: P1
-\item [{[}C2{]}]  	Contains 21 references and reference to C6 C4.
-\item [{[}C3{]}]    Contains 47 references (reference check needed, maybe remove this one since its about ARM).
-\item [{[}C4{]}]  	Contains 42 references and reference to C6, C2. Found: P1
-\item [{[}C5{]}]  	Contains 46 references. Found: P1
-\item [{[}C6{]}]  	Contains 50 references. Found: P1
-\item [{[}C7{]}]  	Contains 19 references and reference to C6. Found: P1
-\item [{[}C8{]}]  	Contains 18 references
-\item [{[}C9{]}]  	Contains 31 references. Found C6, Found: P1
+Backward snowballing is the process of studying the reference list of each paper in the start set in order to identify new papers to include in related work. \\
+
+\textbf{C1} includes 26 references where one reference is already included in the start set (paper C6). The reference list was studied, reading the title and abstract of the respective paper. Of all the references, one paper was identified as being related to this study. It was identified by reading all contents of the paper, since final inclusions is based on the full paper. The paper identified and thus included in the list of papers is: \\
+
+\begin{labeling}{[{[}P10{]}]}
+\item [{[}P1{]}]  M. G. Xavier, M. V. Neves, F. D. Rossi, T. C. Ferreto, T. Lange and C. A. F. De Rose, \"Performance Evaluation of Container-Based Virtualization for High Performance Computing Environments,\" 2013 21st Euromicro International Conference on Parallel, Distributed, and Network-Based Processing, Belfast, 2013, pp. 233-240.
+\item
 \end{labeling}
 
-P1: Performance evaluation of container-based virtualization for highperformance computing environments, (same author as C5)
+Table~\ref{back-snow} shows the result of backward snowballing on the remaining eight papers. The results are presented in a table to avoid redundant text as the process and results of backward snowballing for each paper is very similar. Specifically, the process involved studying the reference list to identify new papers. In all papers, except C1, no new papers were identified as being related to this study after reading the title and abstract. Furthermore, most of the papers in the start set reference to each other, as seen in column three of the table~\ref{back-snow}. All papers in the start set contain reference to P1, except papers C2 and C8. Similarly, all papers in the start set reference to C6 except papers C5, C6 and C8. This shows that there is a strong connection between all papers in the start set. However, since there was only one new paper included in the start-set during the backward snowballing, this sheds light on the fact that this study is within a narrow scope, and further motivates the need for carrying out this study. 
+
+\begin{table}[]
+\begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}| >{\centering}m{1in} |>{\centering\arraybackslash}m{1in}|}
+\hline
+\textbf{Start Set Paper} & \textbf{No. References} & \textbf{Reference to Start Set} & \textbf{New Papers Identified} \\ \hline
+\textbf{C1}              & 26                      & C6                                          & P1                  \\ \hline
+\textbf{C2}              & 21                      & C6, C4                                      & 0                   \\ \hline
+\textbf{C3}              & 47                      & C6, P1                                      & 0                   \\ \hline
+\textbf{C4}              & 42                      & C6, C2, P1                                  & 0                   \\ \hline
+\textbf{C5}              & 46                      & P1                                          & 0                   \\ \hline
+\textbf{C6}              & 50                      & P1                                          & 0                   \\ \hline
+\textbf{C7}              & 19                      & C6, P1                                      & 0                   \\ \hline
+\textbf{C8}              & 18                      & 0                                           & 0                   \\ \hline
+\textbf{C9}              & 31                      & C6, P1                                      & 0                   \\ \hline
+\end{tabular}
+\centering
+\caption{Results from Backward Snowballing}
+\label{back-snow}
+\end{table}
+
+
+
+
+%All papers in the start set except C2 and C8 contain reference to P1. 
+%All papers in the start set except C5,C6,C8 contain reference to C6
+
+%C1 Contains 26 references and reference to C6. Found: P1
+%C2 Contains 21 references and reference to C6 C4.
+%C3 Contains 47 references and reference to C6. Found: P1 (reference check needed, maybe remove this one since its about ARM). 
+%C4 Contains 42 references and reference to C6, C2. Found: P1
+%C5 Contains 46 references. Found: P1
+%C6 Contains 50 references. Found: P1
+%C7 Contains 19 references and reference to C6. Found: P1
+%C8 Contains 18 references
+%C9 Contains 31 references. Found C6, Found: P1
+
+
+
 
 \subsubsection{Forward Snowballing}
-We use Google scholar here (seems better than scopus) 
+The next step is to examine the citation to all papers that are in the start set. All papers were search for citations using Google Scholar. The Scopus database was chosen not to be used for the forward snowballing procedure since it was shown that Google Scholar was more accurate in finding cited papers. The exclusion criteria for this snowballing search procedure excludes all non peer reviewed papers. However, during the forward snowballing search, a very relevant paper was found in regards to this study. It was then decided to include the paper as part of the related work. The specific paper included is: \\
 
 
-\begin{labeling}{[{[}C10{]}]} 
-\item [{[}C1{]}]  	Scopus Cited by 0
-\item [{[}C2{]}]  	Scopus Cited by 0
-\item [{[}C3{]}]    Scopus Cited by 0
-\item [{[}C4{]}]  	Scopus Cited by 4 Google Scholar Cited by 7
-%https://www.scopus.com/results/citedbyresults.uri?sort=plf-f&cite=2-s2.0-84944351058&src=s&imp=t&sid=651AE361FEC58E5CB44C1CE87571686E.53bsOu7mi7A1NSY7fPJf1g%3a280&sot=cite&sdt=a&sl=0&origin=resultslist&editSaveSearch=&txGid=0
-\item [{[}C5{]}]  	Scopus Cited by 1  Google Scholar Cited by 2
-%https://www.scopus.com/results/citedbyresults.uri?sort=plf-f&cite=2-s2.0-84962802494&src=s&imp=t&sid=651AE361FEC58E5CB44C1CE87571686E.53bsOu7mi7A1NSY7fPJf1g%3a560&sot=cite&sdt=a&sl=0&origin=resultslist&editSaveSearch=&txGid=0
-\item [{[}C6{]}]  	Scopus Cited by 3  Google Scholar Cited by 81
-\item [{[}C7{]}]	Scopus Cited by 0
-\item [{[}C8{]}]	Scopus Cited by 0  Google Scholar Cited by 4
-\item [{[}C9{]}]	Scopus Cited by 0  Google Scholar Cited by 1
+\begin{labeling}{[{[}P10{]}]}
+\item [{[}P2{]}]  Welch, James Matthew. Performance Optimization of Linux Networking for Latency-Sensitive Virtual Systems. Diss. ARIZONA STATE UNIVERSITY, 2015.\todo{wait for hugo to get back to me on this}
+
+\item
 \end{labeling}
+
+\begin{table}[]
+\begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}|>{\centering\arraybackslash}m{1in}|}
+\hline
+\textbf{Start Set Paper} & \textbf{No. Citations}  & \textbf{New Papers Identified} \\ \hline
+\textbf{C1}              & 0                       & 0                             \\ \hline
+\textbf{C2}              & 0                       & 0                             \\ \hline
+\textbf{C3}              & 0                       & 0                             \\ \hline
+\textbf{C4}              & 8                       & 1 Master Thesis               \\ \hline
+\textbf{C5}              & 2                       & 0                             \\ \hline
+\textbf{C6}              & 81                      & 0                             \\ \hline
+\textbf{C7}              & 4                       & 0                             \\ \hline
+\textbf{C8}              & 1                       & 0                             \\ \hline
+\textbf{C9}              & 104                     & 0                             \\ \hline
+\end{tabular}
+\centering
+\caption{Results from Forward Snowballing}
+\label{forward-snow}
+\end{table}
+
+\subsection{Iteration 2}
+Two additional papers were found in iteration 1. Backwards and forwards snowballing is applied to these two papers.
+
+\subsubsection{Backward Snowballing}
+
+\subsubsection{Forward Snowballing}
+
+\section{Related Work}
+
+%C1 0
+%C2 0
+%C3 0
+%C4 Google Scholar Cited by 8 (all excluded, areas such as power effieciency, and networking )
+%Reference to the master thesis: https://repository.asu.edu/attachments/162165/content/Welch_asu_0010N_15451.pdf
+%C5 Google Scholar Cited by 2 (excluded due to being a web-page and in different language)
+%C6 Google Scholar Cited by 81 (there were so many references spanning multiple areas of research from HPC, )
+%C7 0
+%C8 Google Scholar Cited by 4 (video / area surveillance, target detection)
+%C9 Google Scholar Cited by 1 (out of scope)
+%P1 Google Scholar Cited by 104 ()
+
+
 
 
 
