@@ -14,8 +14,37 @@ Internal validity refers to the extent to which an unknown factor has an effect 
 
 % dealing with operating systesm are complex beasts and so we can expect that random things happen, but we need a source for this.
 
+%http://link.springer.com/article/10.1007%2Fs10664-008-9102-8
+
 \section{Threats to External Validity}
 \section{Threats to Conclusion Validity}
+
+% Construct Validity
+\begin{enumerate}
+\item generlisable beyond the scope of the study, since the execution enviroment can be understood for different use cases. The hardware is typical COTS. 
+\end{enumerate}
+
+% Internal Validity
+\begin{enumerate}
+\item Having automated tests. Introduces a lower level of risk. Used for mitigate possible risks of not having it automated.
+\item Environment is set up with a script to ensure clones...
+\item Networking and external peripherals have been removed for removing unncessary interrups. However a computer does not always behave and display its behaviour for us.. No way to predict exactly how a computer will behave. Though, uninstalled software and scaled down Linux dist have been used to mitigate risks of unncessary processes impacting our results.
+\item Gathering data from serial port rather than USB or Network or storing data locally to mitigate any impact on the performance of the system. Interrupts, disk io, memory io, usb io, etc.
+
+\end{enumerate}
+
+% Conclusion Validity
+\begin{enumerate}
+\item Conclusions drawn from the results are specific to the hardware and software used in the experiments. May be different from other setups.
+\item The hardware is very specific for the case and cannot ensure the same results on either a personal computer or a high performing computer.
+
+\end{enumerate}
+
+
+% External Validity
+\begin{enumerate}
+\item generlisable beyond the scope of the study, since the execution enviroment can be understood for different use cases. The hardware is typical COTS. 
+\end{enumerate}
 
 % How did we validate the results? 
 	% statistical analysis is powerful 
