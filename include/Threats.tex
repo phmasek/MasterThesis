@@ -3,48 +3,49 @@
 In this section, the four perspective of validity threats presented by Runeson and H\"{o}st \cite{runeson} are discussed.
 %\textit{Summary: In this section we will introduce potential weakenesses we are aware of by following the guidelines of Runeson \& Höst, Feldt \& Magazinius.}
 
-\section{Threats to Construct Validity}
-\section{Threats to Internal Validity}
-Internal validity refers to the extent to which an unknown factor has an effect on the factor under invesigtation or may refer to the issues that may affect the relationship between treatment and outcome. In order to mitigate the risk of an unknown factor interfering with the data being captured a number of strategies is used, namely: \\
+\section{Construct Validity}
+
+Construct validity refers to how well the treatment selected for the experiment reflects the aim of the study.
+
+\section{Internal Validity}
+Internal validity refers to the extent to which an unknown factor has an effect on the factor under investigation or may refer to the issues that may affect the relationship between treatment and outcome. In order to mitigate the risk of an unknown factor interfering with the data being captured a number of strategies is used, namely: \\
+
 \begin{enumerate}
-\item{A script is used to execute the installation of all software packages requried for the experiment to run. All software packages that is installed on the target system is installed from an offline package manager. This ensure that all software packages installed on the system has equal versions when preparing the target system, and that precisely each step of the installation process is documented and available for review.}
-\item{The configuration file used to prepare the specific kernels used in this study are from reputable sources. These sources are from Ubuntu and the OSADL laboratory open source configuration files. This ensures that the kernels were configured in a correct and complete manner.}
-\item{A systematic checklist is used prior to executing the experiment. This ensures that the runtime configuration of the target system is documented and never altered until the experiment is completed.}
+\item{All execution environments are run through a set of scenario scripts. Every executed scenario is automated to ensure that no external factors may impact the outcome of the data during run time. Having each scenario automated further strengthens the assurance that when each scenario is re-executed the environment is a reproduction of the previous iteration of the same scenario. Although mitigating risk of external impact, the scripts may include bugs not counted for. To mitigate the risk of bugs manual validation runs are made with the intent to confirm that the execution environment is as stated in the scenario.}
+\item{To mitigate any impact made on the performance on the system, the machine's network is disabled, as the network IRQ directly impacts the scheduling of the system.}
+\item{Data is captured through a serial port to bypass any performance impact made locally on the disk or through the USB kernel stack. The serial port is connected to an external device that handles the data capturing and processing it to a file. By writing all data through a serial port onto an external device any impact on the scheduler made by USB, memory, or disk is mitigated.}
 \end{enumerate}
+
+
+% \begin{enumerate}
+% \item{A script is used to execute the installation of all software packages requried for the experiment to run. All software packages that is installed on the target system is installed from an offline package manager. This ensure that all software packages installed on the system has equal versions when preparing the target system, and that precisely each step of the installation process is documented and available for review.}
+% \item{The configuration file used to prepare the specific kernels used in this study are from reputable sources. These sources are from Ubuntu and the OSADL laboratory open source configuration files. This ensures that the kernels were configured in a correct and complete manner.}
+% \item{A systematic checklist is used prior to executing the experiment. This ensures that the runtime configuration of the target system is documented and never altered until the experiment is completed.}
+% \end{enumerate}
 
 % dealing with operating systesm are complex beasts and so we can expect that random things happen, but we need a source for this.
 
 %http://link.springer.com/article/10.1007%2Fs10664-008-9102-8
 
-\section{Threats to External Validity}
-\section{Threats to Conclusion Validity}
+\section{External Validity}
+\section{Conclusion Validity}\todo{Not finilised due to uncertainties with how to analyse data.}
+
+Conclusion validity refers to validity of the measured effect of the treatments used in the experiment. There exists two apparent threats to conclusion validity, namely Type I and Type II statistical errors. Due to the samples size of this research the threat of Type I error is considerable. For the statistical phenomena where an increasing sample size will result in a decreasing P-value. This research have thus put less weight on the P-value results as there exists a large number of data samples for the hypothesis testing \cite{kampenes2007systematic} which will result in highly significant results. This requires a more extensive analysis of the results, taking larger consideration on the effect size while evaluating the data. To further ensure validity of the conducted statistical analyses a post-hoc analysis was conducted with the intention to understand the statistical power of the results, thus drawing stronger conclusions.\\
+
+
+
 
 % Construct Validity
-\begin{enumerate}
-\item generlisable beyond the scope of the study, since the execution enviroment can be understood for different use cases. The hardware is typical COTS. 
-\end{enumerate}
-
-% Internal Validity
-\begin{enumerate}
-\item Having automated tests. Introduces a lower level of risk. Used for mitigate possible risks of not having it automated.
-\item Environment is set up with a script to ensure clones...
-\item Networking and external peripherals have been removed for removing unncessary interrups. However a computer does not always behave and display its behaviour for us.. No way to predict exactly how a computer will behave. Though, uninstalled software and scaled down Linux dist have been used to mitigate risks of unncessary processes impacting our results.
-\item Gathering data from serial port rather than USB or Network or storing data locally to mitigate any impact on the performance of the system. Interrupts, disk io, memory io, usb io, etc.
-
-\end{enumerate}
+% \begin{enumerate}
+% \item generlisable beyond the scope of the study, since the execution enviroment can be understood for different use cases. The hardware is typical COTS. 
+% \end{enumerate}
 
 % Conclusion Validity
-\begin{enumerate}
-\item Conclusions drawn from the results are specific to the hardware and software used in the experiments. May be different from other setups.
-\item The hardware is very specific for the case and cannot ensure the same results on either a personal computer or a high performing computer.
-
-\end{enumerate}
-
 
 % External Validity
-\begin{enumerate}
-\item generlisable beyond the scope of the study, since the execution enviroment can be understood for different use cases. The hardware is typical COTS. 
-\end{enumerate}
+% \begin{enumerate}
+% \item generlisable beyond the scope of the study, since the execution enviroment can be understood for different use cases. The hardware is typical COTS. 
+% \end{enumerate}
 
 % How did we validate the results? 
 	% statistical analysis is powerful 
@@ -69,3 +70,9 @@ Internal validity refers to the extent to which an unknown factor has an effect 
 
 
 % every run of tests is automated, perparing the target system is automated so we can ensure that results between eachother are the same. Ensures equal versioning between all enviroments
+
+
+% \begin{enumerate}
+% \item{All conclusion drawn from the results are specific to the hardware and software used in the experiments. It has to be noted that the results may differ on other machines.}
+% \item{The hardware is very specific for the case and cannot ensure the same results on either a personal computer or a high performing computer.}
+% \end{enumerate}
