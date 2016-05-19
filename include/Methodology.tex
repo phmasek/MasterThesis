@@ -13,7 +13,9 @@ In order to answer the research questions, an experiment is carried out followin
 % refine the main research questions, describe and motivate them to allow for traceability down to the hypotheses. 
 %Does the respective execution context influence the scheduling precision of the respective application?
 %Does the respective execution context influence the input/output performance of the respective application?
-The aim of the experiment is to systematically evaluate the scheduling precision and input-output performance of the experimental units running in different execution environments with respect to the deployment context. The goals of the experiment is described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section. \todo{how are these connected to the research questions you described earlier?} 
+The aim of the experiment is to systematically evaluate the scheduling precision and input-output performance of the experimental units running in different execution environments with respect to the deployment context. Understanding how the respective execution enviroment (e.g running the experimental untis in a Docker container with a real-time Linux kernel) influences sheduling precision and input-output performence will ultimately decide how deterministic - with respect to time - the system is said to be. Uncovering how deterministic the system is will answer the research questions. \\
+
+The goals of the experiment is described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section. 
 
 % execution environment: complete system 
 % deployment context: docker non-docker 
@@ -172,7 +174,7 @@ When applying load to the target system, two processor worker threads are starte
 The experimental units are executed in different execution environments with respect to the deployment context. The experimental units are tasked with capturing specified measurement points and sending the measurement data via serial communication to the data capturer where they are stored. A description of the experimental units is found in section \ref{section:exp-units} where the specific measurement points that are captured is found in section~\ref{section:dependent}.
 
 
-\section{Variables and Hypotheses} \todo{do we have any parameters?}
+\section{Variables and Hypotheses} %do we have any parameters?
 Two types of variables are defined for the experiment: dependent and independent variables. The variables are analysed to evaluate the hypotheses of the experiment which are defined in this section. 
 %This section presents all hypotheses that will be analysed and answered in order to understand how the specified execution environments impact the performance of the experimental units.\\
 
