@@ -182,9 +182,23 @@ Two types of variables are defined for the experiment: dependent and independent
 \subsection{Dependent Variables} \label{section:dependent}
 %There exists groups of dependent variables which are all impacted by switching treatment. It is important to look both at the aggregated view of the variables, as well as at each of the variables independently. 
 
-The dependent variables are 1) scheduling precision, 2) input performance, and 3) output performance. Scheduling precision refers to how accurately, in terms of time, the system performs the necessary actions within a specified time-slice. The captured data points for measuring scheduling precision is the duration between four measurement points for the Pi Component. The four measurement points are depicted in figure~\ref{pi_measure}, which represent the Pi Components complete time-slice. The duration between measurement points one and two, and between measurement points three and four reveal the necessary overhead of OpenDaVINCI, the chosen middle-ware of the experimental units. The duration between measurement points four and one (the next time slice) reveals the sleep precision of the Pi Component with respect to the execution environment. Input and output performance is the duration it takes to capture and image from a web camera and save it to disk.\\ 
+The dependent variables are 1) scheduling precision, 2) input performance, and 3) output performance. Scheduling precision refers to how accurately, in terms of time, the system performs the necessary actions within a specified time-slice. The captured data points for measuring scheduling precision is the duration between four measurement points for the Pi Component. Raw data of these measurement points are the current time with a nanosecond accuracy, which is presented in \ref{table:measurement}. The location four measurement points within a time-slice is depicted in figure~\ref{pi_measure}, which represent the Pi Components complete time-slice. The duration between measurement points one and two, and between measurement points three and four reveal the necessary overhead of OpenDaVINCI, the chosen middle-ware of the experimental units. The duration between measurement points four and one (the next time slice) reveals the sleep precision of the Pi Component with respect to the execution environment. Input and output performance is the duration it takes to capture and image from a web camera and save it to disk.\\ 
 
 %Figure \ref{pi_measure} displays the four measurement points of the Pi Component time-slice, where the duration between measurement points \#1 and \#2, and between \#3 and \#4 reveals the necessary overhead of OpenDaVinci. While the duration between \#4 and \#1 (next time-slice) reveals the sleep precision of the execution environment.\\
+
+\begin{table}[ht]
+\begin{tabular}{|c|c|}
+\hline
+\textbf{Measurement point} 	& \textbf{Time-stamp}  \\ \hline
+1							& 1462886735010040031  \\ \hline
+2							& 1462886735010146016  \\ \hline
+3							& 1462886735018168837  \\ \hline
+4							& 1462886735018233859  \\ \hline
+\end{tabular}
+\centering
+\caption{Raw data}
+\label{table:measurement}
+\end{table}
 
 \begin{figure}[ht]
 \centering
@@ -268,18 +282,16 @@ The overall procedure of the experiment is to execute the experimental units in 
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}
-The dependent variables are based on a data format referred as accumulative overhead. The accumulative overhead is the sum of a measurement point within all time-slices. The sum is divided by the expected total run duration which is calculated by the amount of time-slices in the dataset and the $hz$ that dataset was captured in. Equation \ref{eq:accover} and \ref{eq:duration} presents how the dependent variables were calculated.\todo{Make this clearer and link it with the python script}
+The dependent variables are based on the duration between time-points within all executed time-slices using a measurement unit of \texttt{nanoseconds}. The procedure for processing the raw data captured from the experiment machine, is done through a python script. The script calculates the duration between two time-stamps using the equation shown in \ref{eq:calculate-duration} and stores the specific duration into a \textit{.csv} file.
 
-\begin{figure}[H]
-\begin{equation}\label{eq:accover}
-accumulative\ overhead = \frac{\sum_{measurement\ point}}{expected\ total\ run\ duration}
+\begin{equation} 
+\label{eq:calculate-duration}
+\begin{split}
+duration = t_{n} - t_{n-1}
+\end{split}
 \end{equation}
-\begin{equation}\label{eq:duration}
-expected\ total\ run\ duration = \frac{no.\ time\-slices\ in\ dataset}{hz}
-\end{equation}
-\end{figure}
 
-To address both research questions and to ensure full coverage, the experiment results will be analysed through an analysis of variance (ANOVA) to understand the impact the different treatments have on the dependent variable.\\\todo{Write about the python code and how the data was processed for the analysis}
+To address both research questions and to ensure full coverage, the experiment results is analysed through an analysis of variance (ANOVA) to understand the impact the different treatments have on the dependent variable. As this research has a very large sample size the data gathered will provide high significance. To understand the impact of the treatments further correlation analysis is made between the subjects and treatments.\\
 
 
 
