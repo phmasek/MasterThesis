@@ -1,0 +1,148 @@
+
+%-------------------------------
+\subsection{Start Set}
+In order to begin the snowballing search approach, a collection of papers are required. To identify a start set of papers, keywords are extracted from the research questions, taking synonyms into account. Formulating a search-string from keywords that are broad and cover multiple areas of research may result in collecting large ammounts of literature that span different subject domains. For that reason, broad keywords are broken down into more specific and detailed keywords specific to this study. The resulting search string used for a provisional start-set is found in table~\ref{search-string}. \\
+
+The search string was applied to the Scopus database \cite{scopus} which resulted in finding 215 papers. The actual search was conducted May 10, 2016. The Scopus database was chosen to avoid publisher bias and to only search for published papers. A screening process was then applied to the provisional start-set. The screening process included reading the title and abstract and results to determine if the paper is relevant
+
+% what is relevant here? What are the inclusion and exclusion criteria?
+
+ to this study. In total, 10 candidates for inclusion were identified as being related work. The 10 papers are identified in table~\ref{lr-startset}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{p{15cm}}
+TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Based OR Linux Containers OR Lightweight Virtualization OR Container Cloud OR Docker) AND ( LIMIT-TO(SUBJAREA,"COMP" ) )
+\end{tabular}
+\caption{Search String}
+\label{search-string}
+\end{table}
+
+\begin{table}[]
+\begin{tabular}{lp{13cm}}
+{[}P1{]}  & C. N. Mao, M. H. Huang, S. Padhy, S. T. Wang, W. C. Chung, Y. C. Chung, and C. H. Hsu, “Minimizing latency of real-time container cloud for software radio access networks,” in 2015 IEEE 7th International Conference on Cloud Computing Technology and Science (CloudCom), Nov 2015, pp. 611–616.                                  \\
+{[}P2{]}  & A. Krylovskiy, “Internet of things gateways meet linux containers: Performance evaluation and discussion,” in Internet of Things (WF-IoT), 2015 IEEE 2nd World Forum on, Dec 2015, pp. 222–227.                                                                                                                                      \\
+{[}P3{]}  & M. Raho, A. Spyridakis, M. Paolino, and D. Raho, “Kvm, xen and docker: A performance analysis for arm based nfv and cloud computing,” in Information,Electronic and Electrical Engineering (AIEEE), 2015 IEEE 3rd Workshop onAdvances in, Nov 2015, pp. 1–8.                                                                         \\
+{[}P4{]}  & R. Morabito, J. Kj\"allman, and M. Komu, “Hypervisors vs. lightweight virtualization: A performance comparison,” in Proceedings of the 2015 IEEE Interational Conference on Cloud Engineering, ser. IC2E ’15. Washington, DC, USA: IEEE Computer Society, 2015, pp. 386–393.                                                      \\
+{[}P5{]}  & M. G. Xavier, I. C. D. Oliveira, F. D. Rossi, R. D. D. Passos, K. J. Matteussi, and C. A. F. D. Rose, “A performance isolation analysis of disk-intensive workoads on container-based clouds,” in 2015 23rd Euromicro International Conference on Parallel, Distributed, and Network-Based Processing, March 2015, pp. 253–260. \\
+{[}P6{]}  & W. Felter, A. Ferreira, R. Rajamony, and J. Rubio, “An updated performance comparison of virtual machines and linux containers,” in Performance Analysis of Systems and Software (ISPASS), 2015 IEEE International Symposium on, March 2015, pp. 171–172.                                                                            \\
+{[}P7{]}  & C. Ruiz, E. Jeanvoine, and L. Nussbaum, “Performance evaluation of containers for hpc,” in Euro-Par 2015: Parallel Processing Workshops: Euro-Par 2015 International Workshops, Vienna, Austria, August 24-25, 2015, Revised Selected Papers. Cham: Springer International Publishing, 2015, pp. 813–824. \\
+{[}P8{]}  & R. Wu, Y. Chen, E. Blasch, B. Liu, G. Chen, and D. Shen, “A container-based elastic cloud architecture for real-time full-motion video (fmv) target tracking,” in 2014 IEEE Applied Imagery Pattern Recognition Workshop (AIPR), Oct 2014, pp. 1–8.                                                                                  \\
+{[}P9{]} & Z. Estrada, F. Deng, Z. Stephens, C. Pham, Z. Kalbarczyk, and R. Iyer, “Performance comparison and tuning of virtual machines for sequence alignment software,” Scalable Computing, vol. 16, no. 1, pp. 71–84, 2015.
+\end{tabular}
+\centering
+\caption{Start Set}
+\label{lr-startset}
+\end{table}
+
+%C1 Minimizing latency of real-time container cloud for software radio access networks,
+%C2 Internet of things gateways meet linux containers: Per- formance evaluation and discussion
+%C3 Kvm, xen and docker: A performance analysis for arm based nfv and cloud computing
+%C4 Hypervisors vs. lightweight virtualization: A performance comparison
+%C5 A performance isolation analysis of disk- intensive workoads on container-based clouds,
+%C6 An updated performance comparison of virtual machines and linux containers
+%C7 Performance evaluation of containers for hpc
+%C8 A container- based elastic cloud architecture for real-time full-motion video (fmv) tar- get tracking,
+%C9 Performance comparison and tuning of virtual machines for sequence alignment software
+%P1 Performance Evaluation of Container-Based Virtualization for High Performance Computing Environments
+%P2 Performance Optimization of Linux Networking for Latency-Sensitive Virtual Systems
+
+%-------------------------------
+\subsection{Iteration 1}
+Backward and forward snowballing is conducted on the start set consisting of nine papers.
+
+%-------------------------------
+\subsubsection{Backward Snowballing}
+Backward snowballing is the process of studying the reference list of each paper in the start set in order to identify new papers to include in related work. \\
+
+\textbf{P1} includes 26 references where one reference is already included in the start set (paper P6). The reference list was studied, reading the title and abstract of the respective paper. Of all the references, one paper was identified as being related to this study. It was identified by reading all contents of the paper, since final inclusions is based on the full paper. The paper identified and thus included in the list of papers is: \\
+
+\begin{labeling}{[{[}C10{]}]}
+\item [{[}\textbf{C1}{]}]  M. G. Xavier, M. V. Neves, F. D. Rossi, T. C. Ferreto, T. Lange and C. A. F. De Rose, “Performance Evaluation of Container-Based Virtualization for High Performance Computing Environments,“ 2013 21st Euromicro International Conference on Parallel, Distributed, and Network-Based Processing, Belfast, 2013, pp. 233-240.
+\item
+\end{labeling}
+
+Table~\ref{back-snow} shows the result of backward snowballing on the remaining eight papers. The results are presented in a table to avoid redundant text as the process and results of backward snowballing for each paper is very similar. Specifically, the process involved studying the reference list to identify new papers. In all papers, except P1, no new papers were identified as being related to this study after reading the title and abstract. Furthermore, most of the papers in the start set reference to each other, as seen in column three of the table~\ref{back-snow}. All papers in the start set contain reference to C1, except papers P2 and P8. Similarly, all papers in the start set reference to P6 except papers P5, P6 and P8. This shows that there is a strong connection between all papers in the start set. However, since there was only one new paper included in the start-set during the backward snowballing, this sheds light on the fact that this study is within a narrow scope, and further motivates the need for carrying out this study. 
+
+\begin{table}[]
+\begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}| >{\centering}m{1in} |>{\centering\arraybackslash}m{1in}|}
+\hline
+\textbf{Start Set Paper} & \textbf{No. References} & \textbf{Reference to Start Set} & \textbf{New Papers Identified} \\ \hline
+\textbf{P1}              & 26                      & P6                                          & C1                  \\ \hline
+\textbf{P2}              & 21                      & P6, P4                                      & 0                   \\ \hline
+\textbf{P3}              & 47                      & P6, C1                                      & 0                   \\ \hline
+\textbf{P4}              & 42                      & P6, P2, C1                                  & 0                   \\ \hline
+\textbf{P5}              & 46                      & C1                                          & 0                   \\ \hline
+\textbf{P6}              & 50                      & C1                                          & 0                   \\ \hline
+\textbf{P7}              & 19                      & P6, C1                                      & 0                   \\ \hline
+\textbf{P8}              & 18                      & 0                                           & 0                   \\ \hline
+\textbf{P9}              & 31                      & P6, C1                                      & 0                   \\ \hline
+\end{tabular}
+\centering
+\caption{Results from Backward Snowballing in Iteration 1}
+\label{back-snow}
+\end{table}
+
+%-------------------------------
+\subsubsection{Forward Snowballing}
+The next step is to examine the citation to all papers that are in the start set. All papers were search for citations using Google Scholar. The Scopus database was chosen not to be used for the forward snowballing procedure since it was shown that Google Scholar was more accurate in finding cited papers. The exclusion criteria for this snowballing search procedure excludes all non peer reviewed papers. However, during the forward snowballing search, a very relevant paper was found in regards to this study. It was then decided to include the paper as part of the related work. The specific paper included is: \\
+
+
+\begin{labeling}{[{[}C10{]}]}
+\item [{[}\textbf{C2}{]}]  Welch, James Matthew. Performance Optimization of Linux Networking for Latency-Sensitive Virtual Systems. Diss. ARIZONA STATE UNIVERSITY, 2015.
+
+\item
+\end{labeling}
+
+\begin{table}[]
+\begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}|>{\centering\arraybackslash}m{1in}|}
+\hline
+\textbf{Start Set Paper} & \textbf{No. Citations}  & \textbf{New Papers Identified} \\ \hline
+\textbf{P1}              & 0                       & 0                             \\ \hline
+\textbf{P2}              & 0                       & 0                             \\ \hline
+\textbf{P3}              & 0                       & 0                             \\ \hline
+\textbf{P4}              & 8                       & C2				               \\ \hline
+\textbf{P5}              & 2                       & 0                             \\ \hline
+\textbf{P6}              & 81                      & 0                             \\ \hline
+\textbf{P7}              & 4                       & 0                             \\ \hline
+\textbf{P8}              & 1                       & 0                             \\ \hline
+\textbf{P9}              & 1                     & 0                             	\\ \hline
+\end{tabular}
+\centering
+\caption{Results from Forward Snowballing in Iteration 1}
+\label{forward-snow}
+\end{table}
+
+%-------------------------------
+\subsection{Iteration 2}
+Two additional papers to the start set were found in iteration one of the snowballing procedure. Thus, backward and forward snowballing is applied to C1 and C2. 
+
+%-------------------------------
+\subsubsection{Backward Snowballing}
+\textbf{C1} has 32 references. Of the 32 references, 16 references are excluded based on being references to online material. A large number of the resulting references have already been analysed. No new papers were identified being related work after reading the title and abstract of the references after the exclusion criteria is applied. \textbf{C2} has 69 references with reference to C1, P4, P6. No additional papers were found when studying the reference list of the paper.
+
+%-------------------------------
+\subsubsection{Forward Snowballing}
+\textbf{C1} has been cited by 104 papers. When reviewing the list of cited papers, many of them have already been reviewed during the snowballing procedure.  Analysing the list of papers resulted in no additional papers as being related work. For \textbf{C2} there were no citations to the paper found. This is expected since C2 is not a published paper. 
+
+%-------------------------------
+\section{Related Work}
+
+deployment using docker for rt-system
+
+CPU performance overhead
+IO performance overhead 
+
+
+
+\subsection{Deployment}
+
+%[A modular CPS architecture design based on ROS and Docker] http://link.springer.com/article/10.1007/s12008-016-0313-8 
+%[Testing Continuous Deployment with Lightweight Multi-Platform Throw-Away Containers] https://drive.google.com/drive/folders/0B5MHQ6z1NgQAXzh6TDk2Z0tvLUk
+
+Why use docker for RT CPS?
+
+\subsection{Performance}
+
+%Does the deployment context influence the scheduling precision of the application with respect to the execution environment. 
+
