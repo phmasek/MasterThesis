@@ -10,12 +10,11 @@ In this section we introduce (i) the process of identifying related work and (ii
 
 %-------------------------------
 \section{Gathering Related Work}
-The snowballing search approach for systematic literature studies is used to find relevant literature on the topic of this paper. The snowballing approach is the process of using the reference list or citations of a paper in order to identify additional papers. The guidelines for conducting a snowballing search approach, presented by Wohlin \cite{Wohlin} are followed. \\
+The snowballing search approach for systematic literature studies is used to find relevant literature on the topic of this paper. The snowballing approach is complementary to a traditional database search. Specifically, the reference list and citations of a paper are studied in order to identify additional papers. The snowballing search approach is used to ensure good coverage of current literature.\\
 
-In order to begin the snowballing search approach, a collection of papers are required. To identify a start set of papers, keywords are extracted from the research questions, taking synonyms into account. Formulating a search-string from keywords that are broad and cover multiple areas of research may result in collecting large ammounts of literature that span different subject domains. For that reason, broad keywords are broken down into more specific and detailed keywords specific to this study
+The guidelines for conducting a snowballing search approach, presented by Wohlin \cite{Wohlin} are followed. The steps to conduct a snowballing procedure involve selecting a start set of papers and apply forward and backward snowballing on each paper respectively. The process iterates until no new papers are found. To identify a start set of papers, keywords are extracted from the research questions, taking synonyms into account. Formulating a search-string from keywords that are broad and cover multiple areas of research may result in collecting large amounts of literature that span different subject domains. For that reason, broad keywords should be broken down into more specific and detailed keywords specific to the study. The search string is then applied to a database that preferably searches multiple publishers in order to avoid publisher bias. The papers are then screened according to inclusion/exclusion criteria. An exclusion criteria could state that all online material be excluded. \\
 
-Backward snowballing is the process of studying the reference list of each paper in the start set in order to identify new papers to include in related work. \\
-
+Backward and forward snowballing is then conducted on the start set. Backward snowballing is the process of studying the reference list to identify new papers. Looking at the place of reference and reading the title and abstract of the paper is a good starting point for inclusion, however, final inclusion states that the entire paper must be read. Subsequently, forward snowballing is the identifying papers that cite the paper under inspection. The same process of reading the title, abstract and place of reference is applied in order to include new literature. 
 
 %-- Why Snowballing ?
 %snowballing to ensure good coverage of literature
@@ -32,7 +31,7 @@ Backward snowballing is the process of studying the reference list of each paper
 This section introduces the results from performing the snowballing search procedure described in the previous section. First the start-set is formulated and introduced, where two sets of iterations are performed. 
 
 \subsubsection*{Start Set}
-To identify a provisional start set, a database search is performed. The  search string  applied to the Scopus database \cite{scopus} is found in \ref{search-string}.  The actual search was conducted May 10, 2016. The Scopus database is used in order to avoid publisher bias, since the database returns papers from a wide array of sources. The search resulted in finding 215 papers. A screening process was then applied to the 215 papers by reading the title and abstract. Papers were added to the provisional start set upon meeting the inclusion/exclusion criteria. Papers were included if found to be about disk I/O benchmarking, CPU benchmarking or software deployment, within the subject area of virtual containers (preferably Docker) and/or within the context of cyber physical systems. Papers were excluded if not being peer-reviewed. In total, 10 candidates for inclusion were identified. The 10 papers are identified in table~\ref{lr-startset}.
+A database search on Scopus \cite{scopus} is performed to identify the start set: the search string is found in \ref{search-string}.  The actual search was conducted May 10, 2016. The Scopus database returns literature from multiple publishers. The search resulted in finding 215 papers. The screening process was then applied to the 215 papers. Papers were added to the start set upon meeting the inclusion/exclusion criteria. Papers were included if found to be about disk I/O benchmarking, CPU benchmarking or software deployment, within the subject area of virtual containers (preferably Docker) and/or within the context of cyber physical systems. Papers were excluded if not being peer-reviewed. In total, 10 candidates for inclusion were identified. The 10 papers are identified in table~\ref{lr-startset}, denoted P1, P2 and so on.
 
 \begin{table}[]
 \centering
@@ -63,7 +62,7 @@ TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Ba
 %-----------------------%
 %------Iteration 1------ 
 \subsubsection*{Iteration 1: Backward Snowballing}
-\textbf{P1} includes 26 references where one reference is already included in the start set (paper P6). The reference list was studied, reading the title and abstract of the respective paper. Based on the inclusion criteria, one paper was included. It was identified by reading all contents of the paper, since final inclusions is based on the full paper. The paper identified and thus included in the list of papers is: \\
+\textbf{P1} includes 26 references where one reference is already included in the start set (paper P6). Based on the inclusion criteria, one paper was included. The paper identified and thus included in the start set is: \\
 
 %-------------------------------
 \begin{labeling}{[{[}C10{]}]}
@@ -72,7 +71,7 @@ TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Ba
 \end{labeling}
 %-------------------------------
 
-Table~\ref{back-snow} shows the result of backward snowballing on the remaining eight papers. The results are presented in a table to avoid redundant text as the process and results of backward snowballing for each paper is very similar. Specifically, the process involved studying the reference list to identify new papers. In all papers, except P1, no new papers matched the inclusion criteria after reading the title and abstract. Furthermore, most of the papers in the start set reference to each other, as seen in column three of table~\ref{back-snow}. All papers in the start set contain reference to C1, except papers P2 and P8. Similarly, all papers in the start set reference to P6 except papers P5, P6 and P8. This shows that there is a strong connection between all papers in the start set. 
+Table~\ref{back-snow} shows the result of backward snowballing on the remaining eight papers. The results are presented in a table to avoid redundant text as the process and results of backward snowballing for each paper are very similar. In all papers, except P1, no new papers matched the inclusion criteria after reading the title and abstract. Furthermore, most of the papers in the start set reference to each other, as seen in column three of table~\ref{back-snow}. All papers in the start set contain reference to C1, except papers P2 and P8. Similarly, all papers in the start set reference to P6 except papers P5, P6 and P8. This shows that there is a strong connection between all papers in the start set. 
 
 %-------------------------------
 \begin{table}[]
@@ -96,7 +95,7 @@ Table~\ref{back-snow} shows the result of backward snowballing on the remaining 
 %-------------------------------
 
 \subsubsection*{Iteration 1: Forward Snowballing}
-The next step is to examine the citation to all papers that are in the start set. All papers were search for citations using Google Scholar. The Scopus database was chosen not to be used for the forward snowballing procedure since it was shown that Google Scholar was more accurate in finding cited papers. The exclusion criteria for this snowballing search procedure excludes all non peer reviewed papers. However, during the forward snowballing search, a very relevant paper was found in regards to this study. It was then decided to include the paper as part of the related work. The specific paper included is: \\
+The next step is to examine the citation to all papers that are in the start set. All papers were searched for citations using Google Scholar. The Scopus database was chosen not to be used for the forward snowballing procedure since it was shown that Google Scholar was more accurate in finding cited papers. The exclusion criteria for this snowballing search procedure excludes all non peer reviewed papers. However, during the forward snowballing search, a very relevant paper was found in regards to this study. It was then decided to include the paper as part of the related work. The specific paper included is: \\
 
 
 \begin{labeling}{[{[}C10{]}]}
@@ -127,20 +126,25 @@ The next step is to examine the citation to all papers that are in the start set
 \subsubsection*{Iteration 2: Backward Snowballing}
 Two additional papers to the start set were found in iteration one of the snowballing procedure. Thus, backward and forward snowballing is applied to C1 and C2.\\ 
 
-\textbf{C1} has 32 references. Of the 32 references, 16 references are excluded based on being references to online material. A large number of the resulting references have already been analysed. No new papers were identified being related work after reading the title and abstract of the references after the exclusion criteria is applied.\\ 
+\textbf{C1} has 32 references. Of the 32 references, 16 references are excluded based on being references to online material. A large number of the resulting references have already been analysed in the previous iteration. No new papers were identified for inclusion.\\ 
 
 \textbf{C2} has 69 references with reference to C1, P4, P6. No additional papers were found when studying the reference list of the paper.
 
 \subsubsection*{Iteration 2: Forward Snowballing}
-\textbf{C1} has been cited by 104 papers. When reviewing the list of cited papers, many of them have already been reviewed during the snowballing procedure.  Analysing the list of papers resulted in no additional papers as being related work.\\ 
+\textbf{C1} has been cited by 104 papers. When reviewing the list of cited papers, many of them have already been reviewed during the snowballing procedure.  Analysing the list of papers resulted in no additional candidates for inclusion.\\ 
  
-
 \textbf{C2} has no citations. This is expected since C2 is not a published paper. 
-What did we get out of doing the snowballing \cite{gon}
+
 
 \subsection{Outcome}
+The snowballing search procedure resulted in finding nine papers during the database search. Two additional papers were identified during forward and backward snowballing. The snowballing procedure enabled good coverage of literature for related work and helped identify the current status of research in the field of container virtualization. 
 %a qualitative outcome of the snowballing procedure. What did it actually give us, and do for the paper? 
 %However, since there was only one new paper included in the start-set during the backward snowballing, this sheds light on the fact that this study is within a narrow scope, and further motivates the need for carrying out this study. 
+
+%What did we get out of doing the snowballing
+
+\section{Related Work} 
+\todo{can we have the same heading here again?}
 
 
 

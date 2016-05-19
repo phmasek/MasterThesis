@@ -1,6 +1,6 @@
 %Analyse <..> for the purpose of <..> with respect to their <..> from the point of view of the <..> in the context of <..>
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
-\chapter{Methodology}
+\chapter{Research Methodology}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\section{Experiment Planning}
@@ -13,7 +13,7 @@ In order to answer the research questions, an experiment is carried out followin
 % refine the main research questions, describe and motivate them to allow for traceability down to the hypotheses. 
 %Does the respective execution context influence the scheduling precision of the respective application?
 %Does the respective execution context influence the input/output performance of the respective application?
-The aim of the experiment is to systematically evaluate the scheduling precision and input-output performance of the experimental units running in different execution environments with respect to the deployment context. The goals of the experiment is described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section.  
+The aim of the experiment is to systematically evaluate the scheduling precision and input-output performance of the experimental units running in different execution environments with respect to the deployment context. The goals of the experiment is described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section. \todo{how are these connected to the research questions you described earlier?} 
 
 % execution environment: complete system 
 % deployment context: docker non-docker 
@@ -29,7 +29,7 @@ Goal 2 & Analyse the input and output performance of the Pi/IO Component for the
 \end{table}
 
 
-\subsection{Execution Environment}
+\subsection{Execution Environment} \label{section:exe-env}
 The execution environment describes the setting in which the execution of the experimental units take place. Specifically, the execution environment refers to all components that make up a complete system: the processors, operating system, software packages and so on. There are four execution environments used in this experiment. The execution environments are configured the same but with two main differences. The difference being (1) an alternation of two Linux kernels and (2) an alternation of the deployment context. In this case, the deployment context is running the experiment units natively on the target system or running the experimental units in a Docker container. The execution environments are precisely specified in table~\ref{table:exe-env}, where the configuration of the execution environment is later described in section~\ref{section:exp-material}.
 
 
@@ -49,9 +49,7 @@ The execution environment describes the setting in which the execution of the ex
 \subsection{System Load}
 Submitting the target system to heavy load is required in order to (1) traverse as many code paths of the kernel as possible and (2) mimic the run-time load of a real-time system. Stress-ng \cite{stress-ng} is a user-space application that interacts with many components of the kernel. It can spawn a number of worker threads that perform useless tasks in order to apply load to the target system. The type of worker thread can vary from processor load to disk intensive load. Applying heavy load to the target system enables the experiment to be executed in an environment that mimics a real-life scenario. One would expect a real-time system to consume 80\% of the system's resources, leaving a 20\% buffer for extreme circumstances to circumvent system overload. \\
 
-The experiment is performed in two scenarios: applying no-load and apply high-load to the system. Having the two scenarios allows us to make a fair comparison by identifying how the experimental units perform in a perfect environment versus a more realistic environment. 
-
-
+The experiment is performed in two scenarios: applying no-load and apply high-load to the system. Having these two scenarios allows for a fair comparison when the experimental units are executed in a more realistic operational enviroment. Having no load allows for the experimental units to be executed in isolated, controlled enviroment where a fair comparison can be done.
 
 %Tracing through all possible code paths of the kernel is not an option to uncover how deterministic a system is. In order to get a reliable estimation, a tool is required to traverse as many of these as possible. Stress offers a way to induce several different kinds of system load, therefore it interacts with many components of the kernel and should be able to expose some of the longer code paths through the kernel. Stress is a user-space application that can spawn a number of worker threads that perform useless tasks with the only purpose of submitting the system on which it runs to heavy load. Putting the system under load also enables the experiment to be executed in an environment that mimics a real-life scenario. One would expect a computer system in production to run at 80\% load, leaving a 20\% buffer for extreme circumstances and to avoid overloading the system.  
 
@@ -129,10 +127,7 @@ The vanilla Linux kernel 3.18.25-generic is downloaded from the official Ubuntu 
 \hline
 Parameter             & \multicolumn{1}{l|}{Setting} & Description \\ \hline
 CONFIG\_PREEMPT\_RT   & \textit{y}                   &             \\ \hline
-\textit{more to come} & \textit{}                    &             \\ \hline
-                      & \textit{}                    &             \\ \hline
-                      & \textit{}                    &             \\ \hline
-                      & \textit{}                    &             \\ \hline
+CONFIG_LOCK_DEBUGGING & \textit{n}                   &             \\ \hline
 \end{tabular}
 \centering
 \caption{Kernel Configuration Modifications}
@@ -218,7 +213,9 @@ The treatments that will be used for assessing the impact are factors specific t
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Hypotheses}
-The dependent variables are analysed to evaluate the hypotheses of the experiment. The alternative hypotheses are stated below, denoted $H_{1i_{j}}$. The \textit{i} corresponds to the goal identifier of the experiment where \textit{j} is a counter when more than one hypothesis is formulated per goal.  
+The dependent variables are analysed to evaluate the hypotheses of the experiment. The alternative hypotheses are stated below, denoted $H_{1i_{j}}$. The \textit{i} corresponds to the goal identifier of the experiment where \textit{j} is a counter when more than one hypothesis is formulated per goal. 
+
+The deployment context is executing the experimental units on the target system natively or in a Docker container. The execution enviroment is an alternating of the independent variables. Further details on the execution enviroments are specified in \ref{section:exe-env}.
 
 \begin{table}[H]
 \begin{tabular}{l|l}
