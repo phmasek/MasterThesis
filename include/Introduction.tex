@@ -86,6 +86,14 @@ The limitations of each execution environment can be identified by understanding
 %---------------------------------------------------%
 \section{Problem Domain \& Motivation}
 % This is a dedicated section for problem and motivation, you should not deviate too much from our domain and context
+% What is the connection with deployment?
+% check if the info in this section is really reflecting and following the reasoning you pitched in the previous subsections
+
+There exists no evidence which presents argumentation on how state-of-art deployment strategies impact real-time systems within autonomous self-driving vehicles and their time sensitive performance requirements. Current literature \cite{vmvscontainers} explores the overhead for general purpose operating system in the context of cloud-computing, which differs in requirements from that of an autonomous self-driving vehicle's real-time system. This creates a compelling gap in literature to explore the field of automotive by building argumentation which decision makers can rely upon when determining for which strategy is most suitable for the real-time application in question. The popularity of deployment strategies utilising containers is steadily increasing, thus making it intriguing to understand the performance overhead introduced by containers such as Docker. While the implementation of virtualisation technologies for deployment strategies brings many advantages, there still exists uncertainty to the disadvantage of how much, if any, performance overhead they carry.\\
+
+It is of particular importance to understand this impact for decision makers responsible for determining deployment strategies for time-critical systems utilized by self-driving vehicles. The rationale being that real-time systems are time constrained and must guarantee responses within a specified time deadline. If the system is to violate the specified deadline it may lead to software failure, which can potentially be catastrophic in the context of autonomous self-driving vehicles. Therefore it is crucial to ensure that the execution environment and deployment context will allow the real-time application to stay within its specified deadline. This is the gap in which the result of this research will seek to fulfil. Gaining specific measurement data of whether Docker carries extensive performance overhead will be an ultimate factor when deciding an approach to software deployment for real-time systems implemented in autonomous self-driving vehicles.\\
+
+
 %---------------------------------------------------%
 
 
@@ -93,6 +101,14 @@ The limitations of each execution environment can be identified by understanding
 %---------------------------------------------------%
 \section{Research Goal \& Research Questions}
 % We need rationales to explain what we expect from these RQs. Further, it would be nice to have some preparation sentences that would justify asking these questions and not others
+
+This research seeks to systematically study the impact of various execution contexts of two sample applications realised with OpenDaVINCI. The execution environment refers to the configuration of the target system including but not limited to system load, the deployment strategy and an alternation of a set of chosen Linux kernels. Methods of experimentation is used to answer the following research questions:\\
+
+\begin{enumerate}[label=\textbf{RQ\arabic*}]
+\label{section:rqs}
+	\item Does the respective execution environment influence the scheduling precision of the respective application?
+	\item Does the respective execution environment influence the input/output performance of the respective application?\\
+\end{enumerate}
 %---------------------------------------------------%
 
 
