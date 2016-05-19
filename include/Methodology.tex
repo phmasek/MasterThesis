@@ -127,13 +127,12 @@ The vanilla Linux kernel 3.18.25-generic is downloaded from the official Ubuntu 
 \hline
 Parameter             & \multicolumn{1}{l|}{Setting} & Description \\ \hline
 CONFIG\_PREEMPT\_RT   & \textit{y}                   &             \\ \hline
-CONFIG_LOCK_DEBUGGING & \textit{n}                   &             \\ \hline
+CONFIG\_LOCK\_DEBUGGING & \textit{n}                   &             \\ \hline
 \end{tabular}
 \centering
 \caption{Kernel Configuration Modifications}
 \label{kernel-config}
 \end{table}
-
 
 \subsubsection{Docker Parameters}
 The back-end manager for controlling Docker containers is performed by the \texttt{docker daemon}. The \texttt{docker daemon} is in charge of setting up the software environment for the containers as well as managing and controlling the container's resources. As mentioned in section~\ref{soft-env}, the \texttt{docker daemon} configuration file is changed to persistently use the \texttt{overlayfs} storage driver.\\
