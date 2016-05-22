@@ -12,10 +12,10 @@ The Pi Component aims to answer the first research question with a series of dat
 
 \subsection{Descriptive Statistics}
 
-This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{tab:desc-table-dep-pi} displays all mean values 
+This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart} displays all standard deviations between the treatment groups. A lower standard deviation imply a more deterministic treatment group. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
 
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \caption{Descriptive Statistics}
 \label{tab:desc-table-pi}
@@ -34,38 +34,95 @@ This section provides an overview of the collected data used for answering the h
 
 
 
-\begin{landscape}
-\begin{table}[]
-\centering
-\caption{Descriptive statistics of groups}
-\label{tab:desc-table-dep-pi}
-\renewcommand{\arraystretch}{1.5}
-\begin{tabu}{R{4.2cm}lccccc}
-\multicolumn{7}{c}{\textbf{Mean}}                                                                       \\
-                                             & \textit{\textbf{}}                     & \textbf{Overhead \#1} & \textbf{Pi Algorithm} & \textbf{Overhead \#2} & \textbf{Sleep} & \textbf{Total} \\ \tabucline[2pt]{-}
-\multirow{2}{*}[.2em]{\textbf{Deployment Context}} & Native                        & 23461                 & 8157531               & 29422                 & 2013445        & 10223860       \\
-                                             & Docker                        & 23576                 & 8159740               & 29815                 & 1998890        & 10212021       \\\hline
-\multirow{2}{*}[-.2em]{\textbf{Kernel Version}}     & Vanilla                       & 19941                 & 8180967               & 36361                 & 2198612        & 10435881       \\
-                                             & RT                            & 27096                 & 8136305               & 22876                 & 1813723        & 10000000       \\\hline
-\multirow{2}{*}[-.2em]{\textbf{Load Type}}          & No Load                       & 28378                 & 8012087               & 32725                 & 1926811        & 10000000       \\
-                                             & CPU Load                      & 18660                 & 8305185               & 26513                 & 2085524        & 10435881       \\
-                                           &                                        &                                        &                               &                               &                               &                               \\
-\multicolumn{7}{c}{\textbf{Std. dev.}}                                                                  \\
-                                             & \textit{\textbf{}}                     & \textbf{Overhead \#1} & \textbf{Pi Algorithm} & \textbf{Overhead \#2} & \textbf{Sleep} & \textbf{Total} \\ \tabucline[2pt]{-}
-\multirow{2}{*}[.2em]{\textbf{Deployment Context}} & Native                        & 16296                 & 2425112               & 54039                 & 1966256        & 3042014        \\
-                                             & Docker                        & 25156                 & 2424657               & 38275                 & 1944629        & 3025734        \\\hline
-\multirow{2}{*}[-.2em]{\textbf{Kernel Version}}     & Vanilla                       & 8057                  & 2736986               & 51781                 & 2160648        & 3400376        \\
-                                             & RT                            & 28423                 & 2065925               & 40164                 & 1704518        & 2598352        \\\hline
-\multirow{2}{*}[-.2em]{\textbf{Load Type}}          & No Load                       & 1032                  & 580                   & 16701                 & 15999          & 3536           \\
-                                             & CPU Load                      & 29156                 & 3423037               & 63931                 & 2763150        & 4279483       
-\end{tabu}
-\end{table}
-\end{landscape}
+
+
+\pgfplotstableread[col sep = semicolon]{data/pi-std.csv}\mydata
+\begin{figure}[H]
+\caption{Std. dev. between groups \textit{(lower is better)}}
+\label{fig:pi-std-chart}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.4,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1.05},
+      y dir=reverse,
+      xlabel={$ns$ std. dev.},
+      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=Group,x=odv_oh1]{\mydata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=pi_calc]{\mydata};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=Group,x=odv_oh2]{\mydata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=sleep]{\mydata};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+\pgfplotstableread[col sep = semicolon]{data/pi-mean.csv}\mydata
+\begin{figure}[H]
+\caption{Mean between groups \textit{(lower is better)}}
+\label{fig:pi-mean-chart}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.4,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1.05},
+      y dir=reverse,
+      xlabel={$ns$ mean},
+      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=Group,x=odv_oh1]{\mydata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=pi_calc]{\mydata};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=Group,x=odv_oh2]{\mydata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=sleep]{\mydata};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
 
 
 \subsection{Hypothesis Testing}
 
-Table \ref{tbl:hypothesispi} presents the P-value results of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments. To better understand what that impact is a effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
+Table \ref{tbl:hypothesispi} presents the P-value $Pr(>F)$ results of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
 
 \begin{table}[H]
 \centering
@@ -91,42 +148,31 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cKKccccD}
                                 & \textbf{Df} & \textbf{Pillai} & \textbf{Wilks} & \textbf{approx F} & \textbf{num Df} & \textbf{den Df} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{deployment}             & 1           & 0.000040        & 0.99996        & 114               & 4               & 11519957        & {< 2.2e-16}     & 0,00003759565 \\
-\textbf{kernel}                 & 1           & 0,061970        & 0.93803        & 190263            & 4               & 11519957        & {< 2.2e-16}     & 0,061865746 \\
-\textbf{load}                   & 1           & 0.064299        & 0.93570        & 197906            & 4               & 11519957        & {< 2.2e-16}     & 0,062118543 \\
-\textbf{deployment:kernel:load} & 1           & 0.056744        & 0.94326        & 41444             & 16              & 11519957        & {< 2.2e-16}     & 0,062118543 \\
+\textbf{deployment}             & 1           & 0.000040        & 0.99996        & 114               & 4               & 11519957        & {< 2.2e-16}     & 0.00003973235  \\
+\textbf{kernel}                 & 1           & 0,061970        & 0.93803        & 190263            & 4               & 11519957        & {< 2.2e-16}     & 0.0619699      \\
+\textbf{load}                   & 1           & 0.064299        & 0.93570        & 197906            & 4               & 11519957        & {< 2.2e-16}     & 0.06429905     \\
+\textbf{deployment:kernel:load} & 1           & 0.000016        & 0.99998        & 46                & 4               & 11519957        & {< 2.2e-16}     & 0.00001594317  \\
 \textbf{Residuals}              & 11519960    &                 &                &                   &                 &                 &                 &            
 \end{tabu}
 \end{table}
-\end{landscape}
-
-
-The MANOVA tests suggests that \textit{deployment context} has a smaller impact on scheduling precision. This is further evident when analysing the coefficients captured. Table \ref{tbl:coef-pi} displays the coefficients of each treatment onto each of the dependent variables. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable.
-
 \begin{table}[]
 \centering
 \caption{Coefficient between treatment and dependent variable ($ns$)}
 \label{tbl:coef-pi}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabu}{r|cccc}
-                     & \textbf{Overhead \#1} & \textbf{Pi Algorithm} & \textbf{Overhead \#2} & \textbf{Sleep} \\ \tabucline[2pt]{-}
-\textbf{(Intercept)} & 13459.67              & 8347536.33            & -4247.76              & 2538690.84     \\
-\textbf{native}      & 16.36                 & -36.77                & -10.08                & 30.48          \\
-\textbf{vanilla}     & -1390.55              & -888.55               & 29233.05              & -26953.95      \\
-\textbf{noload}      & 15588.70              & -334976.86            & 22312.86              & -598363.77     \\
-%                      &                       &                       &                       &                \\
-% \multicolumn{5}{c}{\textbf{Coefficient for all scenarios}}                                                    \\
-% \textbf{Scenario}    & \textbf{Overhead \#1} & \textbf{Pi Algorithm} & \textbf{Overhead \#2} & \textbf{Sleep} \\ \tabucline[2pt]{-}
-% \textbf{1}           & N/A                   & N/A                   & N/A                   & N/A            \\
-% \textbf{2}           & N/A                   & N/A                   & N/A                   & N/A            \\
-% \textbf{3}           & N/A                   & N/A                   & N/A                   & N/A            \\
-% \textbf{4}           & 11544                 & -88142                & 31629                 & -850470        \\
-% \textbf{5}           & N/A                   & N/A                   & N/A                   & N/A            \\
-% \textbf{6}           & 66                    & -41                   & 192                   & -217           \\
-% \textbf{7}           & 279                   & 7303                  & 897                   & -55834         \\
-% \textbf{8}           & 11726                 & -86718                & 32070                 & -852517
+\begin{tabu}{r|rlrlrlrl}
+                     & \multicolumn{2}{c}{\textbf{Overhead \#1}} & \multicolumn{2}{c}{\textbf{Pi Algorithm}} & \multicolumn{2}{c}{\textbf{Overhead \#2}} & \multicolumn{2}{c}{\textbf{Sleep}} \\ \tabucline[2pt]{-}
+\textbf{(Intercept)} & \multicolumn{2}{c}{24742.80}              & \multicolumn{2}{c}{8033313.53}            & \multicolumn{2}{c}{39270.59}              & \multicolumn{2}{c}{2126532.85}     \\
+\textbf{deployment}  & 115.22 & \textit{(0.005)} & 2208.25 & \textit{(0.000)}& 392.57 & \textit{(0.010)} & -14554.94 & \textit{(0.007)}      \\
+\textbf{kernel}      & 7154.64 & \textit{(0.289)}& -44662.06 & \textit{(-0.006)}& -13484.74 & \textit{(-0.343)}& -384888.47 & \textit{(-0.181)}     \\
+\textbf{load}        & -9718.16 & \textit{(-0.393)}& 293097.96 & \textit{(0.036)}& -6211.75 & \textit{(-0.158)}& 158712.59 & \textit{(0.075)}     \\
 \end{tabu}
 \end{table}
+\end{landscape}
+
+
+The MANOVA tests suggests that \textit{deployment context} and the full \textit{execution environment} has a smaller impact on scheduling precision compared to the other separate independent variables. This is further evident when analysing the coefficients captured. Table \ref{tbl:coef-pi} displays the coefficients of each treatment onto each of the dependent variables. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in parentheses depicts how many percentage from intercept the treatment affects the particular independent variable.
+
 
 
 
@@ -156,4 +202,188 @@ The MANOVA tests suggests that \textit{deployment context} has a smaller impact 
 
 \subsection{Descriptive Statistics}
 
+This section provides an overview of the collected data used for answering the hypotheses and research question 2. Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of execution environment and its sub treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive Statistics}
+\label{tab:desc-table-piio}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{2.8cm}lcccl}
+\textbf{Type of variable}                         & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \textbf{Std. dev.}    & \textbf{Scale} \\ \tabucline[2pt]{-}
+\multirow{3}{*}[.3em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment context    & 1 151 968     & N/A           &   N/A                 & Nominal   \\ 
+                                              & Kernel Version        & 1 151 968     & N/A           &   N/A                 & Nominal   \\
+                                              & Load Type             & 1 151 968     & N/A           &   N/A                 & Nominal   \\ \hline
+\multirow{2}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Camera Performance    & 1 151 968     & 6040738       &   3282642             & Ratio     \\
+                                              & Disk performance      & 1 151 968     & 3559087       &   13424505            & Ratio     \\ \hline
+\end{tabu}
+\end{table}
+
+
+
+\pgfplotstableread[col sep = semicolon]{data/piio-std.csv}\mydata
+\begin{figure}[H]
+\caption{Std. dev. between groups \textit{(lower is better)}}
+\label{fig:piio-std-chart}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.4,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1.05},
+      y dir=reverse,
+      xlabel={$ns$ std. dev.},
+      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=camio]{\mydata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=diskio]{\mydata};
+
+\legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+\pgfplotstableread[col sep = semicolon]{data/piio-mean.csv}\mydata
+\begin{figure}[H]
+\caption{Mean between groups \textit{(lower is better)}}
+\label{fig:piio-mean-chart}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.4,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1.05},
+      y dir=reverse,
+      xlabel={$ns$ mean},
+      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=camio]{\mydata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=diskio]{\mydata};
+
+\legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
 \subsection{Hypothesis Testing}
+
+An analysis of variance was performed for each of the dependent variables to understand the impact of the independent variables onto the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.
+
+
+\begin{table}[H]
+\centering
+\caption{Hypothesis results}
+\label{tbl:hypothesispiio}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabu}{llc}
+\multicolumn{2}{c}{\textbf{Hypothesis}}                                     & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
+$H_{12_{1}}$    & Camera Performance $\leftarrow$ Deployment Context      & {< 2.2e-16}     \\
+$H_{12_{2}}$    & Camera Performance $\leftarrow$ Kernel Version          & {< 2.2e-16}     \\
+$H_{12_{3}}$    & Camera Performance $\leftarrow$ Execution environment   & {< 2.2e-16}     \\
+$H_{12_{4}}$    & Disk Performance $\leftarrow$ Deployment Context      & {< 2.2e-16}       \\
+$H_{12_{5}}$    & Disk Performance $\leftarrow$ Kernel Version          & {< 2.2e-16}       \\
+$H_{12_{6}}$    & Disk Performance $\leftarrow$ Execution environment   & {0.00074}
+\end{tabu}
+\end{table}
+
+
+Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on the chosen kernel version. While load has a far lower effect on camera performance in comparison with the kernel version. This can be seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
+
+\begin{table}[H]
+\centering
+\caption{ANOVA results Camera performance}
+\label{tbl:anova-cam}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{r|cccccD}
+                    & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
+\textbf{deployment} & 1           & {5.403e+15}     & {5.403e+15}      & 509.91           & {< 2.2e-16}      & 0.0004424508 \\
+\textbf{kernel}     & 1           & {1.890e+17}     & {1.890e+17}      & 17833.94         & {< 2.2e-16}      & 0.01524537   \\
+\textbf{load}       & 1           & {7.905e+14}     & {7.905e+14}      & 74.61            & {< 2.2e-16}      & 0.00006476481\\
+\textbf{deployment:kernel}&1      & {2.511e+15}     & {2.511e+15}      & 236.96           & {< 2.2e-16}      & 0.0002056625 \\
+\textbf{Residuals}  & 1151960     & {1.221e+19}     & {1.060e+13}      &                  &                  &           
+\end{tabu}
+\end{table}
+
+
+
+The conducted ANOVA's result depicted in table \ref{tbl:anova-disk} suggests that the effect deployment context has on disk performance is below the effect of kernel version and load type. This is seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
+
+\begin{table}[H]
+\centering
+\caption{ANOVA results Disk performance}
+\label{tbl:anova-disk}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{r|cccccD}
+                    & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(>F)}  & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
+\textbf{deployment} & 1           & {2.433e+16}     & {2.433e+16}      & 136              & {< 2.2e-16}      & 0.0001180497 \\
+\textbf{kernel}     & 1           & {5.558e+17}     & {5.558e+17}      & 3107             & {< 2.2e-16}      & 0.0026899434 \\
+\textbf{load}       & 1           & {9.636e+17}     & {9.636e+17}      & 5387             & {< 2.2e-16}      & 0.0046543952 \\
+\textbf{deployment:kernel}&1      & {2.037e+15}     & {2.037e+15}      & 11.386           & 0.00074          & 0.000009884337 \\
+\textbf{Residuals}  & 1151964     & {2.061e+20}     & {1.789e+14}      &                  &                  &   
+\end{tabu}
+\end{table}
+
+
+Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camera performance and disk performance. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in parentheses depicts how many percentage from intercept the treatment affects the particular independent variable.
+
+\begin{table}[H]
+\centering
+\caption{Coefficient between treatment and dependent variable ($ns$)}
+\label{tbl:coef-piio}
+\renewcommand{\arraystretch}{1.5}
+\begin{tabu}{r|cccc}
+                     & \multicolumn{2}{c}{\textbf{Camera}}         & \multicolumn{2}{c}{\textbf{Disk}} \\ \tabucline[2pt]{-}
+\textbf{(Intercept)} & \multicolumn{2}{c}{5665596}                 & \multicolumn{2}{c}{1755530}       \\
+\textbf{deployment}  & 34059              & \textit{(0.006)}       & 173067         & \textit{(0.099)} \\
+\textbf{kernel}      & 778096             & \textit{(0.137)}       & 1517577        & \textit{(0.864)} \\
+\textbf{load}        & -16137             & \textit{(-0.003)}      & 2011365        & \textit{(1.146)}
+\end{tabu}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+
+
