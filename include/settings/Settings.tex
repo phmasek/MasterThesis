@@ -157,18 +157,28 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 \definecolor{blues4}{RGB}{49, 130, 189}
 \definecolor{blues5}{RGB}{8, 81, 156}
 
-\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{L}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \usepackage{multirow}
 \usepackage{tabu}
 \usepackage[scientific-notation=false]{siunitx}
 
+\newcolumntype{N}{S[
+ tight-spacing=true,round-mode=places,
+                          round-precision=0,
+                          table-format =  1]}
 \newcolumntype{K}{S[
  tight-spacing=true,round-mode=places,
                           round-precision=3]}
+\newcolumntype{D}{S[
+ tight-spacing=true,round-mode=places,
+                          round-precision=4,
+                          table-format =  1.4]}
 \newcolumntype{Z}{S[
  tight-spacing=true,round-mode=places,
+    table-number-alignment=center,
                           round-precision=4] }
 
-
+\usepackage{amssymb}
 \usepackage{pdflscape}
