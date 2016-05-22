@@ -1,0 +1,340 @@
+\iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
+\chapter{Data Analysis} \todo{Find the best way to analyse the data. Meeting with Jan Schröder 20'th May will hopefully give us some hints.}
+
+The conducted experiments resulted in a series of datasets which are used to answer the research questions separately. This section seek to present the descriptive statistics of all data captured.
+
+
+
+\section{Descriptive Statistics}
+
+Table \ref{tab:scen-table} displays the configurations for all scenarios run during the experiment. The scenario numbers depicted in the table reflects the scenario numbers presented in this section.
+
+\begin{table}[H]
+\centering
+\caption{Scenario specification}
+\label{tab:scen-table}
+\begin{tabular}{|c|l|l|l|c|}
+\hline
+\textbf{scenario} & \textbf{deployment} & \textbf{kernel} & \textbf{load} & \textbf{N} \\ \hline
+1                 & native              & generic         & noload  	  &	5		   \\
+2                 & native              & rt              & noload  	  &	5		   \\
+3                 & native              & generic         & cpuload  	  &	5		   \\
+4                 & native              & rt              & cpuload  	  &	5		   \\
+5                 & docker              & generic         & noload   	  &	5		   \\
+6                 & docker              & rt              & noload   	  &	5		   \\
+7                 & docker              & generic         & cpuload  	  &	5		   \\
+8                 & docker              & rt              & cpuload  	  &	5		   \\ \hline
+\end{tabular}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive Statistics}
+\label{tab:desc-table}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{3.7cm}lcccl}
+\textbf{Type of variable} 				& \textbf{Variable} 	& \textbf{N} 	& \textbf{Mean} & \textbf{Std. dev.} 	& \textbf{Scale} \\ \tabucline[2pt]{-}
+\multirow{3}{*}[.3em]{Independent variables} 	& Deployment context 	& 14 399 960 	& N/A  	&	N/A 				& Nominal 	\\ 
+					  					& Kernel Version	   	& 14 399 960 	& N/A  	  		&	N/A 				& Nominal 	\\
+					  					& Load Type			   	& 14 399 960 	& N/A  	  		&	N/A 				& Nominal 	\\ \hline
+\multirow{4}{*}[-.2em]{Dependent variables} 	& Overhead \#1 	& 14 399 960 	& 23520.95		&	14420.58			& Ratio	 	\\
+										& Pi Algorithm 			& 14 399 960 	& 8161512	 	&	2442637				& Ratio	 	\\
+										& Overhead \#1 			& 14 399 960 	& 30946.9	 	&	161049.8			& Ratio	 	\\
+										& Sleep 	 			& 14 399 960 	& 1983268	 	&	1930865				& Ratio	 	\\ \hline
+\end{tabu}
+\end{table}
+
+
+
+
+
+
+
+
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive results of Total}
+\label{tab:desc-table-total}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{3.8cm}lccc}
+\textbf{Differences among groups} 	& \textbf{Treatment groups} 	& \textbf{N} 	& \textbf{Mean ($ns$)} & \textbf{Std. dev.} \\ \tabucline[2pt]{-}
+Deployment Context					& Native 						& 7 199 980	 	& 10192188		& 3024813		 	 \\
+							 		& Docker						& 7 199 980	 	& 10206308		& 3045907		 	 \\ \hline
+Kernel Version 						& Vanilla 						& 7 199 980	 	& 10398495		& 3366281		 	 \\
+							 		& RT\_preempt					& 7 199 980	 	& 10000000		& 2648753		 	 \\ \hline
+Load Type							& No Load 						& 7 199 980 	& 10000000		& 2741.015		 	 \\
+							 		& CPU Stress					& 7 199 980 	& 10398495		& 4283426		 	 \\
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Results of Total}
+\label{tab:desc-table-anova-total}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{4.5cm}cccZ}
+\textbf{Independent factor} 	& \textbf{df} 	& \textbf{Statistic} 	& \textbf{Sig.} & $\eta^{2}$ \\ \tabucline[2pt]{-}
+Deployment Context				& 1 			& 78.58	 				& 2e-16		 	& 0.000005410108     \\
+Kernel Version 					& 1 			& 62586.55	 			& 2e-16			& 0.004308822921     \\
+Load Type						& 1 			& 62586.55 				& 2e-16			& 0.004308823096     \\
+\end{tabu}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive results of Overhead \#1}
+\label{tab:desc-table-overhead1}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{3.8cm}lccc}
+\textbf{Differences among groups} 	& \textbf{Treatment groups} 	& \textbf{N} 	& \textbf{Mean($ns$)} & \textbf{Std. dev.} \\ \tabucline[2pt]{-}
+\multirow{2}{*}[-.1em]{Deployment Context}	& Native 				& 7 199 980	 	& 23407.67		& 8687.914		 	 \\
+							 		& Docker						& 7 199 980	 	& 23634.23		& 18449.96		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Kernel Version} 	& Vanilla 					& 7 199 980	 	& 19927.08		& 8122.908		 	 \\
+							 		& RT\_preempt					& 7 199 980	 	& 27114.82		& 18002.58		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Load Type}	& No Load 						& 7 199 980 	& 28435.13		& 1109.85		 	 \\
+							 		& CPU Stress					& 7 199 980 	& 18606.77		& 19140.96		 	 \\
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Results of Overhead \#1}
+\label{tab:desc-table-anova-total}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{4.5cm}cccZ}
+\textbf{Independent factor} 	& \textbf{df} 	& \textbf{Statistic} 	& \textbf{Sig.} & $\eta^{2}$ \\ \tabucline[2pt]{-}
+Deployment Context				& 1 			& 1081	 				& 2e-16		 	& 0.00006170421    \\
+Kernel Version 					& 1 			& 1088444	 			& 2e-16			& 0.06210956238    \\
+Load Type						& 1 			& 2035096 				& 2e-16			& 0.11612812709    \\
+\end{tabu}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive results of Pi Algorithm}
+\label{tab:desc-table-pi}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{3.8cm}lccc}
+\textbf{Differences among groups} 	& \textbf{Treatment groups} 	& \textbf{N} 	& \textbf{Mean ($ns$)} & \textbf{Std. dev.} \\ \tabucline[2pt]{-}
+\multirow{2}{*}[-.1em]{Deployment Context}	& Native 				& 7 199 980	 	& 8161645		& 2445165		 	 \\
+							 		& Docker						& 7 199 980	 	& 8161379		& 2440106		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Kernel Version} 	& Vanilla 					& 7 199 980	 	& 8180869		& 2728115		 	 \\
+							 		& RT\_preempt					& 7 199 980	 	& 8142155		& 2118865		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Load Type}	& No Load 						& 7 199 980 	& 8012193		& 558.261		 	 \\
+							 		& CPU Stress					& 7 199 980 	& 8310832		& 3447950		 	 \\
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Results of Pi Algorithm}
+\label{tab:desc-table-anova-total}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{4.5cm}cccZ}
+\textbf{Independent factor} 	& \textbf{df} 	& \textbf{Statistic} 	& \textbf{Sig.} & $\eta^{2}$ \\ \tabucline[2pt]{-}
+Deployment Context				& 1 			& 0.043	 				& 0.836		 	& 0.000000002955671    \\
+Kernel Version 					& 1 			& 907.784	 			& 2e-16			& 0.000062801185717    \\
+Load Type						& 1 			& 54016.913				& 2e-16			& 0.003736932449160    \\
+\end{tabu}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive results of Overhead \#2}
+\label{tab:desc-table-overhead2}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{3.8cm}lccc}
+\textbf{Differences among groups} 	& \textbf{Treatment groups} 	& \textbf{N} 	& \textbf{Mean($ns$)} & \textbf{Std. dev.} \\\tabucline[2pt]{-}
+\multirow{2}{*}[-.1em]{Deployment Context}	& Native 				& 7 199 980	 	& 31472.15		& 220151.7		 	 \\
+							 		& Docker						& 7 199 980	 	& 30421.64		& 58367.21		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Kernel Version} 	& Vanilla 					& 7 199 980	 	& 36952.63		& 72785.52		 	 \\
+							 		& RT\_preempt					& 7 199 980	 	& 24941.16		& 215648.3		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Load Type}	& No Load 						& 7 199 980 	& 32924.52		& 16976.72		 	 \\
+							 		& CPU Stress					& 7 199 980 	& 28969.27		& 227107.9		 	 \\
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Results of Overhead \#2}
+\label{tab:desc-table-anova-total}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{4.5cm}cccZ}
+\textbf{Independent factor} 	& \textbf{df} 	& \textbf{Statistic} 	& \textbf{Sig.} & $\eta^{2}$ \\ \tabucline[2pt]{-}
+Deployment Context				& 1 			& 153.4	 				& 2e-16		 	& 0.00001063714    \\
+Kernel Version 					& 1 			& 20056.2	 			& 2e-16			& 0.00139063322    \\
+Load Type						& 1 			& 2174.7				& 2e-16			& 0.00015078792    \\
+\end{tabu}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\caption{Descriptive results of Sleep}
+\label{tab:desc-table-sleep}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{3.8cm}lccc}
+\textbf{Differences among groups} 	& \textbf{Treatment groups} 	& \textbf{N} 	& \textbf{Mean ($ns$)} & \textbf{Std. dev.} \\ \tabucline[2pt]{-}
+\multirow{2}{*}[-.1em]{Deployment Context}	& Native 				& 7 199 980	 	& 1975663		& 1906998		 	 \\
+							 		& Docker						& 7 199 980	 	& 1990873		& 1954411		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Kernel Version} 	& Vanilla 					& 7 199 980	 	& 2160746		& 2113522		 	 \\
+							 		& RT\_preempt					& 7 199 980	 	& 1805789		& 1710704		 	 \\ \hline
+\multirow{2}{*}[-.2em]{Load Type}	& No Load 						& 7 199 980 	& 1926448		& 16258.22		 	 \\
+							 		& CPU Stress					& 7 199 980 	& 2040088		& 2729425		 	 \\
+\end{tabu}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Results of Sleep}
+\label{tab:desc-table-anova-sleep}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{4.5cm}cccZ}
+\textbf{Independent factor} 	& \textbf{df} 	& \textbf{Statistic} 	& \textbf{Sig.} & $\eta^{2}$ \\ \tabucline[2pt]{-}
+Deployment Context				& 1 			& 225.5	 				& 2e-16		 	& 0.00001551286    \\
+Kernel Version 					& 1 			& 122806.2	 			& 2e-16			& 0.00844866758    \\
+Load Type						& 1 			& 12587.3				& 2e-16			& 0.00086596204    \\
+\end{tabu}
+\end{table}
+
+\todo{Clean up format}
+\begin{landscape}
+\begin{table}[]
+\small
+\centering
+\caption{Results of Sleep}
+\label{tab:corrmatrix}
+\renewcommand{\arraystretch}{2}
+\begin{tabu}{l|[2pt]KKKKKKKK}
+ & \textbf{Deployment} & \textbf{Kernel} & \textbf{Load} & \textbf{Sleep} & \textbf{Overhead \#2} & \textbf{Pi Algorithm} & \textbf{Overhead \#1} & \textbf{Total Time-slice} \\ \tabucline[2pt]{-}
+\textbf{Deployment} & 1.000000 & & 										&  &  &  &  &  \\
+\textbf{Kernel} 	& 0.000000 & 1.000000 & 										&  &  &  &  &  \\
+\textbf{Load} 		& 0.000000 & 0.000000 & 1.00000000										&  &  &  &  &  \\
+\textbf{Sleep} 		& 0.00393863723 & -0.09191663 & 0.02942723 	& 1.000000000 &  &  &  &  \\
+\textbf{Overhead \#2} & -0.00326146338 & -0.03729119 & -0.01227957 & -0.018282841 & 1.000000000 &  &  &  \\
+\textbf{Pi Algorithm} & -0.00005436609 & -0.00792472 & 0.06113045 & -0.052751431 & 0.006363630 & 1.00000000000 &  &  \\
+\textbf{Overhead \#1} & 0.00785520266 & 0.24921790 & -0.34077577 & -0.026556810 & 0.007444956 & -0.02677201414 & 1.000000000 &  \\
+\textbf{Total Time-slice} & 0.00232596383 & -0.06564162 & 0.06564163 & 0.592572012 & 0.046583674 & 0.77137448028 & -0.033291422 & 1.000000000 \\
+\end{tabu}
+\end{table}
+\end{landscape}
+\clearpage
+
+
+
+\subsection{Pi Component}
+
+
+Figure \ref{fig:pi-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi component running with a speed of $100hz$. This results is intended to answer RQ1. Each scenario was run 5 times to ensure validity to the data. Scenario 3 and 7 are the only two configurations that overstepped the time deadline violating it by 8\% respectively. Observations can be made on the pi algorithm where the pi calculation overstepped its intended occupation time during the scenarios with CPU load. The algorithm violated its occupation time with approximately 3\% each of the four scenarios. The results show that the overhead of the middle ware (\texttt{odv\_oh1} and \texttt{odv\_oh2}) is minimal during all the scenarios. 
+
+\pgfplotstableread[col sep = semicolon]{data/R13-all-runs-parsed.csv}\mydata
+\begin{figure}
+\caption{Accumulated average time spent in time-slice $100hz$}
+\label{fig:pi-chart}
+\begin{tikzpicture}
+\begin{axis}[
+		xbar stacked,
+		width=\textwidth,
+	    height=7cm,
+	    xlabel={},
+	    ytick=data,
+	    xmin=0,
+	    xmax=1.15,
+      	y dir=reverse,
+	    ylabel={scenario},
+    	xlabel={$\%$ of time-slice},
+		x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	    xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+	    point meta={x*100},
+	    legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydata};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydata};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+\subsection{Pi/IO Component}
+
+Figure \ref{fig:piio-chart} presents the descriptive results extracted for each of the eight scenarios run to capture data for the pi/IO component running with a speed of $10hz$. This results is intended to answer RQ2. Each scenario was, as previous chart, run 5 times to ensure validity to the data. None of the scenarios violated their time deadline.
+
+\pgfplotstableread[col sep = semicolon]{data/R13-camera-runs-parsed.csv}\mycamdata
+\begin{figure}
+\caption{Accumulated average time spent in time-slice $10hz$}
+\label{fig:piio-chart}
+\begin{tikzpicture}
+\begin{axis}[
+		xbar stacked,
+		width=\textwidth,
+	    height=7cm,
+	    xlabel={},
+	    ytick=data,
+	    xmin=0,
+	    xmax=1.15,
+      	y dir=reverse,
+	    ylabel={scenario},
+    	xlabel={$\%$ of time-slice},
+		  x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+	    xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+	    point meta={x*100},
+	    legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=3,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues4,xbar,area legend] table[y=scenario,x=camio]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues2,xbar,area legend] table[y=scenario,x=diskio]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mycamdata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mycamdata};
+
+\legend{\scriptsize Overhead 1,\scriptsize Camera IO,\scriptsize Disk IO,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\section{Hypothesis Testing}
+
+To accurately answer the research questions a set of hypothesis tests are conducted. This section presents the analysis of results with the intent to answer the defined hypotheses set for answering the research questions. To understand each of 
+
+
+
+
+
+\subsection{Pi Component}
+\subsection{Pi/IO Component}
+
