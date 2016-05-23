@@ -177,23 +177,8 @@ The experimental units are executed in different execution environments with res
 
 
 \section{Variables and Hypotheses} %do we have any parameters?
-Two types of variables are defined for the experiment: dependent and independent variables. The variables are analysed to evaluate the hypotheses of the experiment which are defined in this section. The experiment is run with an alternation between the treatment variables presented in section \ref{section:independent}. Table \ref{tab:scen-table} presents the four separate execution environments. Each of the execution environment are run with load and without load where running the application with load is the main source for analysis as it is of highest interest to understand how the execution environments behave when load is introduced.
+Two types of variables are defined for the experiment: dependent and independent variables. The variables are analysed to evaluate the hypotheses of the experiment which are defined in this section. 
 %This section presents all hypotheses that will be analysed and answered in order to understand how the specified execution environments impact the performance of the experimental units.\\
-
-
-\begin{table}[H]
-\centering
-\caption{Execution environment}
-\label{tab:scen-table}
-\begin{tabular}{|c|l|l|c|c|}
-\hline
-\textbf{scenario} & \textbf{deployment} & \textbf{kernel} & \parbox{2.3cm}{\centering\textbf{N with load}}& \parbox{2.3cm}{\centering\textbf{N without load}}	\\ \hline
-1                 & native              & generic         &	5 					& 5							\\
-2                 & native              & rt              &	5 					& 5							\\
-3                 & docker              & generic         &	5 					& 5							\\
-4                 & docker              & rt              &	5 					& 5							\\ \hline
-\end{tabular}
-\end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Dependent Variables} \label{section:dependent}
@@ -244,25 +229,8 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
  %\textit{Camera IO} refers to how much time is required for the application to capture an image from a camera. \textit{Disk IO} refers to how much time is required for the application to dump the image data to the disk. These three variables will be used separately to answer the two sets of hypotheses that addresses the two research goals. 
 
 %%%%%%%%%%%%%%%%%%%%%%
-\subsection{Independent Variables} \label{section:independent}
-The treatments that will be used for assessing the impact are factors specific to the execution environment, namely: 1) the Linux kernel (a vanilla kernel or RT\_Preempt patched kernel), 2) the deployment context (Docker or native) and 3) system load (no load or high load). The research questions will be answered by analysing how each of the dependent variables are affected the independent variables during runtime. Each of the treatments are stored as binary figures in the data table (Table \ref{tbl:csv-structure}) where the true and false value is set depending on the scenario the measurement point is connected to. Table \ref{table:treat-alt} presents the binary alternation between the data scenarios
-
-The control group is having each of the treatment variables set to $0$.
-
-\begin{table}[ht]
-\centering
-\caption{Treatment alternation}
-\label{table:treat-alt}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{|r|c|c|} \hline
-							& \textbf{0}& \textbf{1}	\\ \hline
-\textbf{Deployment Context}	& Native 	& Docker 		\\
-\textbf{Kernel}				& Vanilla 	& RT\_preempt 	\\
-\textbf{Load}				& No Load 	& CPU Load 		\\ \hline
-
-\end{tabular}
-\end{table}
-
+\subsection{Independent Variables} \label{section:independent}\todo{reformulate the stress variable}
+The treatments that will be used for assessing the impact are factors specific to the execution environment, namely: 1) the Linux kernel (a vanilla kernel or RT\_Preempt patched kernel), 2) the deployment context (Docker or native) and 3) system load (no load or high load). The research questions will be answered by analysing how each of the dependent variables are affected the independent variables during runtime.
 
 
 %%%%%%%%%%%%%%%%%%%%%%
