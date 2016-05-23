@@ -1,18 +1,19 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Data Analysis}
 
-The conducted experiments resulted in a series of datasets which are used to answer the research questions separately. This section seek to present the statistical analysis of all data captured. Each of the components is presented separately for the research question they individually seek to answer. The Pi Component section \ref{section:analysis-picomponent} refers to answer the first research question and its corresponding hypotheses. While the Pi/IO Component section \ref{section:analysis-piiocomponent} aims to answer the second research question and its corresponding hypotheses. Initially the hypotheses will be answered by the conducted methods where further in depth analysis will be presented to depict the nuances not answered by the hypotheses.
+The conducted experiments resulted in a series of datasets which are used to answer the research questions separately. This section seek to present the statistical analysis of all data captured. Each of the components is presented separately for the research question they individually seek to answer. The Pi Component section \ref{section:analysis-picomponent} refers to answer the first research question and its corresponding hypotheses. While the Pi/IO Component section \ref{section:analysis-piiocomponent} aims to answer the second research question and its corresponding hypotheses. Initially the hypotheses will be answered by the conducted methods where further in depth analysis will be presented to uncover details not answered by the hypotheses. Throughout this chapter the three treatments will be presented in the tables and charts. These treatments are: 1) \textit{Deployment Context} – running the experimental unit in Docker or natively; 2) \textit{Kernel} – running the experimental unit using a generic kernel or an RT enabled kernel; 3) \textit{Load} – running the experimental unit with simulated CPU load or without load.
 
 
 \section{Pi Component}
 \label{section:analysis-picomponent}
 
-The Pi Component aims to answer the first research question with a series of data points extracted during experiment.
+The Pi Component aims to answer the first research question with a series of data points extracted during experiment. The data presented in this section is extracted by running the experimental unit in $100hertz$.
 
 
 \subsection{Descriptive Statistics}
+\label{section:analysis-picomponent-desc}
 
-This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart} displays all standard deviations between the treatment groups. A lower standard deviation imply a more deterministic treatment group. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
+This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart-load} displays all standard deviations between the execution environments with load, while table \ref{fig:pi-std-chart-noload} displays the same data however the execution environments are running on a system without load. Note that the $x$ axis for both the charts have scientific notations in the bottom right corner. E.g. the execution environment of running the application natively on a vanilla kernel has a $Std. dev.$ of $\sim7 000 000ns$. While the same environment without load has a $Std. dev.$ of $\sim16 000ns$. A lower standard deviation imply a more deterministic execution environment. The charts indicate that the most deterministic environment is running the application on an RT kernel in Docker or natively. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
 
 
 \begin{table}[H]
@@ -22,9 +23,9 @@ This section provides an overview of the collected data used for answering the h
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{L{2.8cm}lcccl}
 \textbf{Type of variable}             & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \textbf{Std. dev.}    & \textbf{Scale} \\ \tabucline[2pt]{-}
-\multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment context    & 14 399 960    & N/A   &   N/A                 & Nominal   \\ 
-                                      & Kernel Version        & 14 399 960    & N/A           &   N/A                 & Nominal   \\
-                                      & Load Type             & 14 399 960    & N/A           &   N/A                 & Nominal   \\ \hline
+\multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 14 399 960    & N/A   &   N/A                 & Nominal   \\ 
+                                      & Kernel                & 14 399 960    & N/A           &   N/A                 & Nominal   \\
+                                      & Load             & 14 399 960    & N/A           &   N/A                 & Nominal   \\ \hline
 \multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Overhead \#1  & 14 399 960    & 23520.95      &   14420.58            & Ratio     \\
                                       & Pi Algorithm          & 14 399 960    & 8161512       &   2442637             & Ratio     \\
                                       & Overhead \#1          & 14 399 960    & 30946.9       &   161049.8            & Ratio     \\
@@ -36,28 +37,28 @@ This section provides an overview of the collected data used for answering the h
 
 
 
-\pgfplotstableread[col sep = semicolon]{data/pi-std.csv}\mydata
+\pgfplotstableread[col sep = semicolon]{data/pi/colsd_load.csv}\mydataload
 \begin{figure}[H]
-\caption{Std. dev. between groups \textit{(lower is better)}}
-\label{fig:pi-std-chart}
+\caption{Std. dev. of execution environments with load \textit{(lower is better)}}
+\label{fig:pi-std-chart-load}
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
       width=\textwidth*.95,
-      height=\textheight*.4,
+      height=\textheight*.25,
       xlabel={},
       ytick=data,
       xmin=0,
       % xmax=1.15,
-      enlarge y limits={abs=1.05},
+      enlarge y limits={abs=1},
       y dir=reverse,
       xlabel={$ns$ std. dev.},
-      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
+      yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       point meta={x*100},
       legend style={
                 draw=none, % ?
                 text depth=0pt,
-                at={(0.5,-0.22)},
+                at={(0.5,-0.25)},
                 anchor=north,
                 legend columns=-1,
                 % default spacing:
@@ -67,10 +68,51 @@ This section provides an overview of the collected data used for answering the h
             }
         ] %first axis
 
-\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=Group,x=odv_oh1]{\mydata};
-\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=pi_calc]{\mydata};
-\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=Group,x=odv_oh2]{\mydata};
-\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=sleep]{\mydata};
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydataload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydataload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydataload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydataload};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\pgfplotstableread[col sep = semicolon]{data/pi/colsd_noload.csv}\mydatanoload
+\begin{figure}[H]
+\caption{Std. dev. of execution environments without load \textit{(lower is better)}}
+\label{fig:pi-std-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.25,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1},
+      y dir=reverse,
+      xlabel={$ns$ std. dev.},
+      yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.25)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
 
 \legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
 \end{axis}
@@ -78,30 +120,39 @@ This section provides an overview of the collected data used for answering the h
 \end{figure}
 
 
-\pgfplotstableread[col sep = semicolon]{data/pi-mean.csv}\mydata
+
+
+Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each respective execution environment. The calculations are made by summing each of the dependent variables and dividing by the sum of all expected time-slice durations. I.e. the application was running at $100hertz$ for 1 hour resulting in $3600s \times hertz \times 5_{iterations}=1 800 000 time-slices$ where each time-slice is $0.01s$. This calculation resulted in an summed expected time-slice duration of $18000s$. The black dotted line displays the time dead line of a time-slice. Figure \ref{fig:pi-mean-chart-load} shows that data extracted from running the application on a Vanilla kernel in both Docker and Natively violates the time-slice with an overall average violation of $\sim10\%$. Where as figure \ref{fig:pi-mean-chart-noload} presents the same data for the environment contexts running on a system without load.
+
+
+
+
+\pgfplotstableread[col sep = semicolon]{data/pi/colsum_load.csv}\mydataload
 \begin{figure}[H]
-\caption{Mean between groups \textit{(lower is better)}}
-\label{fig:pi-mean-chart}
+\caption{Execution environment mean consumed of time-slice with load \textit{(closer to 1 is better)}}
+\label{fig:pi-mean-chart-load}
 \begin{tikzpicture}
 \begin{axis}[
-      xbar stacked,
-      width=\textwidth*.95,
-      height=\textheight*.4,
-      xlabel={},
-      ytick=data,
-      xmin=0,
-      % xmax=1.15,
-      enlarge y limits={abs=1.05},
-      y dir=reverse,
-      xlabel={$ns$ mean},
-      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
-      point meta={x*100},
-      legend style={
+        xbar stacked,
+        width=\textwidth*.95,
+        height=\textheight*.25,
+        xlabel={},
+        ytick=data,
+        xmin=0,
+        xmax=1.15,
+        y dir=reverse,
+        xlabel={$\%$ of time-slice},
+        yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
+          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+        point meta={x*100},
+        legend style={
                 draw=none, % ?
                 text depth=0pt,
                 at={(0.5,-0.22)},
+                legend cell align=left,
                 anchor=north,
-                legend columns=-1,
+                legend columns=3,
                 % default spacing:
                 column sep=1cm,
                 % the space between legend image and text:
@@ -109,10 +160,55 @@ This section provides an overview of the collected data used for answering the h
             }
         ] %first axis
 
-\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=Group,x=odv_oh1]{\mydata};
-\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=pi_calc]{\mydata};
-\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=Group,x=odv_oh2]{\mydata};
-\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=sleep]{\mydata};
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydataload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydataload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydataload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydataload};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\pgfplotstableread[col sep = semicolon]{data/pi/colsum_noload.csv}\mydatanoload
+\begin{figure}[H]
+\caption{Execution environment mean consumed of time-slice without load \textit{(closer to 1 is better)}}
+\label{fig:pi-mean-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+        xbar stacked,
+        width=\textwidth*.95,
+        height=\textheight*.25,
+        xlabel={},
+        ytick=data,
+        xmin=0,
+        xmax=1.15,
+        y dir=reverse,
+        xlabel={$\%$ of time-slice},
+        yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
+          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+        point meta={x*100},
+        legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=3,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
 
 \legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
 \end{axis}
@@ -132,7 +228,7 @@ Table \ref{tbl:hypothesispi} presents the P-value $Pr(>F)$ results of the conduc
 \begin{tabu}{llc}
 \multicolumn{2}{c}{\textbf{Hypothesis}}                                     & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
 $H_{11_{1}}$    & Scheduling Precision $\leftarrow$ Deployment Context      & {< 2.2e-16}     \\
-$H_{11_{2}}$    & Scheduling Precision $\leftarrow$ Kernel Version          & {< 2.2e-16}     \\
+$H_{11_{2}}$    & Scheduling Precision $\leftarrow$ Kernel                  & {< 2.2e-16}     \\
 $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {< 2.2e-16}
 \end{tabu}
 \end{table}
@@ -148,10 +244,10 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cKKccccD}
                                 & \textbf{Df} & \textbf{Pillai} & \textbf{Wilks} & \textbf{approx F} & \textbf{num Df} & \textbf{den Df} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{deployment}             & 1           & 0.000040        & 0.99996        & 114               & 4               & 11519957        & {< 2.2e-16}     & 0.00003973235  \\
-\textbf{kernel}                 & 1           & 0,061970        & 0.93803        & 190263            & 4               & 11519957        & {< 2.2e-16}     & 0.0619699      \\
-\textbf{load}                   & 1           & 0.064299        & 0.93570        & 197906            & 4               & 11519957        & {< 2.2e-16}     & 0.06429905     \\
-\textbf{deployment:kernel:load} & 1           & 0.000016        & 0.99998        & 46                & 4               & 11519957        & {< 2.2e-16}     & 0.00001594317  \\
+\textbf{Deployment Context}     & 1           & 0.000040        & 0.99996        & 114               & 4               & 11519957        & {< 2.2e-16}     & 0.00003973235  \\
+\textbf{Kernel}                 & 1           & 0,061970        & 0.93803        & 190263            & 4               & 11519957        & {< 2.2e-16}     & 0.0619699      \\
+\textbf{Load}                   & 1           & 0.064299        & 0.93570        & 197906            & 4               & 11519957        & {< 2.2e-16}     & 0.06429905     \\
+\textbf{Deployment:Kernel}      & 1           & 0.000016        & 0.99998        & 46                & 4               & 11519957        & {< 2.2e-16}     & 0.00001594317  \\
 \textbf{Residuals}              & 11519960    &                 &                &                   &                 &                 &                 &            
 \end{tabu}
 \end{table}
@@ -163,9 +259,9 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \begin{tabu}{r|rlrlrlrl}
                      & \multicolumn{2}{c}{\textbf{Overhead \#1}} & \multicolumn{2}{c}{\textbf{Pi Algorithm}} & \multicolumn{2}{c}{\textbf{Overhead \#2}} & \multicolumn{2}{c}{\textbf{Sleep}} \\ \tabucline[2pt]{-}
 \textbf{(Intercept)} & \multicolumn{2}{c}{24742.80}              & \multicolumn{2}{c}{8033313.53}            & \multicolumn{2}{c}{39270.59}              & \multicolumn{2}{c}{2126532.85}     \\
-\textbf{deployment}  & 115.22 & \textit{(0.005)} & 2208.25 & \textit{(0.000)}& 392.57 & \textit{(0.010)} & -14554.94 & \textit{(0.007)}      \\
-\textbf{kernel}      & 7154.64 & \textit{(0.289)}& -44662.06 & \textit{(-0.006)}& -13484.74 & \textit{(-0.343)}& -384888.47 & \textit{(-0.181)}     \\
-\textbf{load}        & -9718.16 & \textit{(-0.393)}& 293097.96 & \textit{(0.036)}& -6211.75 & \textit{(-0.158)}& 158712.59 & \textit{(0.075)}     \\
+\textbf{Deployment Context}  & 115.22 & \textit{(0.005)} & 2208.25 & \textit{(0.000)}& 392.57 & \textit{(0.010)} & -14554.94 & \textit{(0.007)}      \\
+\textbf{Kernel}      & 7154.64 & \textit{(0.289)}& -44662.06 & \textit{(-0.006)}& -13484.74 & \textit{(-0.343)}& -384888.47 & \textit{(-0.181)}     \\
+\textbf{Load}        & -9718.16 & \textit{(-0.393)}& 293097.96 & \textit{(0.036)}& -6211.75 & \textit{(-0.158)}& 158712.59 & \textit{(0.075)}     \\
 \end{tabu}
 \end{table}
 \end{landscape}
@@ -175,34 +271,20 @@ The MANOVA tests suggests that \textit{deployment context} and the full \textit{
 
 
 
-
-% \begin{table}[H]
-% \begin{tabular}{l|l}
-% \multicolumn{2}{l}{The hypotheses to achieve goal one of the experiment are:} \\
-% $H_{11_{1}}$ & The deployment context has an impact on scheduling precision. \\
-% $H_{11_{2}}$ & The Linux kernel has an impact on scheduling precision. \\
-% $H_{11_{3}}$ & The execution environment has an impact on scheduling precision. \\          
-% \multicolumn{2}{l}{} \\
-% \multicolumn{2}{l}{The hypotheses to achieve goal two of the experiment are:} \\
-% $H_{12_{1}}$ & The deployment context has an impact on input performance.\\
-% $H_{12_{2}}$ & The Linux kernel has an impact on input performance.\\
-% $H_{12_{3}}$ & The execution environment has an impact on input performance.\\
-% $H_{12_{4}}$ & The deployment context has an impact on output performance.\\
-% $H_{12_{5}}$ & The Linux kernel has an impact on output performance.\\
-% $H_{12_{6}}$ & The execution environment has an impact on output performance.                                                          
-% \end{tabular}
-% \end{table}
-
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  PI COMPONENT  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Pi/IO Component}
 \label{section:analysis-piiocomponent}
 
+This section provides an overview of the collected data and hypothesis test results for answering research question 2. The data presented in this section is extracted by running the experimental unit in $10hertz$.
 
 \subsection{Descriptive Statistics}
 
-This section provides an overview of the collected data used for answering the hypotheses and research question 2. Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of execution environment and its sub treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
+Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of execution environment and its sub treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
 
 
 \begin{table}[H]
@@ -211,39 +293,40 @@ This section provides an overview of the collected data used for answering the h
 \label{tab:desc-table-piio}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{L{2.8cm}lcccl}
-\textbf{Type of variable}                         & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \textbf{Std. dev.}    & \textbf{Scale} \\ \tabucline[2pt]{-}
-\multirow{3}{*}[.3em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment context    & 1 151 968     & N/A           &   N/A                 & Nominal   \\ 
-                                              & Kernel Version        & 1 151 968     & N/A           &   N/A                 & Nominal   \\
-                                              & Load Type             & 1 151 968     & N/A           &   N/A                 & Nominal   \\ \hline
-\multirow{2}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Camera Performance    & 1 151 968     & 6040738       &   3282642             & Ratio     \\
-                                              & Disk performance      & 1 151 968     & 3559087       &   13424505            & Ratio     \\ \hline
+\textbf{Type of variable}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \textbf{Std. dev.}    & \textbf{Scale} \\ \tabucline[2pt]{-}
+\multirow{3}{*}[.3em]{\parbox{2.8cm}{\centering Independent variables}} & Deployment context    & 1 439 960     & N/A           &   N/A                 & Nominal   \\ 
+                                                & Kernel                & 1 439 960     & N/A           &   N/A                 & Nominal   \\
+                                                & Load Type             & 1 439 960     & N/A           &   N/A                 & Nominal   \\ \hline
+\multirow{2}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}  & Camera Performance    & 1 439 960     & 6023777       &   3178647             & Ratio     \\
+                                                & Disk performance      & 1 439 960     & 3553669       &   13404796            & Ratio     \\ \hline
 \end{tabu}
 \end{table}
 
 
+Figure \ref{fig:piio-std-chart-load} presents the $Std. dev.$ for each of the two dependent variables, namely input performance and output performance. Note that the $x$ axis for both the charts have scientific notations in the bottom right corner indicating a multiplier to the value on the $x$ axis. The figure show that the application running on a vanilla kernel results in more deterministic camera performance where the time it takes to capture an image fluctuate less. The graph further shows that the execution environment running the application in Docker utilising the RT kernel has a more deterministic camera performance in comparison with the native equivalent. Lastly, the graph shows that the disk performance is not impacted by switching execution environment as the dark blue bar is consistent in size over each of the environments.
 
-\pgfplotstableread[col sep = semicolon]{data/piio-std.csv}\mydata
+
+\pgfplotstableread[col sep = semicolon]{data/piio/colsd_load.csv}\mydataload
 \begin{figure}[H]
-\caption{Std. dev. between groups \textit{(lower is better)}}
-\label{fig:piio-std-chart}
+\caption{Std. dev. of execution environments with load \textit{(lower is better)}}
+\label{fig:piio-std-chart-load}
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
       width=\textwidth*.95,
-      height=\textheight*.4,
+      height=\textheight*.25,
       xlabel={},
       ytick=data,
       xmin=0,
       % xmax=1.15,
-      enlarge y limits={abs=1.05},
+      enlarge y limits={abs=1},
       y dir=reverse,
       xlabel={$ns$ std. dev.},
-      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
-      point meta={x*100},
+      yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       legend style={
                 draw=none, % ?
                 text depth=0pt,
-                at={(0.5,-0.22)},
+                at={(0.5,-0.25)},
                 anchor=north,
                 legend columns=-1,
                 % default spacing:
@@ -253,8 +336,8 @@ This section provides an overview of the collected data used for answering the h
             }
         ] %first axis
 
-\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=camio]{\mydata};
-\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=diskio]{\mydata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=camio]{\mydataload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=diskio]{\mydataload};
 
 \legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
 \end{axis}
@@ -262,28 +345,30 @@ This section provides an overview of the collected data used for answering the h
 \end{figure}
 
 
-\pgfplotstableread[col sep = semicolon]{data/piio-mean.csv}\mydata
+Figure \ref{fig:piio-std-chart-noload} depicts the $std. dev.$ of the input and output performance of each of the execution environments running on a system without load. The figure shows that the most deterministic execution environment is running the application natively utilising the RT kernel. The figure further displays that the worst deterministic execution environment for a no-load system is the Docker equivalent running with the RT kernel. This result show that docker has an impact on disk performance as seen by the dark blue bars being larger for both of the environments utilising Docker as its deployment context.
+
+\pgfplotstableread[col sep = semicolon]{data/piio/colsd_noload.csv}\mydatanoload
 \begin{figure}[H]
-\caption{Mean between groups \textit{(lower is better)}}
-\label{fig:piio-mean-chart}
+\caption{Std. dev. of execution environments without load \textit{(lower is better)}}
+\label{fig:piio-std-chart-noload}
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
       width=\textwidth*.95,
-      height=\textheight*.4,
+      height=\textheight*.25,
       xlabel={},
       ytick=data,
       xmin=0,
       % xmax=1.15,
-      enlarge y limits={abs=1.05},
+      enlarge y limits={abs=1},
       y dir=reverse,
-      xlabel={$ns$ mean},
-      yticklabels={Native, Docker, Vanilla, RT, No Load, CPU Load},ytick={1,...,6},
+      xlabel={$ns$ std. dev.},
+      yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       point meta={x*100},
       legend style={
                 draw=none, % ?
                 text depth=0pt,
-                at={(0.5,-0.22)},
+                at={(0.5,-0.25)},
                 anchor=north,
                 legend columns=-1,
                 % default spacing:
@@ -293,17 +378,111 @@ This section provides an overview of the collected data used for answering the h
             }
         ] %first axis
 
-\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=Group,x=camio]{\mydata};
-\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=Group,x=diskio]{\mydata};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=camio]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=diskio]{\mydatanoload};
 
 \legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
+
+
+
+
+
+The input output performance results depicted in figure \ref{fig:piio-mean-chart-load} show that the execution environments utilising the RT kernel impacts the camera and disk performance negatively, increasing the occupation time for performing the input and output tasks. This is seen by the larger size of both dependent variables spanning over a larger space of the time-slice.
+
+
+\pgfplotstableread[col sep = semicolon]{data/piio/colsum_load.csv}\mydataload
+\begin{figure}[H]
+\caption{Execution environment mean consumed of time-slice with load \textit{(closer to 1 is better)}}
+\label{fig:piio-mean-chart-load}
+\begin{tikzpicture}
+\begin{axis}[
+        xbar stacked,
+        width=\textwidth*.95,
+        height=\textheight*.25,
+        xlabel={},
+        ytick=data,
+        xmin=0,
+        xmax=0.12,
+        y dir=reverse,
+        xlabel={$\%$ of time-slice},
+        yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
+          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+        point meta={x*100},
+        legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=3,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=camio]{\mydataload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=diskio]{\mydataload};
+
+\legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+\pgfplotstableread[col sep = semicolon]{data/piio/colsum_noload.csv}\mydatanoload
+\begin{figure}[H]
+\caption{Execution environment mean consumed of time-slice without load \textit{(closer to 1 is better)}}
+\label{fig:piio-mean-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+        xbar stacked,
+        width=\textwidth*.95,
+        height=\textheight*.25,
+        xlabel={},
+        ytick=data,
+        xmin=0,
+        xmax=0.12,
+        y dir=reverse,
+        xlabel={$\%$ of time-slice},
+        yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
+          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+        point meta={x*100},
+        legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=3,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=camio]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=diskio]{\mydatanoload};
+
+\legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+
 
 \subsection{Hypothesis Testing}
 
-An analysis of variance was performed for each of the dependent variables to understand the impact of the independent variables onto the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.
+An analysis of variance is performed for each of the dependent variables to understand the if there exists a cause effect relationship between the independent variables and the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA test performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.
 
 
 \begin{table}[H]
@@ -314,16 +493,16 @@ An analysis of variance was performed for each of the dependent variables to und
 \begin{tabu}{llc}
 \multicolumn{2}{c}{\textbf{Hypothesis}}                                     & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
 $H_{12_{1}}$    & Camera Performance $\leftarrow$ Deployment Context      & {< 2.2e-16}     \\
-$H_{12_{2}}$    & Camera Performance $\leftarrow$ Kernel Version          & {< 2.2e-16}     \\
+$H_{12_{2}}$    & Camera Performance $\leftarrow$ Kernel                  & {< 2.2e-16}     \\
 $H_{12_{3}}$    & Camera Performance $\leftarrow$ Execution environment   & {< 2.2e-16}     \\
 $H_{12_{4}}$    & Disk Performance $\leftarrow$ Deployment Context      & {< 2.2e-16}       \\
-$H_{12_{5}}$    & Disk Performance $\leftarrow$ Kernel Version          & {< 2.2e-16}       \\
+$H_{12_{5}}$    & Disk Performance $\leftarrow$ Kernel                  & {< 2.2e-16}       \\
 $H_{12_{6}}$    & Disk Performance $\leftarrow$ Execution environment   & {0.00074}
 \end{tabu}
 \end{table}
 
 
-Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on the chosen kernel version. While load has a far lower effect on camera performance in comparison with the kernel version. This can be seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
+Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on the chosen kernel. While load has a far lower effect on camera performance in comparison with the kernel. This can be seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
 
 \begin{table}[H]
 \centering
@@ -332,7 +511,7 @@ Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cccccD}
                     & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{deployment} & 1           & {5.403e+15}     & {5.403e+15}      & 509.91           & {< 2.2e-16}      & 0.0004424508 \\
+\textbf{deployment} & 1           & {4.329e+15}     & {5.403e+15}      & 509.91           & {< 2.2e-16}      & 0.0004424508 \\
 \textbf{kernel}     & 1           & {1.890e+17}     & {1.890e+17}      & 17833.94         & {< 2.2e-16}      & 0.01524537   \\
 \textbf{load}       & 1           & {7.905e+14}     & {7.905e+14}      & 74.61            & {< 2.2e-16}      & 0.00006476481\\
 \textbf{deployment:kernel}&1      & {2.511e+15}     & {2.511e+15}      & 236.96           & {< 2.2e-16}      & 0.0002056625 \\
@@ -342,7 +521,7 @@ Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on
 
 
 
-The conducted ANOVA's result depicted in table \ref{tbl:anova-disk} suggests that the effect deployment context has on disk performance is below the effect of kernel version and load type. This is seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
+The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} suggests that the effect deployment context has on disk performance is below the effect of kernel and load type. This is seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
 
 \begin{table}[H]
 \centering
@@ -360,7 +539,7 @@ The conducted ANOVA's result depicted in table \ref{tbl:anova-disk} suggests tha
 \end{table}
 
 
-Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camera performance and disk performance. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in parentheses depicts how many percentage from intercept the treatment affects the particular independent variable.
+Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camera performance and disk performance. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in the column to the right of the nanosecond coefficients presents the percentage the dependent variable deviates from the intercept when the treatment is alternated from the intercept treatment.
 
 \begin{table}[H]
 \centering
