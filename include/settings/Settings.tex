@@ -1,9 +1,11 @@
 % CREATED BY DAVID FRISK, 2015
+\usepackage{xr}
 \usepackage{color}
 \usepackage[usenames,dvipsnames]{xcolor}
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
-
+\usepackage{blindtext}
+\usepackage{scrextend}
 % BASIC SETTINGS
 \usepackage{moreverb}								% List settings
 \usepackage{textcomp}								% Fonts, symbols etc.
@@ -20,6 +22,8 @@
 \numberwithin{figure}{chapter}						% Numbering order for figures
 \numberwithin{table}{chapter}						% Numbering order for tables
 \usepackage{listings}								% Enables source code listings
+\usepackage{enumitem}								% Enables Enumaret list with Prefix for [RQ]X
+\usepackage{svg}									% Enables SVG images
 \lstset{ %
 backgroundcolor=\color{lbcolor},
 tabsize=4,    
@@ -43,6 +47,16 @@ commentstyle=\color[rgb]{0.026,0.112,0.095},
 stringstyle=\color[rgb]{0.627,0.126,0.941},
 numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 }
+
+\def\bsq#1{%both single quotes
+\lq{#1}\rq}
+
+\newcommand*{\mybox}[2]{\colorbox{#1!30}{\parbox{.98\linewidth}{#2}}}
+
+\newtheorem{hypothesis}{Hypothesis}
+\newtheorem{nullhypothesis}{Null Hypothesis}
+\setsvg{svgpath = figure/}
+
 \usepackage{chemfig}								% Chemical structures
 \usepackage[top=3cm, bottom=3cm,
 			inner=3cm, outer=3cm]{geometry}			% Page margin lengths			
@@ -55,7 +69,7 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 \usepackage{float} 									% Enables object position enforcement using [H]
 \usepackage{parskip}								% Enables vertical spaces correctly 
 
-
+\usepackage{tabularx}
 
 % OPTIONAL SETTINGS (DELETE OR COMMENT TO SUPRESS)
 
@@ -65,7 +79,7 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 
 % Caption settings (aligned left with bold name)
 \usepackage[labelfont=bf, textfont=normal,
-			justification=justified,
+			justification=centering,
 			singlelinecheck=false]{caption} 		
 
 		  	
@@ -87,6 +101,9 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
   {\Huge\bfseries\filcenter}
   {{\fontsize{50pt}{1em}\vspace{-4.2ex}\selectfont \textnormal{\thechapter}}}{1ex}{}[]
 
+\usepackage{framed}
+
+\usepackage{csquotes}
 
 % Header and footer settings (Select TWOSIDE or ONESIDE layout below)
 \usepackage{fancyhdr}								
@@ -116,9 +133,52 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 \usepackage[textsize=tiny]{todonotes}   % Include the option "disable" to hide all notes
 \setlength{\marginparwidth}{2.5cm} 
 
+% Inline code
+\newcommand{\code}[1]{\texttt{#1}}
 
 % Supress warning from Texmaker about headheight
 \setlength{\headheight}{15pt}		
 
+% Enable circled numbering for LOG
+\usepackage{pgf}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\usetikzlibrary{arrows,automata}
 
+\usepackage[flushleft]{threeparttable}
+\usepackage{pgfplotstable,filecontents}
+\pgfplotsset{compat=1.9}% supress warning
 
+\definecolor{blues1}{RGB}{198, 219, 239}
+\definecolor{blues2}{RGB}{158, 202, 225}
+\definecolor{blues3}{RGB}{107, 174, 214}
+\definecolor{blues4}{RGB}{49, 130, 189}
+\definecolor{blues5}{RGB}{8, 81, 156}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage{multirow}
+\usepackage{tabu}
+\usepackage[scientific-notation=false]{siunitx}
+
+\newcolumntype{N}{S[
+ tight-spacing=true,round-mode=places,
+                          round-precision=0,
+                          table-format =  1]}
+\newcolumntype{K}{S[
+ tight-spacing=true,round-mode=places,
+                          round-precision=3]}
+\newcolumntype{D}{S[
+ tight-spacing=true,round-mode=places,
+                          round-precision=4,
+                          table-format =  1.4]}
+\newcolumntype{Z}{S[
+ tight-spacing=true,round-mode=places,
+    table-number-alignment=center,
+                          round-precision=4] }
+
+\usepackage{amssymb}
+\usepackage{pdflscape}
