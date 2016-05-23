@@ -566,3 +566,94 @@ Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camer
 
 
 
+
+
+\pgfplotstableread[col sep = semicolon]{data/truck/colsum_load.csv}\mydatanoload
+\begin{figure}[H]
+\caption{Execution environment mean consumed of time-slice with real-life load \textit{(closer to 1 is better)}}
+\label{fig:piio-mean-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+        xbar stacked,
+        width=\textwidth*.95,
+        height=\textheight*.25,
+        xlabel={},
+        ytick=data,
+        xmin=0,
+        xmax=1.15,
+        y dir=reverse,
+        xlabel={$\%$ of time-slice},
+        enlarge y limits={abs=1.25},
+        yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
+          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+        point meta={x*100},
+        legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.22)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=3,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
+
+\legend{\scriptsize Camera Performance,\scriptsize Disk Performance};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+
+
+\pgfplotstableread[col sep = semicolon]{data/truck/colsd_load.csv}\mydatanoload
+\begin{figure}[H]
+\caption{Std. dev. of execution environments with real-life load \textit{(lower is better)}}
+\label{fig:pi-std-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.25,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1.25},
+      y dir=reverse,
+      xlabel={$ns$ std. dev.},
+      yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.25)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
