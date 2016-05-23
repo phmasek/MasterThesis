@@ -3,12 +3,18 @@
 
 
 \section{Future Work}
+This research has intentionally narrowed the focus onto the specific context of implementing Docker as a container deployment strategy for autonomous self-driving vehicles. The design of this research has aimed to find a generalizable understanding of how Docker impacts scheduling precision and camera/disk IO for the context used. This research has analysed how these performance factors behave while switching between different treatments, such as system load and kernel version. The performance factors scheduling precision and camera/disk IO builds a foundation of understanding the impact of using Docker for real-time systems, however, there exists other factors that are of interest to investigate. There exists a need for understanding the impact of using Docker on multiple hosts, as CPS's typically contain multiple computing nodes. The computational overhead of using multiple hosts is identified in \cite{p1} in the context of cloud computing. However, a similar approach is needed from the context of CPS.
 
-This research has intentionally narrowed the focus onto the specific context of implementing Docker as a container deployment strategy for autonomous self-driving vehicles. Future work need to investigate alternatives such as running the application in a Jailhouse environment to understand the impact Docker has on the determinism of a real-time system in comparison with an environment specifically designed for real-time systems. This, to see whether or not Docker is comparable with an environment design solely for real-time system implementation.\\
 
-The design of this research has aimed to find a generalizable understanding of how Docker impacts a couple performance factors, e.g scheduling precision and camera/disk IO for the context used. Further this research has analysed at how these performance factors behave while switching between different treatments, e.g. system load and kernel version. It is interesting to see the behaviour of Docker in a hardware environment utilising an ARM CPU. Furthermore, as Docker is continuously transformed with updates and patches, new configuration options arise. Future work is needed to further understand which Docker configuration is optimal for real-time systems.\\
+%performance while running several applications on separate machines in a network cluster. Current work \cite{conf/cloudcom/MaoHPWCCH15} indicates that network performance is worsened while running real-time applications in Docker containers. Future work is therefore required to understand how Docker impacts the network performance for real-time systems in the context of autonomous self-driving vehicles.\\
 
-The performance factors scheduling precision and camera/disk IO builds a foundation of understanding the impact of using Docker for real-time systems, however, there exists other factors that are of interest to investigate. There exists a need for understanding the impact of Docker on performance while running several applications on separate machines in a network cluster. Current work \cite{conf/cloudcom/MaoHPWCCH15} indicates that network performance is worsened while running real-time applications in Docker containers. Future work is therefore required to understand how Docker impacts the network performance for real-time systems in the context of autonomous self-driving vehicles.\\
+
+
+
+
+%Future work need to investigate alternatives such as running the application in a Jailhouse environment to understand the impact Docker has on the determinism of a real-time system in comparison with an environment specifically designed for real-time systems. This, to see whether or not Docker is comparable with an environment design solely for real-time system implementation.\\
+
+%It is interesting to see the behaviour of Docker in a hardware environment utilising an ARM CPU. Furthermore, as Docker is continuously transformed with updates and patches, new configuration options arise. Future work is needed to further understand which Docker configuration is optimal for real-time systems.\\
 
 
 
