@@ -1,9 +1,9 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Data Validation}\label{section:data-validation}
 
-This section introduces the result of executing parts of the experiment on self-driving truck that participated in the Grand Cooperative Driving Challenge 2016 in the Netherlands. 
+This section introduces the result of executing parts of the experiment on a self-driving Volvo truck that participated in the Grand Cooperative Driving Challenge 2016 in the Netherlands. 
 
 \section{Method}
-The Pi Component from \ref{section:exp-units} is executed on the Volvo truck using precisely same hardware that is used in the experiment. The Pi component is run on the target system natively and within a Docker container. The major difference in this case in comparison to the experiment, is that all software components required for the Volvo truck to operate in a driver-less manner is started and run in the background in a native and Dockerized enviroment. Measurement points are then captured via the Pi Component to measure the impact in a real use case. 
+The Pi Component from \ref{section:exp-units} is executed on a Volvo truck using precisely same hardware for the target system that is used in the experiment. The Pi component is executed on the target system natively and within a Docker container. The major difference in comparison to the experiment run is that all software components required for the Volvo truck to operate in a driver-less manner is started and run in the background: this enable a more realistic operational load but consequently a less controlled enviroment. Fifteen compoents are executed natively and within a Dockerized enviroment. Measurement points are captured via serial communication to measure the impact in a real use case. 
 
 \section{Results}
