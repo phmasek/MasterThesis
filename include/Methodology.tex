@@ -83,7 +83,7 @@ The Pi Component is utilised for measuring scheduling precision in order to answ
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pi/IO Component}
-The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). Capturing the image and storing it will hereon be referred to as input performance and output performance respectively. The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV \cite{opendlv}. OpenDLV, at the time of writing, is software under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Utilising source code from the OpenDLV project adds credibility to the experiment. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}, on page~\pageref{code:pi-io}.
+The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). Capturing the image and storing it will hereon be referred to as input performance \todo{Should it be camera performance?} and output performance \todo{Should it be disk write performance?} respectively. The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV \cite{opendlv}. OpenDLV is open source software currently under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Utilising source code from the OpenDLV project adds credibility to the experiment. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}, on page~\pageref{code:pi-io}.
 
 %The Pi/IO Component is responsible for the measuring input/output performance in order to answer RQ2 (\ref{section:rqs}). The component extends the Pi Component by adding two additional factors to its time-slice execution. The factors are camera IO and disk IO. The code implementation of the camera component is a direct copy of code utilized by ReVeRe lab in a real-life scenario of a self-driving truck\footnote{https://github.com/chalmers-revere/opendlv}. This was copied to mimic real-life to ensure the relevance of the data captured. Furthermore, the code implementation for disk IO is also a direct copy used by ReVeRe lab for logging the system during runtime. Between these two additional factors, two measurement points are set to measure the overhead added by capturing an image and dumping that image to the disk.\\
 
@@ -182,18 +182,23 @@ Two types of variables are defined for the experiment: dependent and independent
 \subsection{Dependent Variables} \label{section:dependent}
 %There exists groups of dependent variables which are all impacted by switching treatment. It is important to look both at the aggregated view of the variables, as well as at each of the variables independently. 
 
-The dependent variables are 1) scheduling precision, 2) input performance, and 3) output performance. Scheduling precision refers to how accurately, in terms of time, the system performs the necessary actions within a specified time-slice. The captured data points for measuring scheduling precision is the duration between four measurement points for the Pi Component. Raw data of these measurement points are the current time with a nanosecond accuracy, which is presented in \ref{table:measurement}. The location four measurement points within a time-slice is depicted in figure~\ref{pi_measure}, which represent the Pi Components complete time-slice. The duration between measurement points one and two, and between measurement points three and four reveal the necessary overhead of OpenDaVINCI, the chosen middle-ware of the experimental units. The duration between measurement points four and one (the next time slice) reveals the sleep precision of the Pi Component with respect to the execution environment. Input and output performance is the duration it takes to capture and image from a web camera and save it to disk.\\ 
+This research seeks to answer performance impact on 1) scheduling precision, 2) input performance, and 3) output performance. These three aggregated variables each consists of dependent variables which are impacted by the treatments presented in section \ref{section:independent}. Scheduling precision refers to how accurately, in terms of time, the system performs the necessary actions within a specified time-slice. The captured data points for measuring scheduling precision is the duration between four measurement points for the Pi Component. Raw data of these measurement points are the current time with a nanosecond accuracy, which is presented in \ref{table:measurement}. The location of the four measurement points within a time-slice is depicted in figure~\ref{pi_measure}, which represent the Pi Components complete time-slice. The duration between measurement points one and two, and between measurement points three and four reveal the overhead of the middle-ware OpenDaVINCI. The duration between measurement points four and one (the next time slice) reveals the sleep precision of the Pi Component with respect to the execution environment.\\ 
 
 %Figure \ref{pi_measure} displays the four measurement points of the Pi Component time-slice, where the duration between measurement points \#1 and \#2, and between \#3 and \#4 reveals the necessary overhead of OpenDaVinci. While the duration between \#4 and \#1 (next time-slice) reveals the sleep precision of the execution environment.\\
 
+
 \begin{table}[ht]
-\begin{tabular}{|c|c|}
+\begin{tabular}{|r|c|c|}
 \hline
-\textbf{Measurement point} 	& \textbf{Time-stamp}  \\ \hline
-1							& 1462886735010040031  \\ \hline
-2							& 1462886735010146016  \\ \hline
-3							& 1462886735018168837  \\ \hline
-4							& 1462886735018233859  \\ \hline
+\textbf{Time-slice}  				&\textbf{Measurement point} 	& \textbf{Time-stamp}  \\ \hline
+\multirow{4}{*}[-.1em]{Time-slice \#1}& 1							& 1463404523050041154  \\ \cline{2-3}
+									& 2								& 1463404523050079895  \\ \cline{2-3}
+									& 3								& 1463404523058096263  \\ \cline{2-3}
+									& 4								& 1463404523058149089  \\ \hline
+\multirow{4}{*}[-.1em]{Time-slice \#2}& 1							& 1463404523060041405  \\ \cline{2-3}
+									& 2								& 1463404523060080287  \\ \cline{2-3}
+									& 3								& 1463404523068095916  \\ \cline{2-3}
+									& 4								& 1463404523068147008  \\ \hline
 \end{tabular}
 \centering
 \caption{Raw data}
@@ -207,7 +212,7 @@ The dependent variables are 1) scheduling precision, 2) input performance, and 3
        \label{pi_measure}
 \end{figure}
 
-The Pi/IO Component is an extension of the Pi Component with the addition of two measurement points. The duration between measurement points one and three reveal the input performance of the Pi/IO component with respect to the execution environment. The duration between measurement points three and four reveals the output performance of saving an image to disk. The duration between measurement point two and four depict the total input-output performance of the executed time-slice. The remaining measurement points are the same as used in the Pi Component. 
+The Pi/IO Component is an extension of the Pi Component with the addition of two measurement points added for measuring camera performance and disk write performance. The duration between measurement points two and three reveal the input performance of the Pi/IO component with respect to the execution environment. The duration between measurement points three and four reveals the output performance of saving an image to disk. The duration between measurement point two and four depict the total input-output performance of the executed time-slice. The remaining measurement points are the same as used in the Pi Component which are not analysed for answering research question 2.
 
 %Figure \ref{piio_measure} displays the six measurement points of the Pi/IO Component time-slice, where the duration between measurement points \#2 and \#3 reveals the Camera IO performance of the execution environment. Duration between measurement points \#3 and \#4 reveals the Disk IO performance of the execution environment. Whereas the duration between \#2 and \#4 depicts the total IO performance of the executed time-slice. The remaining measurement points are the same points used for Pi Component.\\
 
@@ -222,7 +227,7 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
  %\textit{Camera IO} refers to how much time is required for the application to capture an image from a camera. \textit{Disk IO} refers to how much time is required for the application to dump the image data to the disk. These three variables will be used separately to answer the two sets of hypotheses that addresses the two research goals. 
 
 %%%%%%%%%%%%%%%%%%%%%%
-\subsection{Independent Variables}\todo{reformulate the stress variable}
+\subsection{Independent Variables} \label{section:independent}\todo{reformulate the stress variable}
 The treatments that will be used for assessing the impact are factors specific to the execution environment, namely: 1) the Linux kernel (a vanilla kernel or RT\_Preempt patched kernel), 2) the deployment context (Docker or native) and 3) system load (no load or high load). The research questions will be answered by analysing how each of the dependent variables are affected the independent variables during runtime.
 
 
@@ -282,7 +287,7 @@ The overall procedure of the experiment is to execute the experimental units in 
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}
-The dependent variables are based on the duration between time-points within all executed time-slices using a measurement unit of \texttt{nanoseconds}. The procedure for processing the raw data captured from the experiment machine, is done through a python script. The script calculates the duration between two time-stamps using the equation shown in \ref{eq:calculate-duration} and stores the specific duration into a \textit{.csv} file.
+The dependent variables are the duration between time measurement points within all executed time-slices using a measurement unit of \texttt{nanoseconds}. The procedure for processing the raw data captured from the experiment machine, is achieved using a python script\footnote{https://github.com/Pletron/[ADD REPO HERE]}. The script calculates the duration between two time-stamps using the equation shown in \ref{eq:calculate-duration} and stores the specific duration into a \textit{.csv} file together with the connected execution environment variables for the specific scenario run. The \textit{.csv} table structure and data types for each of the experimental units is presented in table \ref{tbl:csv-structure}.
 
 \begin{equation} 
 \label{eq:calculate-duration}
@@ -291,13 +296,27 @@ duration = t_{n} - t_{n-1}
 \end{split}
 \end{equation}
 
-To address both research questions and to ensure full coverage, the experiment results is first analysed through an multivariate analysis (MANOVA) to understand whether the different treatments have an overall impact on all of the dependent variables. Where the collection of all dependent variables reflects the overall scheduling precision of the execution environment. To better understand the impact of the treatments the coefficient derived corresponding to each of the dependent variables is analysed.\\
+\begin{table}[H]
+\caption{CSV table structure for both experimental units}
+\label{tbl:csv-structure}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{rL{2.9cm}|rL{2.9cm}}
+\multicolumn{2}{c}{\textbf{Pi Component}}			& \multicolumn{2}{c}{\textbf{Pi/IO Component}}		\\ \hline
+\textbf{Column names}	& \textbf{Measurement unit} & \textbf{Column names}	& \textbf{Measurement unit}	\\ \hline
+deployment\_context		& binary					& deployment\_context		& binary				\\
+kernel 					& binary					& kernel					& binary				\\
+load 					& binary					& load						& binary				\\
+overhead\_1				& nanoseconds				& overhead\_1				& nanoseconds			\\
+pi\_calculation			& nanoseconds				& camera\_input				& nanoseconds			\\
+overhead\_2				& nanoseconds				& disk\_output				& nanoseconds			\\
+sleep 					& nanoseconds				& pi\_calculation			& nanoseconds			\\
+						& 							& overhead\_2				& nanoseconds			\\
+	 					& 							& sleep 					& nanoseconds			
+\end{tabular}
+\end{table}
 
+Initially descriptive statistics are presented as a base for clarifying the variables used by statistical analyses for answering the hypotheses. Bar charts are constructed to present an overview of the result. This structure is the same between the two experimental units.\\
 
+To address the first research question a multivariate analysis (MANOVA) is conducted to understand the cause effect relationship between the three variables which construct the execution environment and the four measurement points collectively referred to as the scheduling precision. The MANOVA provides a P-values which are used to address the hypotheses connected to research question 1. The P-value explains whether there exists if there exists a cause effect relationship between the variables, however it does not disclose what that relationship is. To further understand what impact the treatments have on the dependent variables an $\eta^{2}$ value is calculated to reveal how large the impact is. Finally the relationship is explained by analysing the coefficients between the treatments and dependent variables.\\
 
-
-
-
-
-
-
+The second research question addresses two variables separately, namely input performance and output performance. Similar to the analysis procedure for research question 1, the second question seeks to understand the impact of the independent variables on the dependent variables. However the second research question have two separate dependent variables which are analysed separately to answer the first research question. Thus an ANOVA is conducted for each of the dependent variable to understand the impact between the treatment and independent variables. The ANOVA will reveal if there exists a cause effect relationship between the treatments on the dependent variables of input and output performance separately. Lastly the relationship is analysed through calculated $\eta^{2}$ values which will disclose how large the impact is.\\
