@@ -1,9 +1,28 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Conclusion \& Future Work} \label{section:conclusion}
 
+This research aimed to understand the impact Docker brings when utilised in the deployment strategy for systems which enable self-driving capabilities in vehicles. The research was conducted in collaboration with Chalmers Revere lab where a self-driving truck is currently in development where the results from this research acts as support in the decision of implementing Docker for the deployment strategy of the self-driving truck project. Previous literature \cite{p6,c2,p3,p4,p7,c1} shows promising results for helping the deployment decision where their result presents negligible overhead introduced by utilising Docker in the execution environment of the applications explored. However, previous research has not been able to build a case for the decision making specific for the domain of self-driving vehicles where the domain stresses the real-time requirements of cyber-physical systems. While one previous research \cite{p1} have explored how Docker behaves using cyclic test in a cloud computing environment with real-time requirements, it has not explored how Docker behaves in the context of a complete cyber-physical system. This is the gap this research has explored.\\
 
-\section{Future Work}
-This research has intentionally narrowed the focus onto the specific context of implementing Docker as a container deployment strategy for autonomous self-driving vehicles. The design of this research has aimed to find a generalizable understanding of how Docker impacts scheduling precision and camera/disk IO for the context used. This research has analysed how these performance factors behave while switching between different treatments, such as system load and kernel version. The performance factors scheduling precision and camera/disk IO builds a foundation of understanding the impact of using Docker for real-time systems, however, there exists other factors that are of interest to investigate. There exists a need for understanding the impact of using Docker on multiple hosts, as CPS's typically contain multiple computing nodes. The computational overhead of using multiple hosts is identified in \cite{p1} in the context of cloud computing. However, a similar approach is needed from the context of CPS.
+The findings of this research are in-line with previous research and show that Docker introduces negligible overhead to the cyber-physical system in both the controlled environment as well as the environment of the self-driving truck at Chalmers Revere lab. Furthermore, the results convey that choosing a correct \textit{kernel} for the system carry heavier importance in comparison to choosing Docker or natively for the deployment strategy. This is seen where the results show a considerably more deterministic environment when utilising an RT\_preempt kernel in comparison with a vanilla kernel. This argues that Docker is not the predominant factor impacting the scheduling or IO performance for when designing the correct execution environment for a self-driving vehicle.\\
+
+This research has intentionally narrowed the focus onto the specific context of implementing Docker as a container deployment strategy for self-driving vehicles. The design of this research has aimed to find a generalizable understanding of how Docker impacts scheduling precision and camera/disk IO for the context used. Analysis has been carried out to understand how these performance factors behave while switching between different treatments, such as system load and kernel version. The performance factors scheduling precision and camera/disk IO builds a foundation of understanding the impact of using Docker for real-time systems, however, there exists other factors that are of interest to investigate. There exists a need for understanding the impact of using Docker on multiple hosts, as CPS's typically contain multiple computing nodes. The computational overhead of using multiple hosts is identified in \cite{p1} in the context of cloud computing. However, a similar approach is needed from the context of CPS.
+
+
+
+% Decision makers inquiring whether Docker is safe to implement in a cyber-physical system within the domain of self-driving vehicles, need firstly understand how Docker benefits the software engineering procedures for the project and the requirements for the intended system.
+
+
+
+% During the research project, the team experienced that porting existing software into a Dockerized deployment strategy was shown to carry low transferability cost, where the porting of the full system took roughly 30 hours of work.
+
+
+
+
+
+
+
+
+
 
 
 %performance while running several applications on separate machines in a network cluster. Current work \cite{conf/cloudcom/MaoHPWCCH15} indicates that network performance is worsened while running real-time applications in Docker containers. Future work is therefore required to understand how Docker impacts the network performance for real-time systems in the context of autonomous self-driving vehicles.\\
