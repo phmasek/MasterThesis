@@ -16,7 +16,7 @@ The Pi Component aims to answer the first research question with a series of dat
 This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart-load} displays all standard deviations between the execution environments with load, while table \ref{fig:pi-std-chart-noload} displays the same data however the execution environments are running on a system without load. Note that the $x$ axis for both the charts have scientific notations in the bottom right corner. E.g. the execution environment of running the application natively on a vanilla kernel has a $Std. dev.$ of $\sim7 000 000ns$. While the same environment without load has a $Std. dev.$ of $\sim16 000ns$. A lower standard deviation imply a more deterministic execution environment. The charts indicate that the most deterministic environment is running the application on an RT kernel in Docker or natively. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
 
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{Descriptive Statistics}
 \label{tab:desc-table-pi}
@@ -38,7 +38,7 @@ This section provides an overview of the collected data used for answering the h
 
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsd_load.csv}\mydataload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Std. dev. of execution environments with load \textit{(lower is better)}}
 \label{fig:pi-std-chart-load}
 \begin{tikzpicture}
@@ -79,7 +79,7 @@ This section provides an overview of the collected data used for answering the h
 \end{figure}
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsd_noload.csv}\mydatanoload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Std. dev. of execution environments without load \textit{(lower is better)}}
 \label{fig:pi-std-chart-noload}
 \begin{tikzpicture}
@@ -128,7 +128,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsum_load.csv}\mydataload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Execution environment mean consumed of time-slice with load \textit{(closer to 1 is better)}}
 \label{fig:pi-mean-chart-load}
 \begin{tikzpicture}
@@ -172,7 +172,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 \end{figure}
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsum_noload.csv}\mydatanoload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Execution environment mean consumed of time-slice without load \textit{(closer to 1 is better)}}
 \label{fig:pi-mean-chart-noload}
 \begin{tikzpicture}
@@ -220,7 +220,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 
 Table \ref{tbl:hypothesispi} presents the P-value $Pr(>F)$ results of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{Hypothesis results}
 \label{tbl:hypothesispi}
@@ -287,7 +287,7 @@ This section provides an overview of the collected data and hypothesis test resu
 Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of execution environment and its sub treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
 
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{Descriptive Statistics}
 \label{tab:desc-table-piio}
@@ -307,7 +307,7 @@ Figure \ref{fig:piio-std-chart-load} presents the $Std. dev.$ for each of the tw
 
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsd_load.csv}\mydataload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Std. dev. of execution environments with load \textit{(lower is better)}}
 \label{fig:piio-std-chart-load}
 \begin{tikzpicture}
@@ -348,7 +348,7 @@ Figure \ref{fig:piio-std-chart-load} presents the $Std. dev.$ for each of the tw
 Figure \ref{fig:piio-std-chart-noload} depicts the $std. dev.$ of the input and output performance of each of the execution environments running on a system without load. The figure shows that the most deterministic execution environment is running the application natively utilising the RT kernel. The figure further displays that the worst deterministic execution environment for a no-load system is the Docker equivalent running with the RT kernel. This result show that docker has an impact on disk performance as seen by the dark blue bars being larger for both of the environments utilising Docker as its deployment context.
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsd_noload.csv}\mydatanoload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Std. dev. of execution environments without load \textit{(lower is better)}}
 \label{fig:piio-std-chart-noload}
 \begin{tikzpicture}
@@ -394,7 +394,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsum_load.csv}\mydataload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Execution environment mean consumed of time-slice with load \textit{(closer to 1 is better)}}
 \label{fig:piio-mean-chart-load}
 \begin{tikzpicture}
@@ -436,7 +436,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsum_noload.csv}\mydatanoload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Execution environment mean consumed of time-slice without load \textit{(closer to 1 is better)}}
 \label{fig:piio-mean-chart-noload}
 \begin{tikzpicture}
@@ -485,7 +485,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 An analysis of variance is performed for each of the dependent variables to understand the if there exists a cause effect relationship between the independent variables and the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA test performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.
 
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{Hypothesis results}
 \label{tbl:hypothesispiio}
@@ -504,7 +504,7 @@ $H_{12_{6}}$    & Disk Performance $\leftarrow$ Execution environment   & {0.000
 
 Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on the chosen kernel. While load has a far lower effect on camera performance in comparison with the kernel. This can be seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{ANOVA results Camera performance}
 \label{tbl:anova-cam}
@@ -523,7 +523,7 @@ Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on
 
 The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} suggests that the effect deployment context has on disk performance is below the effect of kernel and load type. This is seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{ANOVA results Disk performance}
 \label{tbl:anova-disk}
@@ -541,7 +541,7 @@ The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} sugg
 
 Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camera performance and disk performance. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in the column to the right of the nanosecond coefficients presents the percentage the dependent variable deviates from the intercept when the treatment is alternated from the intercept treatment.
 
-\begin{table}[H]
+\begin{table}[ht]
 \centering
 \caption{Coefficient between treatment and dependent variable ($ns$)}
 \label{tbl:coef-piio}
