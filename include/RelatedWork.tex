@@ -34,7 +34,7 @@ This section introduces the results from performing the snowballing search proce
 \subsubsection*{Start Set}
 A database search on Scopus \cite{scopus} is performed to identify the start set: the search string is found in \ref{search-string}.  The actual search was conducted May 10, 2016. The Scopus database returns literature from multiple publishers. The search resulted in finding 215 papers. The screening process was then applied to the 215 papers. Papers were added to the start set upon meeting the inclusion/exclusion criteria. Papers were included if found to be about input/output benchmarking, CPU benchmarking or software deployment, within the subject area of virtual containers (preferably Docker) and/or within the context of cyber physical systems. Papers were excluded if not being peer-reviewed. In total, 8 candidates for inclusion were identified. The 8 papers are identified in table~\ref{lr-startset}, denoted P1, P2 and so on.
 
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \begin{tabular}{p{15cm}}
 TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Based OR Linux Containers OR Lightweight Virtualization OR Container Cloud OR Docker) AND ( LIMIT-TO(SUBJAREA,"COMP" ) )
@@ -74,7 +74,7 @@ TITLE-ABS-KEY(Performance OR Comparison OR Latency OR Evaluation OR Container-Ba
 Table~\ref{back-snow} shows the result of backward snowballing on the remaining eight papers. The results are presented in a table to avoid redundant text as the process and results of backward snowballing for each paper are very similar. In all papers, except P1, no new papers matched the inclusion criteria after reading the title and abstract. Furthermore, most of the papers in the start set reference to each other, as seen in column three of table~\ref{back-snow}. All papers in the start set contain reference to C1, except papers P2 and P8. Similarly, all papers in the start set reference to P6 except papers P5, P6 and P8. This shows that there is a strong connection between all papers in the start set. 
 
 %-------------------------------
-\begin{table}[ht]
+\begin{table}[H]
 \begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}| >{\centering}m{1in} |>{\centering\arraybackslash}m{1in}|}
 \hline
 \textbf{Start Set Paper} & \textbf{No. References} & \textbf{Reference to Start Set} & \textbf{New Papers Identified} \\ \hline
@@ -103,7 +103,7 @@ The next step is to examine the citations towards all papers that are in the sta
 \item
 \end{labeling}
 
-\begin{table}[ht]
+\begin{table}[H]
 \begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}|>{\centering\arraybackslash}m{1.8in}|}
 \hline
 \textbf{Start Set Paper} & \textbf{No. Citations}  & \textbf{New Papers Identified} \\ \hline
