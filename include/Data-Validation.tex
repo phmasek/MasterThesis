@@ -23,19 +23,19 @@ The results shown in figure \ref{fig:truck-std-chart-noload} show that there exi
 
 
 \pgfplotstableread[col sep = semicolon]{data/truck/colsd_load.csv}\mydatanoload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Std. dev. of execution environments with real-life load \textit{(lower is better)}}
 \label{fig:truck-std-chart-noload}
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
       width=\textwidth*.95,
-      height=\textheight*.25,
+      height=\textheight*.19,
       xlabel={},
       ytick=data,
       xmin=0,
       % xmax=1.15,
-      enlarge y limits={abs=1.25},
+      enlarge y limits={abs=1},
       y dir=reverse,
       xlabel={$ns$ std. dev.},
       yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
@@ -65,21 +65,21 @@ The results shown in figure \ref{fig:truck-std-chart-noload} show that there exi
 
 
 \pgfplotstableread[col sep = semicolon]{data/truck/colsum_load.csv}\mydatanoload
-\begin{figure}[H]
+\begin{figure}[ht]
 \caption{Execution environment mean consumed of time-slice with real-life load \textit{(closer to 1 is better)}}
 \label{fig:truck-mean-chart-noload}
 \begin{tikzpicture}
 \begin{axis}[
         xbar stacked,
         width=\textwidth*.95,
-        height=\textheight*.25,
+        height=\textheight*.19,
         xlabel={},
         ytick=data,
         xmin=0,
         xmax=1.15,
         y dir=reverse,
         xlabel={$\%$ of time-slice},
-        enlarge y limits={abs=1.25},
+        enlarge y limits={abs=1},
         yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
           x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
         xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
