@@ -124,9 +124,9 @@ All software packages that are required for the experiment are installed via the
 The vanilla Linux kernel 3.18.25-generic is downloaded from the official Ubuntu Kernel package archive \cite{kernel}. In order prepare the real-time enabled kernel, a specific set of kernel configurations are applied during the kernel build process. The default configuration file (\texttt{.config}) for the vanilla kernel is extracted and used as a basis for configuring the real-time enabled kernel. The modifications made to the default configuration file for the real-time enabled kernel follows the guidelines from \cite{rt-howto} and are specified in table~\ref{kernel-config}.  
 
 \begin{table}[ht]
-\begin{tabular}{|l|c|l|}
+\begin{tabular}{|>{\centering\bfseries}m{2.8in} |>{\centering}m{0.5in}|>{\centering\arraybackslash}m{1.95in}|}
 \hline
-Parameter             		& \multicolumn{1}{l|}{Setting} & Description \\ \hline
+Parameter             		& \multicolumn{1}{l|}{\textbf{Setting}} & \textbf{Description} \\ \hline
 CONFIG\_PREEMPT\_RT   		& \textit{y}                   & Enable preempt-rt patch.            \\ \hline
 CONFIG\_LOCK\_DEBUGGING 	& \textit{n}                   & Disable schedule debugging information.            \\ \hline
 HIGH\_RES\_TIMERS 			& \textit{y}				   & Enable high resolution timers. \\ \hline
