@@ -115,23 +115,13 @@ Figure \ref{containers} exemplifies a deployment strategy design utilising Docke
 
 Docker is an open source light-weight container manager that launched in 2013 and has gained ground rapidly with its simplicity. The environment offered by Docker simplifies the process of software deployment by packaging all dependencies into a light-weight virtual container which ensures that all instances of the software is utilising the same dependent libraries. The functionality provided by Docker is comparable with virtual machines as both are virtualised environments where software applications can be executed with all dependent libraries and applications pre-installed. However, Docker, in contrast to virtual machines, is a light-weight alternative as it communicates directly to the host machine's kernel. A virtual machine applies the additional levels of a virtualising an operating system which adds complexity since the virtual OS does not speak directly with the host machine's kernel, as depicted in figure~\ref{dockervm}. With the benefit of packaging the dependent libraries and applications into a container, software developers can avoid uncertain deployments where library versions may differ between the developers' development environments and the live production environment. Docker presents further benefits such as safe roll-back between different software versions which provides projects the ability to always be able to fall back on application versions which are known to function correctly. By providing these benefits project managers can feel secure in that there always exists a working runtime environment in the scenario of a new failing deployment.\\
 
-\begin{figure}[ht]
-\centering
-     \includegraphics[width=0.7\textwidth]{./figure/dockervm.png}
-      \caption{Virtual Machines versus Docker \cite{whatdocker}}
-       \label{dockervm}
-\end{figure}
-
-
-The container in which Docker packages all dependent libraries and applications are referred to as a Docker image. This image contains everything which is required for an application to be executed. In the case of self-driving vehicles such dependencies may be image processing libraries such as OpenCV and the middle ware which enables the real-time application. When executing an application within Docker, a container is generated and executed based on the Docker image which consists of the installed libraries and applications. This software design allows for split testing of software as the same application can be executed multiple times without clashing with the other contained application. Thus being optimal for testing different versions of the same application simultaneously while knowing there is no interference between the executed applications.
-
 
 \begin{figure}[ht]
 \centering
 \label{fig:vm-vs-docker-arch}
 \begin{tikzpicture}[
 		box/.style={%
-			fit={(0,0) (1.8,.8)},
+			fit={(0,0) (1.8,.6)},
 			inner sep=0pt,
 			align=center,
 			text centered
@@ -141,48 +131,53 @@ The container in which Docker packages all dependent libraries and applications 
 
 
 
-\node[box,fill=blues1] (app1) {\footnotesize App 1};
-\node[box,fill=blues1] (app1lib) [below=0.1 of app1] {\footnotesize Bins/Libs};
-\node[box,fit={ (0,0) (1.8,2)},fill=blues1] (app1os) [below=0.1 of app1lib] {\footnotesize Guest OS};
+\node[box,fit={(0,0) (1.8,.8)},fill=blues1] (app1) {\scriptsize App 1};
+\node[box,fill=blues1] (app1lib) [below=0.1 of app1] {\scriptsize Bins/Libs};
+\node[box,fit={ (0,0) (1.8,2)},fill=blues1] (app1os) [below=0.1 of app1lib] {\scriptsize Guest OS};
 
 
-\node[box,fill=blues2] (app2) [right=0.1 of app1] {\footnotesize App 2};
-\node[box,fill=blues2] (app2lib) [below=0.1 of app2] {\footnotesize Bins/Libs};
-\node[box,fit={ (0,0) (1.8,2)},fill=blues2] (app2os) [below=0.1 of app2lib] {\footnotesize Guest OS};
+\node[box,fit={(0,0) (1.8,.8)},fill=blues2] (app2) [right=0.1 of app1] {\scriptsize App 2};
+\node[box,fill=blues2] (app2lib) [below=0.1 of app2] {\scriptsize Bins/Libs};
+\node[box,fit={ (0,0) (1.8,2)},fill=blues2] (app2os) [below=0.1 of app2lib] {\scriptsize Guest OS};
 
-\node[box,fill=blues3] (app3) [right=0.1 of app2] {\footnotesize App 3};
-\node[box,fill=blues3] (app3lib) [below=0.1 of app3] {\footnotesize Bins/Libs};
-\node[box,fit={ (0,0) (1.8,2)},fill=blues3] (app3os) [below=0.1 of app3lib] {\footnotesize Guest OS};
+\node[box,fit={(0,0) (1.8,.8)},fill=blues3] (app3) [right=0.1 of app2] {\scriptsize App 3};
+\node[box,fill=blues3] (app3lib) [below=0.1 of app3] {\scriptsize Bins/Libs};
+\node[box,fit={ (0,0) (1.8,2)},fill=blues3] (app3os) [below=0.1 of app3lib] {\scriptsize Guest OS};
 
-\node[box,fit={ (0,0) (5.635,.8)},fill=black!20] (hypervisor) [below=0.1 of app2os] {\footnotesize Hypervisor};
-\node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of hypervisor] {\footnotesize Host Operating System};
-\node[box,fit={ (0,0) (5.635,1.6)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\footnotesize Computer Hardware};
-
-
-\node[box,fit={ (0,0) (5.635,.8)},fill=orange] (dockerengine) [right=1.6 of hypervisor] {\footnotesize Docker Engine};
-\node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of dockerengine] {\footnotesize Host Operating System};
-\node[box,fit={ (0,0) (5.635,1.6)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\footnotesize Computer Hardware};
-
-\node[box,fill=blues2] (dockerapp2lib) [above=0.1 of dockerengine] {\footnotesize Bins/Libs};
-\node[box,fill=blues2] (dockerapp2) [above=0.1 of dockerapp2lib] {\footnotesize App 2};
-
-\node[box,fill=blues3] (dockerapp3lib) [right=0.1 of dockerapp2lib] {\footnotesize Bins/Libs};
-\node[box,fill=blues3] (dockerapp3) [above=0.1 of dockerapp3lib] {\footnotesize App 3};
-
-\node[box,fill=blues1] (dockerapp1lib) [left=0.1 of dockerapp2lib] {\footnotesize Bins/Libs};
-\node[box,fill=blues1] (dockerapp1) [above=0.1 of dockerapp1lib] {\footnotesize App 1};
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!20] (hypervisor) [below=0.1 of app2os] {\scriptsize Hypervisor};
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of hypervisor] {\scriptsize Host Operating System};
+\node[box,fit={ (0,0) (5.635,1.2)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\scriptsize Computer Hardware};
 
 
+\node[box,fit={ (0,0) (5.635,.8)},fill=orange] (dockerengine) [right=1.6 of hypervisor] {\scriptsize Docker Engine};
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of dockerengine] {\scriptsize Host Operating System};
+\node[box,fit={ (0,0) (5.635,1.2)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\scriptsize Computer Hardware};
 
-\node[box,fit={(0,0) (5.635,3)}] (dockerheading) [above=2.1 of dockerapp2] {\textbf{Docker Architecture}};
-\node[box,fit={(0,0) (5.635,3)}] (vmheading) [above=0 of app2] {\textbf{Virtual Machine Architecture}};
+\node[box,fill=blues2] (dockerapp2lib) [above=0.1 of dockerengine] {\scriptsize Bins/Libs};
+\node[box,fit={(0,0) (1.8,.8)},fill=blues2] (dockerapp2) [above=0.1 of dockerapp2lib] {\scriptsize App 2};
+
+\node[box,fill=blues3] (dockerapp3lib) [right=0.1 of dockerapp2lib] {\scriptsize Bins/Libs};
+\node[box,fit={(0,0) (1.8,.8)},fill=blues3] (dockerapp3) [above=0.1 of dockerapp3lib] {\scriptsize App 3};
+
+\node[box,fill=blues1] (dockerapp1lib) [left=0.1 of dockerapp2lib] {\scriptsize Bins/Libs};
+\node[box,fit={(0,0) (1.8,.8)},fill=blues1] (dockerapp1) [above=0.1 of dockerapp1lib] {\scriptsize App 1};
+
+
+
+\node[box,fit={(0,0) (5.635,2)}] (dockerheading) [above=2.1 of dockerapp2] {\textbf{Docker Architecture}};
+\node[box,fit={(0,0) (5.635,2)}] (vmheading) [above=0 of app2] {\textbf{Virtual Machine Architecture}};
 \node[box,fit={(0,0) (5.635,1)}] (vmheading) [below=0 of vmhw] {};
 
 
 
 \end{tikzpicture}
-\caption{Architectural difference between Virtual Machines and Docker}
+\caption{Virtual Machines versus Docker \cite{whatdocker}}
+       \label{dockervm}
 \end{figure}
+
+
+The container in which Docker packages all dependent libraries and applications are referred to as a Docker image. This image contains everything which is required for an application to be executed. In the case of self-driving vehicles such dependencies may be image processing libraries such as OpenCV and the middle ware which enables the real-time application. When executing an application within Docker, a container is generated and executed based on the Docker image which consists of the installed libraries and applications. This software design allows for split testing of software as the same application can be executed multiple times without clashing with the other contained application. Thus being optimal for testing different versions of the same application simultaneously while knowing there is no interference between the executed applications.
+
 
 
 
