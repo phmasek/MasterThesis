@@ -87,4 +87,66 @@ Docker is an open source light-weight container environment which was initially 
 
 The container in which Docker packages all dependent libraries and applications are referred to as a Docker image. This image contains everything which is required for an application to be executed. In the case of self-driving vehicles such dependencies may be image processing libraries such as OpenCV and the middle ware which enables the real-time application. When executing an application within Docker, a container is generated and executed based on the Docker image which consists of the installed libraries and applications. This software design allows for split testing of software as the same application can be executed multiple times without clashing with the other contained application. Thus being optimal for testing different versions of the same application simultaneously while knowing there is no interference between the executed applications.
 
+
+\begin{figure}[ht]
+\centering
+\label{fig:vm-vs-docker-arch}
+\begin{tikzpicture}[
+		box/.style={%
+			fit={(0,0) (1.8,.8)},
+			inner sep=0pt,
+			align=center,
+			text centered
+		}
+	]
+\tikzset{adjust fit placement}
+
+
+
+\node[box,fill=blues1] (app1) {\footnotesize App 1};
+\node[box,fill=blues1] (app1lib) [below=0.1 of app1] {\footnotesize Bins/Libs};
+\node[box,fit={ (0,0) (1.8,2)},fill=blues1] (app1os) [below=0.1 of app1lib] {\footnotesize Guest OS};
+
+
+\node[box,fill=blues2] (app2) [right=0.1 of app1] {\footnotesize App 2};
+\node[box,fill=blues2] (app2lib) [below=0.1 of app2] {\footnotesize Bins/Libs};
+\node[box,fit={ (0,0) (1.8,2)},fill=blues2] (app2os) [below=0.1 of app2lib] {\footnotesize Guest OS};
+
+\node[box,fill=blues3] (app3) [right=0.1 of app2] {\footnotesize App 3};
+\node[box,fill=blues3] (app3lib) [below=0.1 of app3] {\footnotesize Bins/Libs};
+\node[box,fit={ (0,0) (1.8,2)},fill=blues3] (app3os) [below=0.1 of app3lib] {\footnotesize Guest OS};
+
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!20] (hypervisor) [below=0.1 of app2os] {\footnotesize Hypervisor};
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of hypervisor] {\footnotesize Host Operating System};
+\node[box,fit={ (0,0) (5.635,1.6)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\footnotesize Computer Hardware};
+
+
+\node[box,fit={ (0,0) (5.635,.8)},fill=orange] (dockerengine) [right=1.6 of hypervisor] {\footnotesize Docker Engine};
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of dockerengine] {\footnotesize Host Operating System};
+\node[box,fit={ (0,0) (5.635,1.6)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\footnotesize Computer Hardware};
+
+\node[box,fill=blues2] (dockerapp2lib) [above=0.1 of dockerengine] {\footnotesize Bins/Libs};
+\node[box,fill=blues2] (dockerapp2) [above=0.1 of dockerapp2lib] {\footnotesize App 2};
+
+\node[box,fill=blues3] (dockerapp3lib) [right=0.1 of dockerapp2lib] {\footnotesize Bins/Libs};
+\node[box,fill=blues3] (dockerapp3) [above=0.1 of dockerapp3lib] {\footnotesize App 3};
+
+\node[box,fill=blues1] (dockerapp1lib) [left=0.1 of dockerapp2lib] {\footnotesize Bins/Libs};
+\node[box,fill=blues1] (dockerapp1) [above=0.1 of dockerapp1lib] {\footnotesize App 1};
+
+
+
+\node[box,fit={(0,0) (5.635,3)}] (dockerheading) [above=2.1 of dockerapp2] {\textbf{Docker Architecture}};
+\node[box,fit={(0,0) (5.635,3)}] (vmheading) [above=0 of app2] {\textbf{Virtual Machine Architecture}};
+\node[box,fit={(0,0) (5.635,1)}] (vmheading) [below=0 of vmhw] {};
+
+
+
+\end{tikzpicture}
+\caption{Architectural difference between Virtual Machines and Docker}
+\end{figure}
+
+
+
+
 %---------------------------------------------------%
