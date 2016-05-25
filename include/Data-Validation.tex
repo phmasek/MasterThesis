@@ -1,7 +1,7 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Data Validation}\label{section:data-validation}
 
-This section introduces the result of executing parts of the experiment on a self-driving Volvo truck, depicted in figure~\ref{truck}, that participated in the Grand Cooperative Driving Challenge 2016 in the Netherlands. \\
+This section introduces the result of executing parts of the experiment on a self-driving Volvo truck, depicted in figure~\ref{truck}, that participated in the Grand Cooperative Driving Challenge (GCDC) 2016 in the Netherlands. \\
 
 \begin{figure}[ht]
 \centering
@@ -13,13 +13,13 @@ This section introduces the result of executing parts of the experiment on a sel
 
 \section{Method}
 
-The Pi Component from \ref{section:exp-units} is executed on a Volvo truck using precisely same hardware for the target system that is used in the experiment. The Pi component is executed on the target system natively and within a Docker container. The major difference in comparison to the experiment run is that all software components required for the Volvo truck to operate in a driver-less manner is started and run in the background: this enable a more realistic operational load but consequently a less controlled environment. Fifteen components are executed natively and within a Dockerized environment on the target system. These components are tasked with various responsibilities spanning from capturing satellite positioning data, reading data from the vehicle (e.g steering position), vehicle to vehicle communication and a number of camera operating components. Measurement points are captured via serial communication to measure the impact in a real use case. \\
+The Pi Component from \ref{section:exp-units} is executed on a Volvo truck using precisely the same hardware for the target system that is used in the experiment. The Pi component is executed on the target system natively and within a Docker container. The major difference in comparison to the controlled experiment run is that all software components required for the Volvo truck to operate in a driver-less manner is started and run in the background: this enable a more realistic operational load but consequently a less controlled environment in respect to the controlled experiment. Fifteen components are executed natively and within a Dockerized environment on the target system. These components are tasked with various responsibilities spanning from capturing satellite positioning data, reading data from the vehicle (e.g steering position), vehicle to vehicle communication and a number of camera operating components. Measurement points are captured via serial communication to measure the impact in a real use case. \\
 
-The target system is running ArchLinux operating system with real-time enabled kernel, version 4.5.0-1. Docker version 1.11.1 is used for the analysis procedure and the Docker daemon is set to use the \texttt{overlayfs} storage driver, in-line with the experiment described in section \ref{soft-env}.
+The target system is running ArchLinux operating system with a real-time enabled kernel (RT\_preempt), version 4.5.0-1. Docker version 1.11.1 is used for the analysis procedure and the Docker daemon is set to use the \texttt{overlayfs} storage driver, in-line with the experiment described in section \ref{soft-env}.
 
 \section{Results}
 
-The results shown in figure \ref{fig:truck-std-chart-noload} show that there exists a difference between the two deployment contexts in the load environment introduced by the other components running on the same system. The difference indicates that the deployment context has an impact on how deterministic a system is as native fluctuates roughly $40\%$ less than the Docker deployment context. Running a statistical test to understand the cause and effect relationship between the deployment context and the dependent variables resulted in a $\eta^{2}=0.504$ which relates to a medium effect size between deployment context and the dependent variables according to Cohen's D. Figure \ref{fig:truck-mean-chart-noload} show that there exists no average time deadline violations for either of the two execution environments.
+The results shown in figure \ref{fig:truck-std-chart-noload} show that there exists a difference between the two deployment contexts in the load environment introduced by the other components running on the same system. The difference indicates that the deployment context has an impact on how deterministic a system is as native fluctuates roughly $40\%$ less than the Docker deployment context. Running a statistical test to understand the cause and effect relationship between the deployment context and the dependent variables resulted in a $\eta^{2}=0.504$ which relates to a medium effect size between deployment context and the dependent variables according to Cohen's D. Figure \ref{fig:truck-mean-chart-noload} show that there exists no violations for the average time deadline for either of the two execution environments.
 
 
 \pgfplotstableread[col sep = semicolon]{data/truck/colsd_load.csv}\mydatanoload
