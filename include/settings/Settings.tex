@@ -145,8 +145,8 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 \usepackage{tikz}
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
-\usetikzlibrary{arrows,automata}
-
+\usetikzlibrary{shapes,shapes.geometric,arrows,fit,calc,positioning,automata,}
+\tikzset{elliptic state/.style={draw,ellipse}}
 \usepackage[flushleft]{threeparttable}
 \usepackage{pgfplotstable,filecontents}
 \pgfplotsset{compat=1.9}% supress warning

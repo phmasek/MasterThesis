@@ -26,13 +26,43 @@ CPSs inherit the discipline of real-time systems requiring real-time computation
 \subsection{Scheduling Concepts}
 A unit of computation that requires the allocation of processing time is referred to as a \textit{job}. Jobs can be event-driven (a specific event triggers activities in the system) or time-triggered (activities are initiated at predefined points in time). Time triggered events require strict timing behaviour and are necessary for hard real-time systems, thus being important for a CPS. When a time-triggered job is initiated, it communicates with the operating system scheduler to acquire processing time. The job enters a ready state assigned by the scheduler and starts processing. The job can then terminate (has reached the end of its processing) or become blocked which is what typically happens for time triggered jobs. A time-triggered job becomes blocked after processing the inner body of an algorithm, subsequently entering a sleep state to the scheduler. The job sleeps for a predefined amount of time: typically for how much time is left in the specified timing parameters. After the required time has elapsed, the job enters the state of being unblocked (waking the job after sleeping), hence ready to run for another execution cycle. A state machine of a scheduler, depicting all states is found in figure~\ref{scheduler}. In summary, a scheduler acts as a traffic police in a busy intersection, handling a queue of all the processes running on the system by prioritising some processes ahead of other processes. The scheduler may act and prioritise differently depending on what rules have been set for it to follow.\\         
 
-
 \begin{figure}[ht]
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
+                    semithick,initial distance=1cm,every initial by arrow/.style={*->}]
+\tikzstyle{every state}=[fill=white,draw=black,text=black]
+
+
+\node[state,draw=none]	(x) [] 					{};
+\node[state] 			(A) [right of=x]       {\small Ready};
+\node[state]         	(B) [above right of=A] {\small Running};
+\node[state]         	(C) [below right of=B] {\small Blocked};
+\node[state,draw=none]	(D) [right of=B] {};
+\node[elliptic state]         	(E) [below of=C,align=center] {\parbox{1.65cm}{\centering\small Blocked\\Suspended}};
+\node[elliptic state]         	(F) [below of=A,align=center] {\parbox{1.65cm}{\centering\small Ready\\Suspended}};
+
+\node[text width=2.3cm] (K) [above left of=A] {\scriptsize\parbox{2.3cm}{\textbf{(Sort Term)\\Scheduling}}};
+\node[text width=2.3cm] (K) [below left of=A] {\scriptsize\parbox{2.3cm}{\textbf{Medium Term\\Scheduling}}};
+\node[text width=9.3cm] (K) [below left of=E] {\scriptsize\parbox{9.3cm}{\textbf{Unblock is done by another task (a.k.a. wakeup, release, V)\\Block is a.k.a. sleep, request}}};
+
+\path[->,label=below]			(x) edge []	node [] 	{\scriptsize Create} (A);
+\path[->,label=top] 			(A) edge [bend right]	node [pos=0.5, sloped, above] 	{\scriptsize Run} (B);
+\path[->,dotted,label=below]	(B) edge [bend right]	node [pos=0.5, sloped, below] 	{\scriptsize Prempt} (A);
+\path[->,label=below]			(B) edge []	node [] 	{\scriptsize Block} (C);
+\path[->,label=below]			(B) edge []	node [] 	{\scriptsize Terminate} (D);
+\path[->,label=below]			(C) edge []	node [] 	{\scriptsize Unblock} (A);
+\path[->,label=below]			(C) edge []	node [] 	{\scriptsize Suspend} (E);
+\path[->,label=below]			(E) edge []	node [] 	{\scriptsize Resume} (C);
+\path[->,label=below]			(E) edge []	node [] 	{\scriptsize Unblock} (F);
+\path[->,label=below]			(F) edge []	node [] 	{\scriptsize Resume} (A);
+\path[->,label=below]			(A) edge []	node [] 	{\scriptsize Suspend} (F);
+
+\end{tikzpicture}
 \centering
-     \includegraphics[width=0.6\textwidth]{./figure/scheduling.png}
-      \caption{Operating System Scheduler \cite{sched}}
-       \label{scheduler}
+\caption{Operating System Scheduler \cite{sched}.}
+\label{scheduler}
 \end{figure}
+
+
 
 
 
@@ -83,7 +113,15 @@ Figure \ref{containers} exemplifies a deployment strategy design utilising Docke
 %containers very efficiently share and utilize CPU and memory resources, 
 % !!! Add in Dockerhub
 
-Docker is an open source light-weight container environment which was initially launched in 2013 and has gained ground rapidly with its simplicity. The environment offered by Docker simplifies the process of software deployment by packaging all dependencies into a light-weight virtualization container which ensures that all instances of the software is utilising the same dependent libraries. The functionality provided by Docker is comparable with virtual machines as both are virtualised environments where software applications can be executed with all dependent libraries and applications installed. However, Docker, in contrast to virtual machines, is a light-weight alternative as it communicates directly to the host machine's kernel. A virtual machine applies the additional levels of a virtual operating system which adds complexity and does not speak directly with the host machine's kernel. With the benefit of packaging the dependent libraries and applications into a container, software developers can avoid uncertain deployments where library versions may differ between the developers' development environments and the live production environment. Docker presents further benefits such as safe roll-back between different software versions which provides projects the ability to always be able to fall back on application versions which are known to function correctly. By providing these benefits project managers can feel secure in that there always exists a working runtime environment in the scenario of a new failing deployment.\\
+Docker is an open source light-weight container manager that launched in 2013 and has gained ground rapidly with its simplicity. The environment offered by Docker simplifies the process of software deployment by packaging all dependencies into a light-weight virtual container which ensures that all instances of the software is utilising the same dependent libraries. The functionality provided by Docker is comparable with virtual machines as both are virtualised environments where software applications can be executed with all dependent libraries and applications pre-installed. However, Docker, in contrast to virtual machines, is a light-weight alternative as it communicates directly to the host machine's kernel. A virtual machine applies the additional levels of a virtualising an operating system which adds complexity since the virtual OS does not speak directly with the host machine's kernel, as depicted in figure~\ref{dockervm}. With the benefit of packaging the dependent libraries and applications into a container, software developers can avoid uncertain deployments where library versions may differ between the developers' development environments and the live production environment. Docker presents further benefits such as safe roll-back between different software versions which provides projects the ability to always be able to fall back on application versions which are known to function correctly. By providing these benefits project managers can feel secure in that there always exists a working runtime environment in the scenario of a new failing deployment.\\
+
+\begin{figure}[ht]
+\centering
+     \includegraphics[width=0.7\textwidth]{./figure/dockervm.png}
+      \caption{Virtual Machines versus Docker \cite{whatdocker}}
+       \label{dockervm}
+\end{figure}
+
 
 The container in which Docker packages all dependent libraries and applications are referred to as a Docker image. This image contains everything which is required for an application to be executed. In the case of self-driving vehicles such dependencies may be image processing libraries such as OpenCV and the middle ware which enables the real-time application. When executing an application within Docker, a container is generated and executed based on the Docker image which consists of the installed libraries and applications. This software design allows for split testing of software as the same application can be executed multiple times without clashing with the other contained application. Thus being optimal for testing different versions of the same application simultaneously while knowing there is no interference between the executed applications.
 
