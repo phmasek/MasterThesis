@@ -21,15 +21,15 @@ This section provides an overview of the collected data used for answering the h
 \caption{Descriptive Statistics}
 \label{tab:desc-table-pi}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabu}{L{2.8cm}lcccl}
-\textbf{Type of variable}             & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \textbf{Std. dev.}    & \textbf{Scale} \\ \tabucline[2pt]{-}
-\multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 14 399 960    & N/A   &   N/A                 & Nominal   \\ 
-                                      & Kernel                & 14 399 960    & N/A           &   N/A                 & Nominal   \\
-                                      & Load             & 14 399 960    & N/A           &   N/A                 & Nominal   \\ \hline
-\multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Overhead \#1  & 14 399 960    & 23520.95      &   14420.58            & Ratio     \\
-                                      & Pi Algorithm          & 14 399 960    & 8161512       &   2442637             & Ratio     \\
-                                      & Overhead \#1          & 14 399 960    & 30946.9       &   161049.8            & Ratio     \\
-                                      & Sleep                 & 14 399 960    & 1983268       &   1930865             & Ratio     \\ \hline
+\begin{tabu}{L{2.4cm}lcccl}
+\parbox{2.4cm}{\centering \textbf{Type of variable}}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \parbox{1.8cm}{\centering \textbf{Std.dev. ($ns$)}}  & \parbox{1.5cm}{\centering \textbf{Scale}} \\ \tabucline[2pt]{-}
+\multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 14 399 960 & N/A  & N/A & Nominal   \\ 
+                                      & Kernel                & 14 399 960    & N/A     & N/A  & Nominal   \\
+                                      & Load                  & 14 399 960    & N/A     & N/A  & Nominal   \\ \hline
+\multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Overhead \#1  & 14 399 960 & 23562 & 19362 & Ratio     \\
+                                      & Pi Algorithm          & 14 399 960    & 8157746 & 2419989 & Ratio     \\
+                                      & Overhead \#2          & 14 399 960    & 29664   & 48484   & Ratio     \\
+                                      & Sleep                 & 14 399 960    & 2004799 & 1960327 & Ratio     \\ \hline
 \end{tabu}
 \end{table}
 
@@ -39,12 +39,12 @@ This section provides an overview of the collected data used for answering the h
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsd_load.csv}\mydataload
 \begin{figure}[ht]
-\caption{Std. dev. of execution environments with load \textit{(lower is better)}}
+\caption{Std.dev. of execution environments with load \textit{(lower is better)}}
 \label{fig:pi-std-chart-load}
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
-      width=\textwidth*.95,
+      width=\textwidth*.92,
       height=\textheight*.25,
       xlabel={},
       ytick=data,
@@ -52,7 +52,7 @@ This section provides an overview of the collected data used for answering the h
       % xmax=1.15,
       enlarge y limits={abs=1},
       y dir=reverse,
-      xlabel={$ns$ std. dev.},
+      xlabel={Standard deviation in $ns$},
       yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       point meta={x*100},
       legend style={
@@ -85,7 +85,7 @@ This section provides an overview of the collected data used for answering the h
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
-      width=\textwidth*.95,
+      width=\textwidth*.92,
       height=\textheight*.25,
       xlabel={},
       ytick=data,
@@ -93,7 +93,7 @@ This section provides an overview of the collected data used for answering the h
       % xmax=1.15,
       enlarge y limits={abs=1},
       y dir=reverse,
-      xlabel={$ns$ std. dev.},
+      xlabel={Standard deviation in $ns$},
       yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       point meta={x*100},
       legend style={
@@ -122,7 +122,7 @@ This section provides an overview of the collected data used for answering the h
 
 
 
-Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each respective execution environment. The calculations are made by summing each of the dependent variables and dividing by the sum of all expected time-slice durations. I.e. the application was running at $100hertz$ for 1 hour resulting in $3600s \times hertz \times 5_{iterations}=1 800 000 time-slices$ where each time-slice is $0.01s$. This calculation resulted in an summed expected time-slice duration of $18000s$. The black dotted line displays the time dead line of a time-slice. Figure \ref{fig:pi-mean-chart-load} shows that data extracted from running the application on a Vanilla kernel in both Docker and Natively violates the time-slice with an overall average violation of $\sim10\%$. Where as figure \ref{fig:pi-mean-chart-noload} presents the same data for the environment contexts running on a system without load.
+Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each respective execution environment. The calculations are made by summing each of the dependent variables and dividing by the sum of all expected time-slice durations. The process is the application running at $100 hertz$ for 1 hour results in $3600s \times hertz \times 5_{iterations}=1 800 000 time-slices$ where each time-slice is $0.01s$. This calculation results in a summed expected time-slice duration of $18000s$. The black dotted line seen in figure \ref{fig:pi-mean-chart-load} displays the time deadline of a time-slice. Figure \ref{fig:pi-mean-chart-load} shows that data extracted from running the application on a Vanilla kernel in both Docker and Natively violates the time-slice with an overall average violation of $\sim10\%$. Where as figure \ref{fig:pi-mean-chart-noload} presents the same data for the environment contexts running on a system without load.
 
 
 
@@ -134,7 +134,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 \begin{tikzpicture}
 \begin{axis}[
         xbar stacked,
-        width=\textwidth*.95,
+        width=\textwidth*.92,
         height=\textheight*.25,
         xlabel={},
         ytick=data,
@@ -178,7 +178,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 \begin{tikzpicture}
 \begin{axis}[
         xbar stacked,
-        width=\textwidth*.95,
+        width=\textwidth*.92,
         height=\textheight*.25,
         xlabel={},
         ytick=data,
@@ -218,7 +218,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 
 \subsection{Hypothesis Testing}
 
-Table \ref{tbl:hypothesispi} presents the P-value $Pr(>F)$ results of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
+Table \ref{tbl:hypothesispi} presents the resulting P-values $Pr(>F)$ of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
 
 \begin{table}[ht]
 \centering
@@ -244,11 +244,11 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cKKccccD}
                                 & \textbf{Df} & \textbf{Pillai} & \textbf{Wilks} & \textbf{approx F} & \textbf{num Df} & \textbf{den Df} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{Deployment Context}     & 1           & 0.000040        & 0.99996        & 114               & 4               & 11519957        & {< 2.2e-16}     & 0.00003973235  \\
-\textbf{Kernel}                 & 1           & 0,061970        & 0.93803        & 190263            & 4               & 11519957        & {< 2.2e-16}     & 0.0619699      \\
-\textbf{Load}                   & 1           & 0.064299        & 0.93570        & 197906            & 4               & 11519957        & {< 2.2e-16}     & 0.06429905     \\
-\textbf{Deployment:Kernel}      & 1           & 0.000016        & 0.99998        & 46                & 4               & 11519957        & {< 2.2e-16}     & 0.00001594317  \\
-\textbf{Residuals}              & 11519960    &                 &                &                   &                 &                 &                 &            
+\textbf{Deployment Context}     & 1         & 0.000147  & 0.99996   & 528     & 4   & 14399952  & {< 2.2e-16}   & 0.0001465922   \\
+\textbf{Kernel}                 & 1         & 0.067785  & 0.93803   & 261770  & 4   & 14399952  & {< 2.2e-16}   & 0.0677851134   \\
+\textbf{Load}                   & 1         & 0.071642  & 0.93570   & 277812  & 4   & 14399952  & {< 2.2e-16}   & 0.0716416991   \\
+\textbf{Deployment:Kernel}      & 1         & 0.000016  & 0.99998   & 370     & 4   & 14399952  & {< 2.2e-16}   & 0.0001026772   \\
+\textbf{Residuals}              & 14399955
 \end{tabu}
 \end{table}
 \begin{table}[ht]
@@ -257,11 +257,12 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \label{tbl:coef-pi}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|rlrlrlrl}
-                     & \multicolumn{2}{c}{\textbf{Overhead \#1}} & \multicolumn{2}{c}{\textbf{Pi Algorithm}} & \multicolumn{2}{c}{\textbf{Overhead \#2}} & \multicolumn{2}{c}{\textbf{Sleep}} \\ \tabucline[2pt]{-}
-\textbf{(Intercept)} & \multicolumn{2}{c}{24742.80}              & \multicolumn{2}{c}{8033313.53}            & \multicolumn{2}{c}{39270.59}              & \multicolumn{2}{c}{2126532.85}     \\
-\textbf{Deployment Context}  & 115.22 & \textit{(0.005)} & 2208.25 & \textit{(0.000)}& 392.57 & \textit{(0.010)} & -14554.94 & \textit{(0.007)}      \\
-\textbf{Kernel}      & 7154.64 & \textit{(0.289)}& -44662.06 & \textit{(-0.006)}& -13484.74 & \textit{(-0.343)}& -384888.47 & \textit{(-0.181)}     \\
-\textbf{Load}        & -9718.16 & \textit{(-0.393)}& 293097.96 & \textit{(0.036)}& -6211.75 & \textit{(-0.158)}& 158712.59 & \textit{(0.075)}     \\
+\multicolumn{1}{c}{\textbf{}} & \multicolumn{2}{c}{\textbf{Overhead \#1}} & \multicolumn{2}{c}{\textbf{Pi Algorithm}} & \multicolumn{2}{c}{\textbf{Overhead \#2}} & \multicolumn{2}{c}{\textbf{Sleep}} \\ \tabucline[2pt]{-}
+\textbf{(Intercept)}          & \multicolumn{2}{c}{24675}                 & \multicolumn{2}{c}{8034093}               & \multicolumn{2}{c}{38997}                 & \multicolumn{2}{c}{2155372}        \\
+\textbf{deployment}           & 119                & (0,005)              & 2121               & (0,000)              & 987                & (0,025)              & -77961          & (-0,036)         \\
+\textbf{kernel}               & 7358               & (0,298)              & -48434             & (-0,006)             & -13056             & (-0,335)             & -414775         & (-0,192)         \\
+\textbf{load}                 & -9644              & (-0,391)             & 291274             & (0,036)              & -6159              & (-0,158)             & 156070          & (0,072)          \\
+\textbf{deployment:kernel}    & -118               & (-0,005)             & 4689               & (0,001)              & -877               & (-0,022)             & 71039           & (0,033)         
 \end{tabu}
 \end{table}
 \end{landscape}
@@ -280,11 +281,11 @@ The MANOVA tests suggests that \textit{deployment context} and the full \textit{
 \section{Pi/IO Component}
 \label{section:analysis-piiocomponent}
 
-This section provides an overview of the collected data and hypothesis test results for answering research question 2. The data presented in this section is extracted by running the experimental unit in $10hertz$.
+This section provides an overview of the collected data and hypothesis test results for answering research question 2. The data presented in this section is extracted by running the experimental unit in $10 hertz$.
 
 \subsection{Descriptive Statistics}
 
-Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of execution environment and its sub treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
+Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of the execution environment and its treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
 
 
 \begin{table}[ht]
@@ -292,13 +293,13 @@ Table \ref{tab:desc-table-piio} provides an overview of the data gathered and im
 \caption{Descriptive Statistics}
 \label{tab:desc-table-piio}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabu}{L{2.8cm}lcccl}
-\textbf{Type of variable}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \textbf{Std. dev.}    & \textbf{Scale} \\ \tabucline[2pt]{-}
+\begin{tabu}{L{2.4cm}lcccl}
+\parbox{2.4cm}{\centering \textbf{Type of variable}}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \parbox{1.8cm}{\centering \textbf{Std.dev. ($ns$)}}  & \parbox{1.5cm}{\centering \textbf{Scale}} \\ \tabucline[2pt]{-}
 \multirow{3}{*}[.3em]{\parbox{2.8cm}{\centering Independent variables}} & Deployment context    & 1 439 960     & N/A           &   N/A                 & Nominal   \\ 
                                                 & Kernel                & 1 439 960     & N/A           &   N/A                 & Nominal   \\
                                                 & Load Type             & 1 439 960     & N/A           &   N/A                 & Nominal   \\ \hline
 \multirow{2}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}  & Camera Performance    & 1 439 960     & 6023777       &   3178647             & Ratio     \\
-                                                & Disk performance      & 1 439 960     & 3553669       &   13404796            & Ratio     \\ \hline
+                                                & Disk Performance      & 1 439 960     & 3553669       &   13404796            & Ratio     \\ \hline
 \end{tabu}
 \end{table}
 
@@ -313,7 +314,7 @@ Figure \ref{fig:piio-std-chart-load} presents the $Std. dev.$ for each of the tw
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
-      width=\textwidth*.95,
+      width=\textwidth*.92,
       height=\textheight*.25,
       xlabel={},
       ytick=data,
@@ -321,7 +322,7 @@ Figure \ref{fig:piio-std-chart-load} presents the $Std. dev.$ for each of the tw
       % xmax=1.15,
       enlarge y limits={abs=1},
       y dir=reverse,
-      xlabel={$ns$ std. dev.},
+      xlabel={Standard deviation in $ns$},
       yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       legend style={
                 draw=none, % ?
@@ -345,7 +346,7 @@ Figure \ref{fig:piio-std-chart-load} presents the $Std. dev.$ for each of the tw
 \end{figure}
 
 
-Figure \ref{fig:piio-std-chart-noload} depicts the $std. dev.$ of the input and output performance of each of the execution environments running on a system without load. The figure shows that the most deterministic execution environment is running the application natively utilising the RT kernel. The figure further displays that the worst deterministic execution environment for a no-load system is the Docker equivalent running with the RT kernel. This result show that docker has an impact on disk performance as seen by the dark blue bars being larger for both of the environments utilising Docker as its deployment context.
+Figure \ref{fig:piio-std-chart-noload} depicts the standard deviation of the input and output performance of each of the execution environments running on a system without load. The figure shows that the most deterministic execution environment is running the application natively utilising the RT kernel. The figure further displays that the worst deterministic execution environment for a no-load system is the Docker equivalent running with the RT kernel. This result show that docker has an impact on disk performance as seen by the dark blue bars being larger for both of the environments utilising Docker as its deployment context.
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsd_noload.csv}\mydatanoload
 \begin{figure}[ht]
@@ -354,7 +355,7 @@ Figure \ref{fig:piio-std-chart-noload} depicts the $std. dev.$ of the input and 
 \begin{tikzpicture}
 \begin{axis}[
       xbar stacked,
-      width=\textwidth*.95,
+      width=\textwidth*.92,
       height=\textheight*.25,
       xlabel={},
       ytick=data,
@@ -362,7 +363,7 @@ Figure \ref{fig:piio-std-chart-noload} depicts the $std. dev.$ of the input and 
       % xmax=1.15,
       enlarge y limits={abs=1},
       y dir=reverse,
-      xlabel={$ns$ std. dev.},
+      xlabel={Standard deviation in $ns$},
       yticklabels={Native [Van],Native [RT],Docker [Van],Docker [RT]},ytick={1,...,4},
       point meta={x*100},
       legend style={
@@ -400,7 +401,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 \begin{tikzpicture}
 \begin{axis}[
         xbar stacked,
-        width=\textwidth*.95,
+        width=\textwidth*.92,
         height=\textheight*.25,
         xlabel={},
         ytick=data,
@@ -442,7 +443,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 \begin{tikzpicture}
 \begin{axis}[
         xbar stacked,
-        width=\textwidth*.95,
+        width=\textwidth*.92,
         height=\textheight*.25,
         xlabel={},
         ytick=data,
@@ -482,7 +483,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 
 \subsection{Hypothesis Testing}
 
-An analysis of variance is performed for each of the dependent variables to understand the if there exists a cause effect relationship between the independent variables and the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA test performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.
+An three-way analysis of variance (ANOVA) is performed for each of the dependent variables to understand if there exists a cause and effect relationship between the independent variables and the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA test performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.\\
 
 
 \begin{table}[ht]
@@ -491,18 +492,18 @@ An analysis of variance is performed for each of the dependent variables to unde
 \label{tbl:hypothesispiio}
 \renewcommand{\arraystretch}{1.4}
 \begin{tabu}{llc}
-\multicolumn{2}{c}{\textbf{Hypothesis}}                                     & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
+\multicolumn{2}{c}{\textbf{Hypothesis}}                                   & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
 $H_{12_{1}}$    & Camera Performance $\leftarrow$ Deployment Context      & {< 2.2e-16}     \\
 $H_{12_{2}}$    & Camera Performance $\leftarrow$ Kernel                  & {< 2.2e-16}     \\
 $H_{12_{3}}$    & Camera Performance $\leftarrow$ Execution environment   & {< 2.2e-16}     \\
-$H_{12_{4}}$    & Disk Performance $\leftarrow$ Deployment Context      & {< 2.2e-16}       \\
-$H_{12_{5}}$    & Disk Performance $\leftarrow$ Kernel                  & {< 2.2e-16}       \\
-$H_{12_{6}}$    & Disk Performance $\leftarrow$ Execution environment   & {0.00074}
+$H_{12_{4}}$    & Disk Performance $\leftarrow$ Deployment Context        & {< 2.2e-16}     \\
+$H_{12_{5}}$    & Disk Performance $\leftarrow$ Kernel                    & {< 2.2e-16}     \\
+$H_{12_{6}}$    & Disk Performance $\leftarrow$ Execution environment     & {0.00074}
 \end{tabu}
 \end{table}
 
 
-Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on the chosen kernel. While load has a far lower effect on camera performance in comparison with the kernel. This can be seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
+The \textbf{$\eta^{2}$} and F values of the treatment groups in table \ref{tbl:anova-cam} show that camera performance is mostly impacted on the chosen kernel. While load has a far lower effect on camera performance in comparison with the kernel.\\
 
 \begin{table}[ht]
 \centering
@@ -510,12 +511,12 @@ Table \ref{tbl:anova-cam} presents that camera performance is mostly impacted on
 \label{tbl:anova-cam}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cccccD}
-                    & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{deployment} & 1           & {4.329e+15}     & {5.403e+15}      & 509.91           & {< 2.2e-16}      & 0.0004424508 \\
-\textbf{kernel}     & 1           & {1.890e+17}     & {1.890e+17}      & 17833.94         & {< 2.2e-16}      & 0.01524537   \\
-\textbf{load}       & 1           & {7.905e+14}     & {7.905e+14}      & 74.61            & {< 2.2e-16}      & 0.00006476481\\
-\textbf{deployment:kernel}&1      & {2.511e+15}     & {2.511e+15}      & 236.96           & {< 2.2e-16}      & 0.0002056625 \\
-\textbf{Residuals}  & 1151960     & {1.221e+19}     & {1.060e+13}      &                  &                  &           
+                           & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(\textgreater F)} & \textbf{Partial $\eta^{2}$} \\\tabucline[2pt]{-}
+\textbf{deployment}        & 1           & 4,329E+15       & 4,329E+15        & 435,65           & \textless2E-16             & 0,0003    \\
+\textbf{kernel}            & 1           & 2,172E+17       & 2,172E+17        & 21858,63         & \textless2E-16             & 0,0150    \\
+\textbf{load}              & 1           & 2,487E+15       & 2,487E+15        & 250,24           & \textless2E-16             & 0,0002    \\
+\textbf{deployment:kernel} & 1           & 2,946E+15       & 2,946E+15        & 296,46           & \textless2E-16             & 0,0002    \\
+\textbf{Residuals}         & 1439952     & 1,431E+19       & 9,938E+12        &                  &                            &          
 \end{tabu}
 \end{table}
 
@@ -529,12 +530,13 @@ The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} sugg
 \label{tbl:anova-disk}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cccccD}
-                    & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(>F)}  & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{deployment} & 1           & {2.433e+16}     & {2.433e+16}      & 136              & {< 2.2e-16}      & 0.0001180497 \\
-\textbf{kernel}     & 1           & {5.558e+17}     & {5.558e+17}      & 3107             & {< 2.2e-16}      & 0.0026899434 \\
-\textbf{load}       & 1           & {9.636e+17}     & {9.636e+17}      & 5387             & {< 2.2e-16}      & 0.0046543952 \\
-\textbf{deployment:kernel}&1      & {2.037e+15}     & {2.037e+15}      & 11.386           & 0.00074          & 0.000009884337 \\
-\textbf{Residuals}  & 1151964     & {2.061e+20}     & {1.789e+14}      &                  &                  &   
+                           & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(\textgreater F)} & \textbf{Partial $\eta^{2}$} \\\tabucline[2pt]{-}
+\textbf{deployment}        & 1           & 2,692E+16       & 2,692E+16        & 150,95           & \textless2E-16             & 0,0001     \\
+\textbf{kernel}            & 1           & 7,063E+17       & 7,063E+17        & 3960,47          & \textless2E-16             & 0,0027     \\
+\textbf{load}              & 1           & 1,199E+18       & 1,199E+18        & 6721,91          & \textless2E-16             & 0,0046     \\
+\textbf{deployment:kernel} & 1           & 1,090E+15       & 1,090E+15        & 6,11             & 0,0134                     & 0,0000     \\
+\textbf{Residuals}         & 1439952     & 2,568E+20       & 1,783E+14        &                  &                            &           
+
 \end{tabu}
 \end{table}
 
@@ -547,10 +549,11 @@ Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camer
 \label{tbl:coef-piio}
 \renewcommand{\arraystretch}{1.5}
 \begin{tabu}{r|cccc}
-                     & \multicolumn{2}{c}{\textbf{Camera}}         & \multicolumn{2}{c}{\textbf{Disk}} \\ \tabucline[2pt]{-}
-\textbf{(Intercept)} & \multicolumn{2}{c}{5665596}                 & \multicolumn{2}{c}{1755530}       \\
-\textbf{deployment}  & 34059              & \textit{(0.006)}       & 173067         & \textit{(0.099)} \\
-\textbf{kernel}      & 778096             & \textit{(0.137)}       & 1517577        & \textit{(0.864)} \\
-\textbf{load}        & -16137             & \textit{(-0.003)}      & 2011365        & \textit{(1.146)}
+                           & \multicolumn{2}{c}{\textbf{Camera}} & \multicolumn{2}{c}{\textbf{Disk}} \\\tabucline[2pt]{-}
+\textbf{(Intercept)}       & \multicolumn{2}{c}{5644123}         & \multicolumn{2}{c}{1738978,8}     \\
+\textbf{deployment}        & 61896            & (0,011)          & 193572           & (0,111)        \\
+\textbf{kernel}            & 787322           & (0,139)          & 1540975          & (0,886)        \\
+\textbf{load}              & 1710             & (0,000)          & 2010246          & (1,156)        \\
+\textbf{deployment:kernel} & -13590           & (-0,002)         & 140025           & (0,081)       
 \end{tabu}
 \end{table}

@@ -1,3 +1,5 @@
+Loading required package: heplots
+Loading required package: car
 ############### ---------------- ##################
 ###############   Reading data   ##################
 ############### ---------------- ##################
@@ -16,35 +18,46 @@
 ############### ---------------- ##################
 ###############      MANOVA      ##################
 ############### ------Both------ ##################
-                                            Df   Pillai approx F num Df   den Df                Pr(>F)    
-data$deployment                              1 0.000148      532      4 14399952 < 0.00000000000000022 ***
-data$kernel                                  1 0.067858   262072      4 14399952 < 0.00000000000000022 ***
-data$load                                    1 0.072271   280443      4 14399952 < 0.00000000000000022 ***
-data$deployment:data$kernel:data$load        1 0.013882    50678      4 14399952 < 0.00000000000000022 ***
-Residuals                             14399955                                                            
+                                  Df   Pillai approx F num Df   den Df
+data$deployment                    1 0.000147      528      4 14399952
+data$kernel                        1 0.067785   261770      4 14399952
+data$load                          1 0.071642   277812      4 14399952
+data$deployment:data$kernel        1 0.000103      370      4 14399952
+Residuals                   14399955                                  
+                               Pr(>F)    
+data$deployment             < 2.2e-16 ***
+data$kernel                 < 2.2e-16 ***
+data$load                   < 2.2e-16 ***
+data$deployment:data$kernel < 2.2e-16 ***
+Residuals                                
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-                                            eta^2
-data$deployment                       0.000147639
-data$kernel                           0.067858175
-data$load                             0.072271026
-data$deployment:data$kernel:data$load 0.013881915
-                                            [,1]       [,2]       [,3]      [,4]
-(Intercept)                            26142.439 8023476.17  42975.466 2043316.1
-data$deployment                        -1377.761   13910.31  -3210.921   51855.2
-data$kernel                             5861.031  -36644.89 -17253.823 -284959.5
-data$load                             -11082.063  300718.51  -9918.288  250366.0
-data$deployment:data$kernel:data$load   5752.255  -37778.89  15037.619 -377185.0
+                                   eta^2
+data$deployment             0.0001465922
+data$kernel                 0.0677851134
+data$load                   0.0716416991
+data$deployment:data$kernel 0.0001026772
+                                  [,1]        [,2]        [,3]       [,4]
+(Intercept)                 24674.8554 8034093.162  38996.7844 2155372.20
+data$deployment               119.3439    2121.053    987.0378  -77960.76
+data$kernel                  7358.1358  -48434.153 -13055.8646 -414775.45
+data$load                   -9643.9993  291273.782  -6158.8828  156069.78
+data$deployment:data$kernel  -118.0816    4689.071   -877.1076   71039.45
 
 
 ############### ---------------- ##################
 ###############      MANOVA      ##################
 ############### ------Load------ ##################
-                                       Df   Pillai approx F num Df  den Df                Pr(>F)    
-cpuload$deployment                      1 0.000287      517      4 7199973 < 0.00000000000000022 ***
-cpuload$kernel                          1 0.081012   158676      4 7199973 < 0.00000000000000022 ***
-cpuload$deployment:cpuload$kernel       1 0.000228      410      4 7199973 < 0.00000000000000022 ***
-Residuals                         7199976                                                           
+                                       Df   Pillai approx F num Df  den Df
+cpuload$deployment                      1 0.000287      517      4 7199973
+cpuload$kernel                          1 0.081012   158676      4 7199973
+cpuload$deployment:cpuload$kernel       1 0.000228      410      4 7199973
+Residuals                         7199976                                 
+                                     Pr(>F)    
+cpuload$deployment                < 2.2e-16 ***
+cpuload$kernel                    < 2.2e-16 ***
+cpuload$deployment:cpuload$kernel < 2.2e-16 ***
+Residuals                                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
                                          eta^2
@@ -61,22 +74,32 @@ cpuload$deployment:cpuload$kernel  -203.0709    9359.336 -2063.409  142373.8
 ############### ---------------- ##################
 ###############      MANOVA      ##################
 ############### ----No Load----- ##################
-                                     Df  Pillai approx F num Df  den Df                Pr(>F)    
-noload$deployment                     1 0.00672    12183      4 7199973 < 0.00000000000000022 ***
-noload$kernel                         1 0.85270 10419548      4 7199973 < 0.00000000000000022 ***
-noload$deployment:noload$kernel       1 0.00037      670      4 7199973 < 0.00000000000000022 ***
-Residuals                       7199976                                                          
+                                     Df  Pillai approx F num Df  den Df
+noload$deployment                     1 0.00672    12183      4 7199973
+noload$kernel                         1 0.85270 10419548      4 7199973
+noload$deployment:noload$kernel       1 0.00037      670      4 7199973
+Residuals                       7199976                                
+                                   Pr(>F)    
+noload$deployment               < 2.2e-16 ***
+noload$kernel                   < 2.2e-16 ***
+noload$deployment:noload$kernel < 2.2e-16 ***
+Residuals                                    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
                                        eta^2
 noload$deployment               0.0067228490
 noload$kernel                   0.8526955098
 noload$deployment:noload$kernel 0.0003720973
-                                       [,1]          [,2]         [,3]          [,4]
-(Intercept)                     27622.99788 8011696.31665  47328.02184 1913352.67270
-noload$deployment                  72.48051     -62.78432    -44.31897      34.63135
-noload$kernel                    1466.21955     878.50817 -29280.13357   26935.39941
-noload$deployment:noload$kernel   -33.09230      18.80665    309.19412    -294.92019
+                                       [,1]          [,2]         [,3]
+(Intercept)                     27622.99788 8011696.31665  47328.02184
+noload$deployment                  72.48051     -62.78432    -44.31897
+noload$kernel                    1466.21955     878.50817 -29280.13357
+noload$deployment:noload$kernel   -33.09230      18.80665    309.19412
+                                         [,4]
+(Intercept)                     1913352.67270
+noload$deployment                    34.63135
+noload$kernel                     26935.39941
+noload$deployment:noload$kernel    -294.92019
 
 
 ############### ---------------- ##################
@@ -143,20 +166,28 @@ noload$deployment:noload$kernel   -33.09230      18.80665    309.19412    -294.9
 ############### ------Load------ ##################
 
 ###############    Scenario 1    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-             0              0        1799995  4596217953933    44111872805 15025933084582    21748823973 19688011735293 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+0.000000e+00 0.000000e+00 1.799995e+06 4.596218e+12 4.411187e+10 1.502593e+13 
+     odv_oh1        total 
+2.174882e+10 1.968801e+13 
 
 ###############    Scenario 2    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-             0        1799995        1799995  3054546881846    49814984930 14849989308245    45598851518 17999950026539 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+0.000000e+00 1.799995e+06 1.799995e+06 3.054547e+12 4.981498e+10 1.484999e+13 
+     odv_oh1        total 
+4.559885e+10 1.799995e+13 
 
 ###############    Scenario 3    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-       1799995              0        1799995  4315497645682    47744973111 15033681865195    22047996381 19418972480369 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+1.799995e+06 0.000000e+00 1.799995e+06 4.315498e+12 4.774497e+10 1.503368e+13 
+     odv_oh1        total 
+2.204800e+10 1.941897e+13 
 
 ###############    Scenario 4    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-       1799995        1799995        1799995  3030098742409    49733958653 14874584846024    45532497344 17999950044430 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+1.799995e+06 1.799995e+06 1.799995e+06 3.030099e+12 4.973396e+10 1.487458e+13 
+     odv_oh1        total 
+4.553250e+10 1.799995e+13 
 
 
 ############### ---------------- ##################
@@ -164,20 +195,28 @@ noload$deployment:noload$kernel   -33.09230      18.80665    309.19412    -294.9
 ############### -----No-Load---- ##################
 
 ###############    Scenario 1    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-             0              0              0  3444025244094    85190202675 14421013311498    49721258077 17999950016344 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+0.000000e+00 0.000000e+00 0.000000e+00 3.444025e+12 8.519020e+10 1.442101e+13 
+     odv_oh1        total 
+4.972126e+10 1.799995e+13 
 
 ###############    Scenario 2    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-             0        1799995              0  3492508828359    32486108656 14422594621810    52360445936 17999950004761 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+0.000000e+00 1.799995e+06 0.000000e+00 3.492509e+12 3.248611e+10 1.442259e+13 
+     odv_oh1        total 
+5.236045e+10 1.799995e+13 
 
 ###############    Scenario 3    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-       1799995              0              0  3444087580359    85110428744 14420900300030    49851722634 17999950031767 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+1.799995e+06 0.000000e+00 0.000000e+00 3.444088e+12 8.511043e+10 1.442090e+13 
+     odv_oh1        total 
+4.985172e+10 1.799995e+13 
 
 ###############    Scenario 4    ##################
-    deployment         kernel           load          sleep        odv_oh2        pi_calc        odv_oh1          total 
-       1799995        1799995              0  3492040309758    32962882587 14422515462225    52431344525 17999949999095 
+  deployment       kernel         load        sleep      odv_oh2      pi_calc 
+1.799995e+06 1.799995e+06 0.000000e+00 3.492040e+12 3.296288e+10 1.442252e+13 
+     odv_oh1        total 
+5.243134e+10 1.799995e+13 
 
 
 ############### ---------------- ##################
@@ -236,3 +275,4 @@ noload$deployment:noload$kernel   -33.09230      18.80665    309.19412    -294.9
 [1] 364.817
 [1] 9133.798
 [1] 9675.572
+[Finished in 403.5s]
