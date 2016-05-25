@@ -224,7 +224,48 @@ This research seeks to answer the two research questions which relates to the pe
 
 \begin{figure}[ht]
 \centering
-     \includegraphics[width=1.0\textwidth]{./figure/measurement_points_pi.png}
+\begin{tikzpicture}[
+		box/.style={%
+			inner sep=0pt,
+			align=center,
+			text centered
+		}
+	]
+\tikzset{adjust fit placement}
+
+
+
+\node[box,draw,fit={(0,0) (15,-.8)},fill=black!5] (total) {\scriptsize 1 execution ($100ms$)};
+
+
+
+
+\node[box,draw,fit={(0,0) (1.5,.3)},fill=blues3] (odv1) {};
+\node[box,draw,fit={(1.5,0) (11,.3)}, fill=white] (picalc) {};
+\node[box,draw,fit={(11,0) (12,.3)},fill=blues1] (odv2) {};
+\node[box,draw,fit={(12,0) (15,.3)},fill=blues4] (sleep) {};
+\node[box,draw,fit={(15,0) (15.5,.3)},fill=orange] (jit) {};
+
+
+
+\draw (12,0)--(12,1.2) node [above right,draw,fill=white] {\scriptsize Measurement point \#4};
+\draw (11,0)--(11,2) node [above right,draw,fill=white] {\scriptsize Measurement point \#3};
+\draw (1.5,0)--(1.5,2) node [above right,draw,fill=white] {\scriptsize Measurement point \#2};
+\draw (0,0)--(0,2.8) node [above right,draw,fill=white] {\scriptsize Measurement point \#1};
+
+
+
+
+\draw[black, dashed] (11.5,0)--(11.5,-1.2) node [below,fill=white] {\parbox{3.5cm}{\tiny Executed OpenDaVINCI code\\(Overhead \#2)}};
+\draw[black, dashed] (.75,0)--(.75,-1.2) node [below right,fill=white] {\parbox{3.5cm}{\tiny Executed OpenDaVINCI code\\(Overhead \#1)}};
+\draw[black, dashed] (15.25,0)--(15.25,-2) node [below left,fill=white] {\parbox{3cm}{\tiny Jitter introduced by not waking up in time}};
+
+
+
+\draw[black, dashed] (6.25,.3)--(6.25,.6) node [above,fill=white] {\tiny Pi Algorithm};
+\draw[black, dashed] (13.5,.3)--(13.5,.6) node [above,fill=white] {\tiny Sleep period};
+
+\end{tikzpicture}
       \caption{Measurement points for Pi scheduling precision.}
        \label{pi_measure}
 \end{figure}
@@ -236,10 +277,57 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
 
 \begin{figure}[ht]
 \centering
-     \includegraphics[width=1.0\textwidth]{./figure/measurement_points_piio.png}
+\begin{tikzpicture}[
+		box/.style={%
+			inner sep=0pt,
+			align=center,
+			text centered
+		}
+	]
+\tikzset{adjust fit placement}
+
+
+
+\node[box,draw,fit={(0,0) (15,-.8)},fill=black!5] (total) {\scriptsize 1 execution ($100ms$)};
+
+
+
+
+\node[box,draw,fit={(0,0) (1.5,.3)},fill=blues3] (odv1) {};
+\node[box,draw,fit={(1.5,0) (3.25,.3)}, fill=blues1] (cam) {};
+\node[box,draw,fit={(3.25,0) (5,.3)}, fill=blues2] (disk) {};
+\node[box,draw,fit={(5,0) (11,.3)}, fill=white] (picalc) {};
+\node[box,draw,fit={(11,0) (12,.3)},fill=blues1] (odv2) {};
+\node[box,draw,fit={(12,0) (15,.3)},fill=blues4] (sleep) {};
+\node[box,draw,fit={(15,0) (15.5,.3)},fill=orange] (jit) {};
+
+
+
+\draw (12,0)--(12,1.2) node [above right,draw,fill=white] {\scriptsize Measurement point \#6};
+\draw (11,0)--(11,2) node [above right,draw,fill=white] {\scriptsize Measurement point \#5};
+\draw (5,0)--(5,2.8) node [above right,draw,fill=white] {\scriptsize Measurement point \#4};
+\draw (3.25,0)--(3.25,1.2) node [above right,draw,fill=white] {\scriptsize Measurement point \#3};
+\draw (1.5,0)--(1.5,2) node [above right,draw,fill=white] {\scriptsize Measurement point \#2};
+\draw (0,0)--(0,2.8) node [above right,draw,fill=white] {\scriptsize Measurement point \#1};
+
+
+
+
+\draw[black, dashed] (4.125,0)--(4.125,-2) node [below,fill=white] {\parbox{3.7cm}{\tiny Saving image data to disk\\(Output performance)}};
+\draw[black, dashed] (2.375,0)--(2.375,-1.2) node [below,fill=white] {\parbox{3.7cm}{\tiny Capturing an image from camera\\(Input performance)}};
+\draw[black, dashed] (15.25,0)--(15.25,-1.2) node [below left,fill=white] {\parbox{3cm}{\tiny Jitter introduced by not waking up in time}};
+
+
+
+\draw[black, dashed] (8,.3)--(8,.6) node [above,fill=white] {\tiny Pi Algorithm};
+\draw[black, dashed] (13.5,.3)--(13.5,.6) node [above,fill=white] {\tiny Sleep period};
+
+
+\end{tikzpicture}
       \caption{Measurement points for IO performance.}
        \label{piio_measure}
 \end{figure}
+
 
  %\textit{Camera IO} refers to how much time is required for the application to capture an image from a camera. \textit{Disk IO} refers to how much time is required for the application to dump the image data to the disk. These three variables will be used separately to answer the two sets of hypotheses that addresses the two research goals. 
 
