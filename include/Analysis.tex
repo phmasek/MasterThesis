@@ -1,19 +1,19 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
 \chapter{Data Analysis}\label{section:data-analysis}
 
-The conducted experiments resulted in a series of datasets which are used to answer the research questions separately. This section seek to present the statistical analysis of all data captured. Each of the components is presented separately for the research question they individually seek to answer. Section \ref{section:analysis-picomponent} aims to answer the first research question and its corresponding hypotheses. While section \ref{section:analysis-piiocomponent} aims to answer the second research question and its corresponding hypotheses. Initially the hypotheses will be answered by the conducted methods where further in depth analysis will be presented to uncover details not answered by the hypotheses. Throughout this chapter the three treatments will be presented in the tables and charts. These treatments are: 1) \textit{Deployment Context} – running the experimental unit in Docker or natively; 2) \textit{Kernel} – running the experimental unit using a generic kernel or an RT enabled kernel; 3) \textit{Load} – running the experimental unit with simulated CPU load or without load.
+The conducted experiments results in a series of datasets which are used to answer the research questions separately. This section seek to present the statistical analysis of all data captured. Each of the components is presented separately for the research question they individually seek to answer. Section \ref{section:analysis-picomponent} presents the processed data intended for answering research question 1 and its corresponding hypotheses. While section \ref{section:analysis-piiocomponent} aims to answer the second research question and its corresponding hypotheses. Initially the hypotheses will be answered by the conducted methods where further in depth analysis will be presented to uncover details not answered by the hypotheses. Throughout this chapter the three treatments will be presented in the tables and charts. These treatments are: 1) \textit{Deployment Context} – running the experimental unit in Docker or natively; 2) \textit{Kernel} – running the experimental unit using a generic kernel or an RT enabled kernel; 3) \textit{Load} – running the experimental unit with simulated CPU load or without load. To extend the understanding of the impact between the treatments and dependent variables, an effect size ($\eta^{2}$) is presented. Cohen's D suggests that a large effect is attained when the $\eta^{2}$ value is above 0.80, medium above 0.50, and small above 0.20 \cite{jackson2013statistics}.
 
 
 \section{Pi Component}
 \label{section:analysis-picomponent}
 
-The Pi Component aims to answer the first research question with a series of data points extracted during the experiment. The data presented in this section is extracted by running the experimental unit in $100hertz$.
+The Pi Component aims to answer the first research question with a series of data points extracted during the experiment. The data presented in this section is extracted by running the experimental unit in $100hz$.
 
 
 \subsection{Descriptive Statistics}
 \label{section:analysis-picomponent-desc}
 
-This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart-load} displays all standard deviations between the execution environments with load, while table \ref{fig:pi-std-chart-noload} displays the same data however the execution environments are running on a system without load. Note that the $x$ axis for both the charts have scientific notations in the bottom right corner. E.g. the execution environment of running the application natively on a vanilla kernel has a $Std. dev.$ of $\sim7 000 000ns$. While the same environment without load has a $Std. dev.$ of $\sim16 000ns$. A lower standard deviation imply a more deterministic execution environment. The charts indicate that the most deterministic environment is running the application on an RT kernel in Docker or natively. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
+This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart-load} displays all standard deviations between the execution environments with load, while table \ref{fig:pi-std-chart-noload} displays the same data however the execution environments are running on a system without load. Note that the $x$ axis for both the charts have scientific notations in the bottom right corner. E.g. the execution environment of running the application natively on a vanilla kernel has a $Std. dev.$ of $\sim7\ 000\ 000ns$. While the same environment without load has a $Std. dev.$ of $\sim16\ 000ns$. A lower standard deviation imply a more deterministic execution environment. The charts indicate that the most deterministic environment is running the application on an RT kernel in Docker or natively. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
 
 
 \begin{table}[ht]
@@ -26,10 +26,10 @@ This section provides an overview of the collected data used for answering the h
 \multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 14 399 960 & N/A  & N/A & Nominal   \\ 
                                       & Kernel                & 14 399 960    & N/A     & N/A  & Nominal   \\
                                       & Load                  & 14 399 960    & N/A     & N/A  & Nominal   \\ \hline
-\multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Overhead \#1  & 14 399 960 & 23562 & 19362 & Ratio     \\
-                                      & Pi Algorithm          & 14 399 960    & 8157746 & 2419989 & Ratio     \\
-                                      & Overhead \#2          & 14 399 960    & 29664   & 48484   & Ratio     \\
-                                      & Sleep                 & 14 399 960    & 2004799 & 1960327 & Ratio     \\ \hline
+\multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Overhead \#1  & 14 399 960 & 23 562 & 19 362 & Ratio     \\
+                                      & Pi Algorithm          & 14 399 960    & 8 157 746 & 2 419 989 & Ratio     \\
+                                      & Overhead \#2          & 14 399 960    & 29 664   & 48 484   & Ratio     \\
+                                      & Sleep                 & 14 399 960    & 2 004 799 & 1 960 327 & Ratio     \\ \hline
 \end{tabu}
 \end{table}
 
@@ -122,14 +122,14 @@ This section provides an overview of the collected data used for answering the h
 
 
 
-Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each respective execution environment. The calculations are made by summing each of the dependent variables and dividing by the sum of all expected time-slice durations. The process is the application running at $100 hertz$ for 1 hour results in $3600s \times hertz \times 5_{iterations}=1 800 000 time-slices$ where each time-slice is $0.01s$. This calculation results in a summed expected time-slice duration of $18000s$. The black dotted line seen in figure \ref{fig:pi-mean-chart-load} displays the time deadline of a time-slice. Figure \ref{fig:pi-mean-chart-load} shows that data extracted from running the application on a Vanilla kernel in both Docker and Natively violates the time-slice with an overall average violation of $\sim10\%$. Where as figure \ref{fig:pi-mean-chart-noload} presents the same data for the environment contexts running on a system without load.
+In figure \ref{fig:pi-mean-chart-load} the scheduling precision for each respective execution environment is presented. The calculations are made by summing each of the dependent variables and dividing by the sum of all expected time-slice durations. The process is the application running at $100hz$ for 1 hour results in $3\ 600s \times hz \times 5_{iterations}=1\ 800\ 000 time\-slices$ where each time-slice is $0.01s$. This calculation results in a summed expected time-slice duration of $18\ 000s$. The black dotted line seen in figure \ref{fig:pi-mean-chart-load} displays the time deadline of a time-slice. Figure \ref{fig:pi-mean-chart-load} shows that data extracted from running the application on a Vanilla kernel in both Docker and Natively violates the time-slice with an overall average violation of $\sim10\%$. Where as figure \ref{fig:pi-mean-chart-noload} presents the same data for the environment contexts running on a system without load.
 
 
 
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsum_load.csv}\mydataload
 \begin{figure}[ht]
-\caption{Execution environment mean consumed of time-slice with load \textit{(closer to 1 is better)}}
+\caption{Execution environment mean consumed of time-slice with load \textit{(closer to 100\% is better)}}
 \label{fig:pi-mean-chart-load}
 \begin{tikzpicture}
 \begin{axis}[
@@ -173,7 +173,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 
 \pgfplotstableread[col sep = semicolon]{data/pi/colsum_noload.csv}\mydatanoload
 \begin{figure}[ht]
-\caption{Execution environment mean consumed of time-slice without load \textit{(closer to 1 is better)}}
+\caption{Execution environment mean consumed of time-slice without load \textit{(closer to 100\% is better)}}
 \label{fig:pi-mean-chart-noload}
 \begin{tikzpicture}
 \begin{axis}[
@@ -218,7 +218,7 @@ Figure \ref{fig:pi-mean-chart-load} presents the scheduling precision for each r
 
 \subsection{Hypothesis Testing}
 
-Table \ref{tbl:hypothesispi} presents the resulting P-values $Pr(>F)$ of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
+Table \ref{tbl:hypothesispi} presents the resulting P-values $Pr(>F)$ of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment context} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
 
 \begin{table}[ht]
 \centering
@@ -244,10 +244,10 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cKKccccD}
                                 & \textbf{Df} & \textbf{Pillai} & \textbf{Wilks} & \textbf{approx F} & \textbf{num Df} & \textbf{den Df} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{Deployment Context}     & 1         & 0.000147  & 0.99996   & 528     & 4   & 14399952  & {< 2.2e-16}   & 0.0001465922   \\
-\textbf{Kernel}                 & 1         & 0.067785  & 0.93803   & 261770  & 4   & 14399952  & {< 2.2e-16}   & 0.0677851134   \\
-\textbf{Load}                   & 1         & 0.071642  & 0.93570   & 277812  & 4   & 14399952  & {< 2.2e-16}   & 0.0716416991   \\
-\textbf{Deployment:Kernel}      & 1         & 0.000016  & 0.99998   & 370     & 4   & 14399952  & {< 2.2e-16}   & 0.0001026772   \\
+\textbf{deployment context}     & 1         & 0.000147  & 0.99996   & 528     & 4   & 14 399 952  & {< 2.2e-16}   & 0.0001465922   \\
+\textbf{kernel}                 & 1         & 0.067785  & 0.93803   & 261770  & 4   & 14 399 952  & {< 2.2e-16}   & 0.0677851134   \\
+\textbf{load}                   & 1         & 0.071642  & 0.93570   & 277812  & 4   & 14 399 952  & {< 2.2e-16}   & 0.0716416991   \\
+\textbf{deployment context:kernel}      & 1         & 0.000016  & 0.99998   & 370     & 4   & 14 399 952  & {< 2.2e-16}   & 0.0001026772   \\
 \textbf{Residuals}              & 14399955
 \end{tabu}
 \end{table}
@@ -259,16 +259,16 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \begin{tabu}{r|rlrlrlrl}
 \multicolumn{1}{c}{\textbf{}} & \multicolumn{2}{c}{\textbf{Overhead \#1}} & \multicolumn{2}{c}{\textbf{Pi Algorithm}} & \multicolumn{2}{c}{\textbf{Overhead \#2}} & \multicolumn{2}{c}{\textbf{Sleep}} \\ \tabucline[2pt]{-}
 \textbf{(Intercept)}          & \multicolumn{2}{c}{24675}                 & \multicolumn{2}{c}{8034093}               & \multicolumn{2}{c}{38997}                 & \multicolumn{2}{c}{2155372}        \\
-\textbf{deployment}           & 119                & (0,005)              & 2121               & (0,000)              & 987                & (0,025)              & -77961          & (-0,036)         \\
+\textbf{deployment context}           & 119                & (0,005)              & 2121               & (0,000)              & 987                & (0,025)              & -77961          & (-0,036)         \\
 \textbf{kernel}               & 7358               & (0,298)              & -48434             & (-0,006)             & -13056             & (-0,335)             & -414775         & (-0,192)         \\
 \textbf{load}                 & -9644              & (-0,391)             & 291274             & (0,036)              & -6159              & (-0,158)             & 156070          & (0,072)          \\
-\textbf{deployment:kernel}    & -118               & (-0,005)             & 4689               & (0,001)              & -877               & (-0,022)             & 71039           & (0,033)         
+\textbf{deployment context:kernel}    & -118               & (-0,005)             & 4689               & (0,001)              & -877               & (-0,022)             & 71039           & (0,033)         
 \end{tabu}
 \end{table}
 \end{landscape}
 
 
-The MANOVA tests suggests that \textit{deployment context} and the full \textit{execution environment} has a smaller impact on scheduling precision compared to the other separate independent variables. This is further evident when analysing the coefficients captured. Table \ref{tbl:coef-pi} displays the coefficients of each treatment onto each of the dependent variables. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in parentheses depicts how many percentage from intercept the treatment affects the particular independent variable.
+The MANOVA tests suggests that \textit{deployment context} and the full \textit{execution environment} has a smaller impact on scheduling precision compared to the other separate independent variables. This is further evident when analysing the coefficients captured. Table \ref{tbl:coef-pi} displays the coefficients of each treatment onto each of the dependent variables. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in parentheses depicts how many percentage from intercept the treatment affects the particular independent variable. In table \ref{tbl:coef-pi} it can be noted that the values displayed for the coefficients related to \textit{deployment context} show a far smaller impact on the dependent variables which is inline with the $\eta^{2}$ value displayed in \ref{tbl:manova-pi}.
 
 
 
@@ -281,7 +281,7 @@ The MANOVA tests suggests that \textit{deployment context} and the full \textit{
 \section{Pi/IO Component}
 \label{section:analysis-piiocomponent}
 
-This section provides an overview of the collected data and hypothesis test results for answering research question 2. The data presented in this section is extracted by running the experimental unit in $10 hertz$.
+This section provides an overview of the collected data and hypothesis test results for answering research question 2. The data presented in this section is extracted by running the experimental unit in $10hz$.
 
 \subsection{Descriptive Statistics}
 
@@ -298,8 +298,8 @@ Table \ref{tab:desc-table-piio} provides an overview of the data gathered and im
 \multirow{3}{*}[.3em]{\parbox{2.8cm}{\centering Independent variables}} & Deployment context    & 1 439 960     & N/A           &   N/A                 & Nominal   \\ 
                                                 & Kernel                & 1 439 960     & N/A           &   N/A                 & Nominal   \\
                                                 & Load Type             & 1 439 960     & N/A           &   N/A                 & Nominal   \\ \hline
-\multirow{2}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}  & Camera Performance    & 1 439 960     & 6023777       &   3178647             & Ratio     \\
-                                                & Disk Performance      & 1 439 960     & 3553669       &   13404796            & Ratio     \\ \hline
+\multirow{2}{*}[.4em]{\parbox{2.8cm}{\centering Dependent variables}}  & Camera Performance    & 1 439 960     & 6 023 777       &   3 178 647             & Ratio     \\
+                                                & Disk Performance      & 1 439 960     & 3 553 669       &   13 404 796            & Ratio     \\ \hline
 \end{tabu}
 \end{table}
 
@@ -396,7 +396,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsum_load.csv}\mydataload
 \begin{figure}[ht]
-\caption{Execution environment mean consumed of time-slice with load \textit{(closer to 1 is better)}}
+\caption{Execution environment mean consumed of time-slice with load \textit{(lower is better)}}
 \label{fig:piio-mean-chart-load}
 \begin{tikzpicture}
 \begin{axis}[
@@ -438,7 +438,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 
 \pgfplotstableread[col sep = semicolon]{data/piio/colsum_noload.csv}\mydatanoload
 \begin{figure}[ht]
-\caption{Execution environment mean consumed of time-slice without load \textit{(closer to 1 is better)}}
+\caption{Execution environment mean consumed of time-slice without load \textit{(lower is better)}}
 \label{fig:piio-mean-chart-noload}
 \begin{tikzpicture}
 \begin{axis}[
@@ -512,7 +512,7 @@ The \textbf{$\eta^{2}$} and F values of the treatment groups in table \ref{tbl:a
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cccccD}
                            & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(\textgreater F)} & \textbf{Partial $\eta^{2}$} \\\tabucline[2pt]{-}
-\textbf{deployment}        & 1           & 4,329E+15       & 4,329E+15        & 435,65           & \textless2E-16             & 0,0003    \\
+\textbf{deployment context}        & 1           & 4,329E+15       & 4,329E+15        & 435,65           & \textless2E-16             & 0,0003    \\
 \textbf{kernel}            & 1           & 2,172E+17       & 2,172E+17        & 21858,63         & \textless2E-16             & 0,0150    \\
 \textbf{load}              & 1           & 2,487E+15       & 2,487E+15        & 250,24           & \textless2E-16             & 0,0002    \\
 \textbf{deployment:kernel} & 1           & 2,946E+15       & 2,946E+15        & 296,46           & \textless2E-16             & 0,0002    \\
@@ -520,9 +520,6 @@ The \textbf{$\eta^{2}$} and F values of the treatment groups in table \ref{tbl:a
 \end{tabu}
 \end{table}
 
-
-
-The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} suggests that the effect deployment context has on disk performance is below the effect of kernel and load type. This is seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.
 
 \begin{table}[ht]
 \centering
@@ -540,6 +537,7 @@ The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} sugg
 \end{tabu}
 \end{table}
 
+The results from the conducted ANOVA depicted in table \ref{tbl:anova-disk} suggests that the effect deployment context has on disk performance is below the effect of kernel and load type. This is seen on the \textbf{$\eta^{2}$} and F values of the treatment groups.\\
 
 Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camera performance and disk performance. Intercept refers to the control variable where each of the treatments are set to default, e.g. having the application running natively with the generic kernel and without load. The values provided below the intercept values display the difference introduced in each of the dependent variable when switching the treatment variable. The figure in the column to the right of the nanosecond coefficients presents the percentage the dependent variable deviates from the intercept when the treatment is alternated from the intercept treatment.
 
@@ -551,9 +549,9 @@ Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camer
 \begin{tabu}{r|cccc}
                            & \multicolumn{2}{c}{\textbf{Camera}} & \multicolumn{2}{c}{\textbf{Disk}} \\\tabucline[2pt]{-}
 \textbf{(Intercept)}       & \multicolumn{2}{c}{5644123}         & \multicolumn{2}{c}{1738978,8}     \\
-\textbf{deployment}        & 61896            & (0,011)          & 193572           & (0,111)        \\
-\textbf{kernel}            & 787322           & (0,139)          & 1540975          & (0,886)        \\
-\textbf{load}              & 1710             & (0,000)          & 2010246          & (1,156)        \\
-\textbf{deployment:kernel} & -13590           & (-0,002)         & 140025           & (0,081)       
+\textbf{deployment context}        & 61 896            & (0,011)          & 193 572           & (0,111)        \\
+\textbf{kernel}            & 787 322           & (0,139)          & 1 540 975          & (0,886)        \\
+\textbf{load}              & 1 710             & (0,000)          & 2 010 246          & (1,156)        \\
+\textbf{deployment:kernel} & -13 590           & (-0,002)         & 140 025           & (0,081)       
 \end{tabu}
 \end{table}
