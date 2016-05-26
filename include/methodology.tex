@@ -13,7 +13,7 @@ In order to answer the research questions, an experiment is carried out followin
 % refine the main research questions, describe and motivate them to allow for traceability down to the hypotheses. 
 %Does the respective execution context influence the scheduling precision of the respective application?
 %Does the respective execution context influence the input/output performance of the respective application?
-The aim of the experiment is to answer the two research questions through evaluating the scheduling precision and input-output performance of the experimental units while running in different execution environments with respect to the deployment context. Understanding how the respective execution environment (e.g running the experimental units in a Docker container with a real-time Linux kernel) influences scheduling precision and input-output performance will ultimately decide how deterministic - with respect to time - the system is. Uncovering how deterministic the system is will answer the research questions. \\
+The aim of the experiment is to, through a sequence of controlled steps, systematically answer the two research questions. This is achieved through evaluating the scheduling precision and input-output performance of the experimental units while running in different execution environments with respect to the deployment context. Understanding how the respective execution environment (e.g running the experimental units in a Docker container with a real-time Linux kernel) influences scheduling precision and input-output performance will ultimately decide how deterministic - with respect to time - the system is. Uncovering how deterministic the system is will answer the research questions. \\
 
 The goals of the experiment is described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section. 
 
@@ -32,6 +32,7 @@ The goals of the experiment is described in table~\ref{table:exp-goals}, where t
 \label{table:exp-goals}
 \end{table}
 
+The goals are set to identify the most deterministic execution environment, as it is crucial for CBSs to meets the specified time deadline requirements, i.e. to ensure that the CBS does not violate the designated time of its executed time-slices.
 
 \subsection{Execution Environment} \label{section:exe-env}
 The execution environment describes the setting in which the execution of the experimental units take place. Specifically, the execution environment refers to all components that make up a complete system: the processors, operating system, software packages and so on. There are four execution environments used in this experiment. The execution environments are configured the same but with two main differences. The difference being (1) an alternation of two Linux kernels and (2) an alternation of the deployment context. In this case, the deployment context is running the experiment units natively on the target system or running the experimental units in a Docker container. The execution environments are precisely specified in table~\ref{table:exe-env}, where the configuration of the execution environment is later described in section~\ref{section:exp-material}.
@@ -66,7 +67,7 @@ The experiment is performed in two scenarios: applying no-load and apply high-lo
 \label{section:exp-units}
 % participants (experimental units) need to be described in detail. Sampling strategy, the number of participants, the kind of participants and the population they were drawn from. 
 
-The experimental units, codenamed Pi and Pi/IO, are realised by the open source development library OpenDaVINCI. Using OpenDaVINCI as a development architecture for the experimental units allows the experiment to mimic the middle-ware one can expect in a autonomous vehicle. The implementation of OpenDaVINCI has been altered to enable full measurement of the system during runtime. The measurement points are simply timestamps of when the application reaches specific points in the code base during run-time. The specific changes that were made to the OpenDaVINCI library are: \\
+The experimental units, codenamed Pi and Pi/IO, are realised by the open source middle-ware OpenDaVINCI. Using OpenDaVINCI as a development framework for the experimental units allows the experiment to mimic the middle-ware one can expect in a autonomous vehicle. The implementation of OpenDaVINCI has been altered to enable full measurement of the system during runtime. The measurement points are simply timestamps of when the application reaches specific points in the code base during run-time. The specific changes that were made to the OpenDaVINCI library are: \\
 
 \begin{enumerate}
 \item Included specific measurement points that captures the current time within OpenDaVINCI's source code.
@@ -79,7 +80,7 @@ The experimental units, codenamed Pi and Pi/IO, are realised by the open source 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pi Component}
 \label{section:exp-units-pi}
-The Pi Component is utilised for measuring scheduling precision in order to answer RQ1. The Pi Component is tasked with calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping. The rationale for why it is specifically 80\% is for the ability to have a buffer that is reserved for sleeping. An alternative approach to the Pi Component was investigated. Namely, limiting the pi algorithm to only calculate \textit{x} digits of pi instead of calculating pi for \textit{x} amount of time. This approach made it difficult to predict whether the amount of pi digits calculated would occupy more than the specified timing requirement. The approach to limit the amount of pi calculations to 80\% was chosen as it provides a more controlled environment. The algorithm that calculates pi, specifically the Leibniz formula \cite{leibniz}, is merely there to simulate some load. In the actual development of a autonomous vehicle, the pi algorithm would be replaced with logic that is useful. The source code for the Pi Component can be found in Appendix~\ref{code:pi}, on page~\pageref{code:pi}.  
+The Pi Component is utilised for measuring scheduling precision in order to answer RQ1. The Pi Component is tasked with calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping. The rationale for why it is specifically 80\% is for the ability to have a buffer that is reserved for sleeping. An alternative approach to the Pi Component was investigated. Namely, limiting the pi algorithm to only calculate \textit{x} digits of pi instead of calculating pi for \textit{x} amount of time. This approach made it difficult to predict whether the amount of pi digits calculated would occupy more than the specified timing requirement. The approach to limit the amount of pi calculations to 80\% was chosen as it provides a more controlled environment. The algorithm that calculates pi, specifically the Leibniz formula \cite{leibniz}, is implemented to simulate load on the system resources. In the actual development of a autonomous vehicle, the pi algorithm would be replaced with components which enable the self-driving capabilities of the vehicle. The source code for the Pi Component can be found in Appendix~\ref{code:pi}, on page~\pageref{code:pi}.  
 
 
 %The Pi Component is responsible for capturing data to measuring scheduling precision in order to answer RQ1. The Pi Component is tasked with calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping (\texttt{clock\_nanosleep}). The rationale of why it is specifically 80\% is due to the ability to have a buffer for sleeping to simulate a realistic scenario of code running for a particular time of the time-slice. An approach of limiting to a certain amount of pi-digits was investigated. However it would prove to be difficult to predict whether the amount of pi digits calculated would not occupy more than the specified time deadline. Therefore an approach to limit the pi calculation to a specific time of a time-slice was chosen as it provides a more controlled environment. The pi calculations are merely there to simulate some load and not to intrude on other components of the application, such as the overhead added by OpenDaVINCI and the accuracy of the system sleep. With the approach of limiting to pi-digits would be chosen, it may intrude on the actual overhead that the experiment sets out to measure.\\
@@ -89,7 +90,7 @@ The Pi Component is utilised for measuring scheduling precision in order to answ
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pi/IO Component}
 \label{section:exp-units-piio}
-The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). Capturing the image and storing it will hereon be referred to as input performance \todo{Should it be camera performance? Should it be disk write performance?} and output performance respectively. The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV \cite{opendlv}. OpenDLV is open source software currently under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Utilising source code from the OpenDLV project adds credibility to the experiment. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}, on page~\pageref{code:pi-io}.
+The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). Capturing the image and storing it will here on be referred to as input performance \todo{Should it be camera performance? Should it be disk write performance?} and output performance respectively. The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV \cite{opendlv}. OpenDLV is open source software currently under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}.
 
 %The Pi/IO Component is responsible for the measuring input/output performance in order to answer RQ2 (\ref{section:rqs}). The component extends the Pi Component by adding two additional factors to its time-slice execution. The factors are camera IO and disk IO. The code implementation of the camera component is a direct copy of code utilized by ReVeRe lab in a real-life scenario of a self-driving truck\footnote{https://github.com/chalmers-revere/opendlv}. This was copied to mimic real-life to ensure the relevance of the data captured. Furthermore, the code implementation for disk IO is also a direct copy used by ReVeRe lab for logging the system during runtime. Between these two additional factors, two measurement points are set to measure the overhead added by capturing an image and dumping that image to the disk.\\
 
@@ -103,7 +104,7 @@ In order for the experiment to begin, the target system needs to be prepared and
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
 \subsection{Hardware Environment}
-The experiment presented in this report will be executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon. The AEC 6950 is an industrial computer marketed for data processing, machine control and fleet management applications \cite{aaeon}. The hardware specification for the target system can be found in table~\ref{table:hardware}. The hardware used to capture measurement data from the Aaeon AEC 6950 is a Raspberry Pi SoC \cite{raspberry} computer Model 1 B+. The data is collected from the target system via RS-232 serial communication by using a serial to USB converter.  
+The experiment presented in this report is executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon. The AEC 6950 is an industrial computer marketed for data processing, machine control and fleet management applications \cite{aaeon}. The hardware specification for the target system can be found in table~\ref{table:hardware}. The hardware used to capture measurement data from the Aaeon AEC 6950 is a Raspberry Pi SoC \cite{raspberry} computer Model 1 B+. The data is collected from the target system via RS-232 serial communication by using a serial to USB converter.  
 
 \begin{table}[ht]
 \centering
@@ -132,7 +133,7 @@ The vanilla Linux kernel 3.18.25-generic is downloaded from the official Ubuntu 
 \begin{table}[ht]
 \begin{tabular}{|>{\centering}m{2in} |>{\centering}m{0.5in}|>{\centering\arraybackslash}m{1.95in}|}
 \hline
-Parameter             		& \multicolumn{1}{l|}{\textbf{Setting}} & \textbf{Description} \\ \hline
+\textbf{Parameter}             		& \multicolumn{1}{l|}{\textbf{Setting}} & \textbf{Description} \\ \hline
 PREEMPT\_RT\_FULL   		& \textit{y}                   & Enable preempt-rt patch.            \\ \hline
 LOCK\_DEBUGGING 			& \textit{n}                   & Disable schedule debugging information.            \\ \hline
 HIGH\_RES\_TIMERS 			& \textit{y}				   & Enable high resolution timers. \\ \hline
@@ -179,7 +180,7 @@ When applying load to the target system, two processor worker threads are starte
 
 
 \section{Tasks}
-The experimental units are executed in different execution environments with respect to the deployment context. The experimental units are tasked with capturing specified measurement points and sending the measurement data via serial communication to the data capturer where they are stored. A description of the experimental units is found in section \ref{section:exp-units} where the specific measurement points that are captured is found in section~\ref{section:dependent}.
+The experimental units are executed in different execution environments with respect to the deployment context. The experimental units are tasked with capturing specified measurement points and sending the measurement data via serial communication to the data capturer where they are stored. A description of the experimental units is found in section \ref{section:exp-units} and the specific measurement points that are captured within these units are found in section~\ref{section:dependent}.
 
 
 \section{Variables and Hypotheses} %do we have any parameters?
@@ -205,28 +206,28 @@ Two types of variables are defined for the experiment: dependent and independent
 \subsection{Dependent Variables} \label{section:dependent}
 %There exists groups of dependent variables which are all impacted by switching treatment. It is important to look both at the aggregated view of the variables, as well as at each of the variables independently. 
 
-This research seeks to answer the two research questions which relates to the performance impact of th treatments on 1) scheduling precision$^{RQ1}$, 2) input performance$^{RQ2}$, and 3) output performance$^{RQ2}$. These three aggregated variables each consists of dependent variables which are impacted by the treatments presented in section \ref{section:independent}. Scheduling precision refers to how accurately, in terms of time, the system performs the necessary actions within a specified time-slice. The captured data points for measuring scheduling precision is the duration between four measurement points for the Pi Component. Table \ref{table:measurement} presents the raw data of these measurement points which are the current time with a nanosecond accuracy. The location of the four measurement points within a time-slice is depicted in figure~\ref{pi_measure}, which represent the Pi Components complete time-slice. The duration between measurement points one and two, and between measurement points three and four reveal the overhead of the middle-ware OpenDaVINCI. The duration between measurement points four and one (the next time slice) reveals the sleep precision of the Pi Component with respect to the execution environment.\\ 
+This research seeks to answer the two research questions which relates to the performance impact of the treatments on 1) scheduling precision$^{RQ1}$, 2) input performance$^{RQ2}$, and 3) output performance$^{RQ2}$. These three aggregated variables each consists of a set of dependent variables that construct the three dependent variables. Scheduling precision refers to how accurately, in terms of time, the system performs the necessary actions within a specified time-slice. The captured data points for measuring scheduling precision is the duration with nanosecond accuracy between four measurement points for the Pi Component. The location of the four measurement points within a time-slice is depicted in figure~\ref{pi_measure}, which represent the Pi Components complete time-slice. The duration between measurement points one and two, and between measurement points three and four reveal the overhead of the middle-ware OpenDaVINCI. The duration between measurement points four and one (the next time slice) reveals the sleep precision of the Pi Component with respect to the execution environment.\\ 
 
 %Figure \ref{pi_measure} displays the four measurement points of the Pi Component time-slice, where the duration between measurement points \#1 and \#2, and between \#3 and \#4 reveals the necessary overhead of OpenDaVinci. While the duration between \#4 and \#1 (next time-slice) reveals the sleep precision of the execution environment.\\
 
 
-\begin{table}[ht]
-\begin{tabular}{|r|c|c|}
-\hline
-\textbf{Time-slice}  				&\textbf{Measurement point} 	& \textbf{Time-stamp}  \\ \hline
-\multirow{4}{*}[-.1em]{Time-slice \#1}& 1							& 1463404523050041154  \\ \cline{2-3}
-									& 2								& 1463404523050079895  \\ \cline{2-3}
-									& 3								& 1463404523058096263  \\ \cline{2-3}
-									& 4								& 1463404523058149089  \\ \hline
-\multirow{4}{*}[-.1em]{Time-slice \#2}& 1							& 1463404523060041405  \\ \cline{2-3}
-									& 2								& 1463404523060080287  \\ \cline{2-3}
-									& 3								& 1463404523068095916  \\ \cline{2-3}
-									& 4								& 1463404523068147008  \\ \hline
-\end{tabular}
-\centering
-\caption{Raw data}
-\label{table:measurement}
-\end{table}
+% \begin{table}[ht]
+% \begin{tabular}{|r|c|c|}
+% \hline
+% \textbf{Time-slice}  				&\textbf{Measurement point} 	& \textbf{Time-stamp}  \\ \hline
+% \multirow{4}{*}[-.1em]{Time-slice \#1}& 1							& 1463404523050041154  \\ \cline{2-3}
+% 									& 2								& 1463404523050079895  \\ \cline{2-3}
+% 									& 3								& 1463404523058096263  \\ \cline{2-3}
+% 									& 4								& 1463404523058149089  \\ \hline
+% \multirow{4}{*}[-.1em]{Time-slice \#2}& 1							& 1463404523060041405  \\ \cline{2-3}
+% 									& 2								& 1463404523060080287  \\ \cline{2-3}
+% 									& 3								& 1463404523068095916  \\ \cline{2-3}
+% 									& 4								& 1463404523068147008  \\ \hline
+% \end{tabular}
+% \centering
+% \caption{Raw data}
+% \label{table:measurement}
+% \end{table}
 
 \begin{figure}[ht]
 \centering
@@ -339,7 +340,7 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
 
 %%%%%%%%%%%%%%%%%%%%%%
 \subsection{Independent Variables} \label{section:independent}
-The treatments that will be used for assessing the impact are factors specific to the execution environment, namely: 1) the Linux kernel (a vanilla kernel or RT\_preempt patched kernel), 2) the deployment context (Docker or native) and 3) system load (no load or high load). The research questions will be answered by analysing how each of the dependent variables are affected the independent variables during runtime. Each of the treatments are stored as binary values ($1:true/0:false$) in the data table (table \ref{tbl:csv-structure}). The true and false value is set depending on which scenario the measurement points are collected from. Table \ref{table:treat-alt} presents the binary alternation between the data scenarios
+The treatments that are used for assessing the impact are factors specific to the execution environment, namely: 1) the Linux kernel (a vanilla kernel or RT\_preempt patched kernel), 2) the deployment context (Docker or native) and 3) system load (no load or high load). Where the alternation of the two former treatments define the execution environment. It is of particular interest for this research to understand the impact of the second treatment, which is the deployment context. Deployment context refers to how the application is executed, whether natively directly in the target machine's operating system, or if it is executed within a Docker container. The research questions are answered by analysing how each of the dependent variables are impacting the independent variables during runtime. Each of the treatments are stored as binary values ($1:true/0:false$) in the data table (table \ref{tbl:csv-structure}). The true and false value is set depending on which scenario the measurement points are collected from. Table \ref{table:treat-alt} presents the binary alternation between the data scenarios
 
 The control group is having each of the treatment variables set to $0$.
 
@@ -431,20 +432,20 @@ duration = t_{n} - t_{n-1}
 \begin{tabular}{rL{2.9cm}|rL{2.9cm}}
 \multicolumn{2}{c}{\textbf{Pi Component}}			& \multicolumn{2}{c}{\textbf{Pi/IO Component}}		\\ \hline
 \textbf{Column names}	& \textbf{Measurement unit} & \textbf{Column names}	& \textbf{Measurement unit}	\\ \hline
-deployment\_context		& binary					& deployment\_context		& binary				\\
-kernel 					& binary					& kernel					& binary				\\
-load 					& binary					& load						& binary				\\
-overhead\_1				& nanoseconds				& overhead\_1				& nanoseconds			\\
-pi\_calculation			& nanoseconds				& camera\_input				& nanoseconds			\\
-overhead\_2				& nanoseconds				& disk\_output				& nanoseconds			\\
-sleep 					& nanoseconds				& pi\_calculation			& nanoseconds			\\
-						& 							& overhead\_2				& nanoseconds			\\
-	 					& 							& sleep 					& nanoseconds			
+deployment\_context		& \texttt{binary}					& deployment\_context		& \texttt{binary}				\\
+kernel 					& \texttt{binary}					& kernel					& \texttt{binary}				\\
+load 					& \texttt{binary}					& load						& \texttt{binary}				\\
+overhead\_1				& \texttt{nanoseconds}				& overhead\_1				& \texttt{nanoseconds}			\\
+pi\_calculation			& \texttt{nanoseconds}				& camera\_input				& \texttt{nanoseconds}			\\
+overhead\_2				& \texttt{nanoseconds}				& disk\_output				& \texttt{nanoseconds}			\\
+sleep 					& \texttt{nanoseconds}				& pi\_calculation			& \texttt{nanoseconds}			\\
+						& 							& overhead\_2				& \texttt{nanoseconds}			\\
+	 					& 							& sleep 					& \texttt{nanoseconds}			
 \end{tabular}
 \end{table}
 
 Each of the subsections of section \ref{section:data-analysis} begins by presenting the gathered descriptive statistics, that is intended for clarifying the variables used by the statistical analyses to answer the hypotheses. Bar charts are constructed to present an overview of the result. This structure is the same between the two experimental units.\\
 
-To address research question 1 a three-way multivariate analysis (MANOVA) is conducted to understand the cause and effect relationship between the three variables: 1) deployment context; 2) kernel; 3) load, which construct the execution environment and the four measurement points collectively referred to as the scheduling precision. The MANOVA provides P-values which are used to address the hypotheses connected to research question 1. The P-value explains if there exists a cause and effect relationship between the variables, however it does not disclose what that relationship is. To further understand what impact the treatments have on the dependent variables an $\eta^{2}$ value is calculated to reveal how large the impact is. Finally the cause and effect relationship is explained by analysing the coefficients between the treatments and dependent variables.\\
+To address research question 1 a three-way multivariate analysis (MANOVA) is conducted to understand the cause and effect relationship between the three treatments: 1) deployment context; 2) kernel; 3) load, which construct the execution environment and the four measurement points collectively referred to as the scheduling precision. The MANOVA provides P-values which are used to address the hypotheses connected to research question 1. The P-value explains if there exists a cause and effect relationship between the variables, however it does not disclose what that relationship is. To further understand what impact the treatments have on the dependent variables an $\eta^{2}$ value is calculated to reveal how large the impact is. Finally the cause and effect relationship is explained by analysing the coefficients between the treatments and dependent variables.\\
 
 The second research question addresses two variables separately, namely input performance and output performance. Similar to the analysis procedure for research question 1, the second question seeks to understand the impact of the independent variables on the dependent variables. However the second research question have two separate dependent variables which are analysed separately to answer the first research question. Thus an three-way analysis of variance (ANOVA) is conducted for each of the dependent variable to understand the impact between the treatment and independent variables. The ANOVA will reveal if there exists a cause effect relationship between the treatments on the dependent variables of input and output performance separately. Lastly the relationship is analysed through calculated $\eta^{2}$ values which will disclose how large the impact is.\\
