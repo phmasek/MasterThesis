@@ -11,6 +11,9 @@ In this section we introduce (i) the process of identifying related work and (ii
 %-----------------------%
 \begin{table}[ht]
 \renewcommand{\arraystretch}{1.4}
+\centering
+\caption{Start Set}
+\label{lr-startset}
 \begin{tabular}{| >{\centering}m{1.3cm} |>{\arraybackslash}m{12.7cm}|}
 \hline
 \textbf{Paper No.} & \textbf{Citation}\\ \hline
@@ -23,9 +26,6 @@ In this section we introduce (i) the process of identifying related work and (ii
 {[}P7{]}  & C. Ruiz, E. Jeanvoine, and L. Nussbaum, “Performance evaluation of containers for hpc,” in Euro-Par 2015: Parallel Processing Workshops: Euro-Par 2015 International Workshops, Vienna, Austria, August 24-25, 2015, Revised Selected Papers. Cham: Springer International Publishing, 2015, pp. 813–824. \\
 {[}P8{]}  & R. Wu, Y. Chen, E. Blasch, B. Liu, G. Chen, and D. Shen, “A container-based elastic cloud architecture for real-time full-motion video (fmv) target tracking,” in 2014 IEEE Applied Imagery Pattern Recognition Workshop (AIPR), Oct 2014, pp. 1–8. \\ \hline
 \end{tabular}
-\centering
-\caption{Start Set}
-\label{lr-startset}
 \end{table}
 
 
@@ -86,6 +86,8 @@ Forward Snowballing is then applied to the papers in the start set. This step in
 \end{labeling}
 
 \begin{table}[H]
+\caption{Results from Forward Snowballing in Iteration 1}
+\label{forward-snow}
 \begin{tabular}{|>{\centering\bfseries}m{1in} |>{\centering}m{1in}|>{\centering\arraybackslash}m{1.8in}|}
 \hline
 \textbf{Start Set Paper} & \textbf{No. Citations}  & \textbf{New Papers Identified} \\ \hline
@@ -99,8 +101,6 @@ Forward Snowballing is then applied to the papers in the start set. This step in
 \textbf{P8}              & 1                       & 0                             \\ \hline
 \end{tabular}
 \centering
-\caption{Results from Forward Snowballing in Iteration 1}
-\label{forward-snow}
 \end{table}
 
 A second round of backwards and forwards snowballing is applied, as two additional papers to the start set were found in the first iteration. \textbf{P9} has 32 references. From the 32 references, 16 references is excluded based on being references to online material. A large number of the resulting references have already been analysed in the previous iteration and no new papers were identified for inclusion. \textbf{P10} has 69 references with reference to P9, P4, P6. No additional candidates for inclusion were found when studying the reference list of the paper. A second round of forward snowballing is done. \textbf{P9} has been cited by 104 papers. When reviewing the list of cited papers, many of them have already been reviewed during the snowballing procedure.  Analysing the list of papers resulted in no additional candidates for inclusion. \textbf{P10} has no citations. This is expected since P10 is not a published paper. \\

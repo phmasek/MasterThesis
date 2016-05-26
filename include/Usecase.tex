@@ -206,11 +206,13 @@ Table \ref{tbl:manova-pi-truck} presents the resulted MANOVA and effect size cal
 
 The coefficients between treatment and dependent variables are presented in table \ref{tbl:coef-pi-truck} to understand what the impact presented in table \ref{tbl:manova-pi-truck} of deployment context is. The right column for each dependent variable depicts the percentage of impact the deployment context has on each of the dependent variables. When executing the application inside a Docker container an increase of 102\% in the duration of Overhead \#2 is found.
 
+As the uncontrolled experiment only has one of the three treatments used in the controlled experiment, only one of the three hypotheses is applicable. The P-value presented in table \ref{tbl:manova-pi-truck} indicates that $H_{11_{1}}$ is significant and thus rejecting the null hypothesis.
 
+\begin{landscape}
 \begin{table}[ht]
 \centering
 \caption{Hypothesis results}
-\label{tbl:hypothesispi}
+\label{tbl:hypothesispi-truck}
 \renewcommand{\arraystretch}{1.4}
 \begin{tabu}{llc}
 \multicolumn{2}{c}{\textbf{Hypothesis}}                                     & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
@@ -218,9 +220,6 @@ $H_{11_{1}}$    & Scheduling Precision $\leftarrow$ Deployment Context      & {<
 \end{tabu}
 \end{table}
 
-As the uncontrolled experiment only has one of the three treatments used in the controlled experiment, only one of the three hypotheses is applicable. The P-value presented in table \ref{tbl:manova-pi-truck} indicates that $H_{11_{1}}$ is significant and thus rejecting the null hypothesis.
-
-\begin{landscape}
 \begin{table}[ht]
 \small
 \centering
