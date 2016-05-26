@@ -27,7 +27,7 @@ This section provides an overview of the collected data used for answering the h
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{L{2.4cm}lcccl}
 \parbox{2.4cm}{\centering \textbf{Type of variable}}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \parbox{1.8cm}{\centering \textbf{Std.dev. ($ns$)}}  & \parbox{1.5cm}{\centering \textbf{Scale}} \\ \tabucline[2pt]{-}
-\multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 14 399 960 & N/A  & N/A & Nominal   \\ 
+\multirow{1}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 14 399 960 & N/A  & N/A & Nominal   \\ 
                                       & Kernel                & 14 399 960    & N/A     & N/A  & Nominal   \\
                                       & Load                  & 14 399 960    & N/A     & N/A  & Nominal   \\ \hline
 \multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}   & Overhead \#1  & 14 399 960 & 23 562 & 19 362 & Ratio     \\
@@ -567,16 +567,15 @@ Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camer
 \section{Use-case Experiment}
 \label{section:results-usecase-experiment}
 
-This section presents the results extracted from the experiment conducted on the use-case of the self-driving truck in the Chalmers Revere Lab. The goal is to understand how the deployment context impacts the experimental units within an environment which have realistic system load.\\
+This section presents the results extracted from the experiment conducted on the use-case of the self-driving truck in the Chalmers Revere Lab. The goal is to understand and provide an instight in how the deployment context impacts the experimental units within an environment which have realistic system load.\\
 
 
-
-\subsubsection{Descriptive Statistics}
+\subsection{Descriptive Statistics}
 
 \begin{table}[ht]
 \centering
 \caption{Descriptive Statistics}
-\label{tab:desc-table-pi}
+\label{tab:desc-table-pi-truck}
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{L{2.4cm}lcccl}
 \parbox{2.4cm}{\centering \textbf{Type of variable}}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \parbox{1.8cm}{\centering \textbf{Std.dev. ($ns$)}}  & \parbox{1.5cm}{\centering \textbf{Scale}} \\ \tabucline[2pt]{-}
@@ -588,8 +587,7 @@ This section presents the results extracted from the experiment conducted on the
 \end{tabu}
 \end{table}
 
-
-The results shown in figure \ref{fig:truck-std-chart-noload} show that there exists a difference between the two deployment contexts in the load environment introduced by the other components running on the same system. The difference indicates that the deployment context has an impact on how deterministic a system is as native fluctuates roughly $40\%$ less than the Docker deployment context. Running a statistical test to understand the cause and effect relationship between the deployment context and the dependent variables resulted in a $\eta^{2}=0.504$ which relates to a medium effect size between deployment context and the dependent variables according to Cohen's D ($\eta^{2} > 0.5$). Figure \ref{fig:truck-mean-chart-noload} show that there exists no violations for the average time deadline for either of the two execution environments.
+The results shown in figure \ref{fig:truck-std-chart-noload} show that there exists a difference between the two deployment contexts in the load environment introduced by the other components running on the same system. The difference indicates that the deployment context has an impact on how deterministic a system is as native fluctuates roughly $40\%$ less than the Docker deployment context. Running a statistical test to understand the cause and effect relationship between the deployment context and the dependent variables resulted in a $\eta^{2}=0.504$ which relates to a medium effect size between deployment context and the dependent variables according to Cohen's D ($\eta^{2} > 0.5$). Figure \ref{fig:truck-mean-chart-noload} show that there exists no violations for the average time deadline for either of the two execution environments.\\
 
 
 \pgfplotstableread[col sep = semicolon]{data/truck/colsd_load.csv}\mydatanoload
