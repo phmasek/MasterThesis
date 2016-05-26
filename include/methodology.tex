@@ -13,7 +13,7 @@ In order to answer the research questions, an experiment is carried out followin
 % refine the main research questions, describe and motivate them to allow for traceability down to the hypotheses. 
 %Does the respective execution context influence the scheduling precision of the respective application?
 %Does the respective execution context influence the input/output performance of the respective application?
-The aim of the experiment is to systematically evaluate the scheduling precision and input-output performance of the experimental units running in different execution environments with respect to the deployment context. Understanding how the respective execution enviroment (e.g running the experimental untis in a Docker container with a real-time Linux kernel) influences sheduling precision and input-output performence will ultimately decide how deterministic - with respect to time - the system is said to be. Uncovering how deterministic the system is will answer the research questions. \\
+The aim of the experiment is to answer the two research questions through evaluating the scheduling precision and input-output performance of the experimental units while running in different execution environments with respect to the deployment context. Understanding how the respective execution environment (e.g running the experimental units in a Docker container with a real-time Linux kernel) influences scheduling precision and input-output performance will ultimately decide how deterministic - with respect to time - the system is. Uncovering how deterministic the system is will answer the research questions. \\
 
 The goals of the experiment is described in table~\ref{table:exp-goals}, where the experimental units, execution environment and system load is described further in this section. 
 
@@ -21,10 +21,12 @@ The goals of the experiment is described in table~\ref{table:exp-goals}, where t
 % deployment context: docker non-docker 
 
 \begin{table}[ht]
-\begin{tabular}{l|p{12cm}}
-Goal 1 & Analyse the scheduling precision of the Pi Component for the purpose of understanding how deterministic the system is with respect to the execution environment and system load. \\
-Goal 2 & Analyse the input and output performance of the Pi/IO Component for the purpose of understanding how deterministic the system is with respect to the execution environment and system load.
-\end{tabular}
+\renewcommand{\arraystretch}{2}
+\begin{tabu}{c|p{12cm}}
+\centering \textbf{Goal} & \centering \textbf{Description} \\ \tabucline[2pt]{-}
+\textbf{1} 		& Analyse the scheduling precision of the Pi Component (section \ref{section:exp-units-pi}) for the purpose of understanding how deterministic the system is with respect to the execution environment and system load. \\
+\textbf{2} 		& Analyse the input and output performance of the Pi/IO Component (section \ref{section:exp-units-piio}) for the purpose of understanding how deterministic the system is with respect to the execution environment and system load.
+\end{tabu}
 \centering
 \caption{Experiment Goals}
 \label{table:exp-goals}
@@ -36,12 +38,14 @@ The execution environment describes the setting in which the execution of the ex
 
 
 \begin{table}[ht]
-\begin{tabular}{l|p{14cm}}
-1. & Running the experimental units natively on the target system running a mainline vanilla Linux kernel.                               \\
-2. & Running the experimental units natively on the target system running a mainline Linux kernel patched with RT\_preempt.              \\
-3. & Running the experimental units in a Docker container on the target system running a mainline vanilla Linux kernel.                  \\
-4. & Running the experimental units in a Docker container on the target system running a mainline Linux kernel patched with RT\_preempt.
-\end{tabular}
+\renewcommand{\arraystretch}{2}
+\begin{tabu}{c|p{11cm}}
+\centering \textbf{Environment} & \centering \textbf{Description} \\ \tabucline[2pt]{-}
+\textbf{1} & Running the experimental units natively on the target system running a vanilla Linux kernel.                               \\
+\textbf{2} & Running the experimental units natively on the target system running a Linux kernel patched with RT\_preempt.              \\
+\textbf{3} & Running the experimental units in a Docker container on the target system running a mainline vanilla Linux kernel.                  \\
+\textbf{4} & Running the experimental units in a Docker container on the target system running a mainline Linux kernel patched with RT\_preempt.
+\end{tabu}
 \centering
 \caption{Execution Environments}
 \label{table:exe-env}
@@ -74,6 +78,7 @@ The experimental units, codenamed Pi and Pi/IO, are realised by the open source 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pi Component}
+\label{section:exp-units-pi}
 The Pi Component is utilised for measuring scheduling precision in order to answer RQ1. The Pi Component is tasked with calculating the next digit of Pi until it reaches 80\% of its' designated time-slice. The remaining 20\% of the time-slice is spent sleeping. The rationale for why it is specifically 80\% is for the ability to have a buffer that is reserved for sleeping. An alternative approach to the Pi Component was investigated. Namely, limiting the pi algorithm to only calculate \textit{x} digits of pi instead of calculating pi for \textit{x} amount of time. This approach made it difficult to predict whether the amount of pi digits calculated would occupy more than the specified timing requirement. The approach to limit the amount of pi calculations to 80\% was chosen as it provides a more controlled environment. The algorithm that calculates pi, specifically the Leibniz formula \cite{leibniz}, is merely there to simulate some load. In the actual development of a autonomous vehicle, the pi algorithm would be replaced with logic that is useful. The source code for the Pi Component can be found in Appendix~\ref{code:pi}, on page~\pageref{code:pi}.  
 
 
@@ -83,6 +88,7 @@ The Pi Component is utilised for measuring scheduling precision in order to answ
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Pi/IO Component}
+\label{section:exp-units-piio}
 The Pi/IO Component is utilised for measuring input and output performance in order to answer RQ2. The component is an extension of the Pi Component with two additional factors. These factors are reading an image from a web camera (input) and storing the image to disk (output). Capturing the image and storing it will hereon be referred to as input performance \todo{Should it be camera performance? Should it be disk write performance?} and output performance respectively. The code implementation of capturing an image from a camera is a direct copy from the open-source project OpenDLV \cite{opendlv}. OpenDLV is open source software currently under development for the operation of an autonomous self-driving vehicle and is built upon OpenDaVINCI. Utilising source code from the OpenDLV project adds credibility to the experiment. Furthermore, the code implementation for storing an image to disk is also a direct copy from the OpenDLV project that is used for logging the system during runtime. In order to capture the specific performance measure of input and output, two measurement points are added to measure the overhead by capturing an image and storing it to disk. The source code for the Pi/IO Component can be found in Appendix~\ref{code:pi-io}, on page~\pageref{code:pi-io}.
 
 %The Pi/IO Component is responsible for the measuring input/output performance in order to answer RQ2 (\ref{section:rqs}). The component extends the Pi Component by adding two additional factors to its time-slice execution. The factors are camera IO and disk IO. The code implementation of the camera component is a direct copy of code utilized by ReVeRe lab in a real-life scenario of a self-driving truck\footnote{https://github.com/chalmers-revere/opendlv}. This was copied to mimic real-life to ensure the relevance of the data captured. Furthermore, the code implementation for disk IO is also a direct copy used by ReVeRe lab for logging the system during runtime. Between these two additional factors, two measurement points are set to measure the overhead added by capturing an image and dumping that image to the disk.\\
