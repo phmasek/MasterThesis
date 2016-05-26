@@ -134,7 +134,16 @@ numberstyle=\color[rgb]{0.205, 0.142, 0.73},
 \setlength{\marginparwidth}{2.5cm} 
 
 % Inline code
-\newcommand{\code}[1]{\texttt{#1}}
+\renewcommand{\texttt}[1]{%
+  \begingroup
+  \ttfamily
+  \begingroup\lccode`~=`/\lowercase{\endgroup\def~}{/\discretionary{}{}{}}%
+  \begingroup\lccode`~=`[\lowercase{\endgroup\def~}{[\discretionary{}{}{}}%
+  \begingroup\lccode`~=`.\lowercase{\endgroup\def~}{.\discretionary{}{}{}}%
+  \catcode`/=\active\catcode`[=\active\catcode`.=\active
+  \scantokens{#1\noexpand}%
+  \endgroup
+}
 
 % Supress warning from Texmaker about headheight
 \setlength{\headheight}{15pt}		
