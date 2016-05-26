@@ -20,9 +20,9 @@ This section is aimed at providing the method of the experiment conducted on the
 \subsection{Experimental Units}
 \label{sec:truck-expun}
 
-A decision to exclusively run the Pi Component is made as the self-driving truck implements a networked camera setup and hence does not have the same camera implementation as the controlled target system (section~\ref{section:hw-env}). The Pi Component presented in section~\ref{section:exp-units} is executed on a target system identical to the one used during the controlled experiments. The computer is connected to hardware components mounted to a Volvo FH16 truck. As the use-case data is extracted using the Pi Component no measurements are done to understand the camera input and disk output performance for the use-case due to the priority of building an understanding of how the scheduling precision behaves with the runtime load of the self-driving truck.\\
+A decision to exclusively run the Pi Component is made as the self-driving truck implements a networked camera setup and hence does not have the same camera implementation as the controlled target system (section~\ref{section:hw-env}). The Pi Component presented in section~\ref{section:exp-units} is executed on the target system identical to the one used during the controlled experiments. The computer is connected to hardware components mounted to a Volvo FH16 truck. As the use-case data is extracted using the Pi Component no measurements are done to understand the camera input and disk output performance for the use-case due to the priority of building an understanding of how the scheduling precision behaves with the runtime load of the self-driving truck.\\
 
-To understand how Docker impacts the scheduling precision on the use-case, the experimental unit is executed first natively and secondly within a Dockerized container. The runtime properties of Docker are presented in table \ref{docker-parameters-truck}. Docker version 1.11.1 is used for the analysis procedure and the Docker daemon is set to use the \texttt{overlayfs} storage driver.
+To understand how Docker impacts the scheduling precision in the context of the use-case, the experimental unit is executed first natively and secondly within a Dockerized container. The runtime properties of Docker are presented in table \ref{docker-parameters-truck}. Docker version 1.11.1 is used and the Docker daemon is set to use the \texttt{overlayfs} storage driver.
 
 
 
@@ -70,17 +70,17 @@ Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB
 
 \subsection{Variables}
 
-The uncontrolled experiment is intended to understand the deployment context's impact on the scheduling precision. In comparison to the controlled environment the kernel is statically set to an RT\_preempt kernel and thus not used as a treatment to the use-case experiment. The deployment context is a categorical variable which holds two values, namely 1) Native and 2) Docker. Where the former is the execution of the experimental unit on the host OS and the second is the execution of the experimental unit in a Dockerized container. As the use-case scenario is a replication of the controlled environment, the same dependent variables are used for measuring the scheduling precision of the experimental unit, namely: 1) Overhead \#1, 2) Pi Algorithm, 3) Overhead \#2, and 4) Sleep. Figure \ref{pi_measure} presents the measurement points from where within the time-slice each of the dependent variables are extracted.\\
+The uncontrolled experiment is intended to understand the deployment context's impact on the scheduling precision. In comparison to the controlled environment the kernel is statically set to an RT\_preempt kernel and thus not used as a treatment to the use-case experiment. The deployment context is a categorical variable which holds two values, namely 1) Native and 2) Docker. Where the former is the execution of the experimental unit on the host OS and the second is the execution of the experimental unit in a Dockerized container. As the use-case scenario is a replication of the controlled environment, the same dependent variables are used for measuring the scheduling precision of the experimental unit, namely measurement points:  Overhead \#1,  Pi Algorithm,  Overhead \#2, and Sleep. Figure \ref{pi_measure} presents the measurement points from where within the time-slice each of the dependent variables are extracted.\\
 
 
 \subsection{Procedure}
 
-The procedure is to execute the experimental unit in 2 different scenarios. The two scenarios is an alternation between two deployment contexts, namely 1) Executing natively on the host OS, and 2) Executing within a Dockerized environment. Each scenario is manually executed for $1h$ on the target machine with the Raspberry Pi SoC \cite{raspberry} hardware connected through a serial to USB device used for capturing measurement data via RS-232 serial communication.\\
+The procedure is to execute the experimental unit in 2 different scenarios. The two scenarios is an alternation between two deployment contexts: executing natively on the host OS, and executing within a Docker environment. Each scenario is manually executed for $1h$ on the target machine with the Raspberry Pi SoC \cite{raspberry} hardware connected through a serial to USB device used for capturing measurement data via RS-232 serial communication.\\
 
 
 \subsection{Analysis Procedure}
 
-Analysing the data is made with a partly replicated analysis procedure used for understanding the scheduling precision of the controlled experiment. The purpose of running the uncontrolled experiment is to provide an insight to how the experimental unit's scheduling precision behave in an environment with realistic load. Each of the measurement points presented in figure \ref{pi_measure} are extracted and processed by calculating the duration between the points using a script. The durations is then analysed by building bar charts to illustrate the scheduling precision which is intended to provide an overview of all data points extracted. Furthermore, a table of sample size, means, and standard deviations is constructed to provide the descriptive statistics of the generated bar charts. Lastly, a one-way multivariate analysis (MANOVA) is conducted to understand how the deployment context impact the scheduling precision and an effect size ($\eta^{2}$) between the deployment context and scheduling precision is calculated to bring a more detailed understanding of what impact the deployment context has on the scheduling precision.\\
+Analysing the data is made with a partly replicated analysis procedure used for understanding the scheduling precision of the controlled experiment. The purpose of running the uncontrolled experiment is to provide an insight to how the experimental unit's scheduling precision behave in an environment with realistic load. Each of the measurement points presented in figure \ref{pi_measure} is extracted and processed by calculating the duration between the points using a script. The durations is then analysed by building bar charts to illustrate the scheduling precision which is intended to provide an overview of all data points extracted. Furthermore, a table of sample size, means, and standard deviations is constructed to provide the descriptive statistics of the generated bar charts. Lastly, a one-way multivariate analysis (MANOVA) is conducted to understand how the deployment context impact the scheduling precision and an effect size ($\eta^{2}$) between the deployment context and scheduling precision is calculated to bring a more detailed understanding of what impact the deployment context has on the scheduling precision.\\
 
 
 
@@ -202,10 +202,24 @@ The results shown in figure \ref{fig:truck-std-chart-noload} show that there exi
 
 \subsection{Hypothesis Testing}
 
-Table \ref{tbl:manova-pi-truck} presents the resulted MANOVA and effect size calculated from the data derived from the uncontrolled experiment.
+Table \ref{tbl:manova-pi-truck} presents the resulted MANOVA and effect size calculated from the data derived from the uncontrolled experiment. As the P-value (Pr(>F)) is smaller than the chosen $\alpha=0.001$ it indicate that the deployment context has a strong significant impact on the scheduling precision in the uncontrolled experiment. The $\eta^{2}$, Wilks $\lambda$, and Pillai's trace values all indicate that the effect of the deployment strategy is of medium size as the $\eta^{2}$ value is larger than the medium threshold provided by Cohen's D ($\eta^{2}>0.5$).\\
 
+The coefficients between treatment and dependent variables are presented in table \ref{tbl:coef-pi-truck} to understand what the impact presented in table \ref{tbl:manova-pi-truck} of deployment context is. The right column for each dependent variable depicts the percentage of impact the deployment context has on each of the dependent variables. When executing the application inside a Docker container an increase of 102\% in the duration of Overhead \#2 is found.
+
+As the uncontrolled experiment only has one of the three treatments used in the controlled experiment, only one of the three hypotheses is applicable. The P-value presented in table \ref{tbl:manova-pi-truck} indicates that $H_{11_{1}}$ is significant and thus rejecting the null hypothesis.
 
 \begin{landscape}
+\begin{table}[ht]
+\centering
+\caption{Hypothesis results}
+\label{tbl:hypothesispi-truck}
+\renewcommand{\arraystretch}{1.4}
+\begin{tabu}{llc}
+\multicolumn{2}{c}{\textbf{Hypothesis}}                                     & \textbf{Pr(>F)} \\\tabucline[2pt]{-}
+$H_{11_{1}}$    & Scheduling Precision $\leftarrow$ Deployment Context      & {< 2.2e-16}     \\
+\end{tabu}
+\end{table}
+
 \begin{table}[ht]
 \small
 \centering
@@ -214,7 +228,7 @@ Table \ref{tbl:manova-pi-truck} presents the resulted MANOVA and effect size cal
 \renewcommand{\arraystretch}{1.2}
 \begin{tabu}{r|cKKccccD}
                                 & \textbf{Df} & \textbf{Pillai} & \textbf{Wilks} & \textbf{approx F} & \textbf{num Df} & \textbf{den Df} & \textbf{Pr(>F)} & \textbf{$\eta^{2}$}   \\  \tabucline[2pt]{-}
-\textbf{deployment context}     & 1           & 0.50408         & 0.99996        & 182 958           & 4               & 719 993         & {< 2.2e-16}     & 0.5040774   \\
+\textbf{deployment context}     & 1           & 0.50408         & 0.49592        & 182 958           & 4               & 719 993         & {< 2.2e-16}     & 0.5040774   \\
 \textbf{Residuals}              & 719 996
 \end{tabu}
 \end{table}
