@@ -5,9 +5,9 @@ This section introduces the result of executing parts of the experiment on a sel
 
 \begin{figure}[ht]
 \centering
-     \includegraphics[width=0.4\textwidth]{./figure/truck.png}
-      \caption{Chalmers Revere GCDC Truck}
-       \label{truck}
+\caption{Chalmers Revere GCDC Truck}
+\label{truck}
+\includegraphics[width=0.4\textwidth]{./figure/truck.png}
 \end{figure}
 
 
@@ -24,6 +24,9 @@ To understand how Docker impacts the scheduling precision on the use-case, the e
 
 
 \begin{table}[ht]
+\centering
+\caption{Docker Image Runtime Properties}
+\label{docker-parameters-truck}
 \begin{tabular}{|l|p{10cm}|}
 \hline
 \textbf{Parameter}           & \textbf{Description}                                            \\ \hline
@@ -33,9 +36,6 @@ To understand how Docker impacts the scheduling precision on the use-case, the e
 \texttt{-v}                  & Mount shared filesystems from the host into the container.    \\ \hline
 \texttt{-w}                  & The working directory to execute the experimental units.               \\ \hline
 \end{tabular}
-\centering
-\caption{Docker Image Runtime Properties}
-\label{docker-parameters-truck}
 \end{table}
 
 
@@ -51,6 +51,8 @@ Table \ref{table:hardware-truck} presents the hardware setup for the target mach
 
 \begin{table}[ht]
 \centering
+\caption{Target System Hardware Specification}
+\label{table:hardware-truck}
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Component} & \textbf{Specification}           \\ \hline
@@ -60,101 +62,9 @@ Storage Device     & 2.5" SATA HDD x 1                \\ \hline
 Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4 \\ Isolated DB-9 x 2 for RS-232/422/485 x 2
 \end{tabular} \\ \hline
 \end{tabular}
-\caption{Target System Hardware Specification}
-\label{table:hardware-truck}
 \end{table}
 
 
 
 \section{Results}
 
-The results shown in figure \ref{fig:truck-std-chart-noload} show that there exists a difference between the two deployment contexts in the load environment introduced by the other components running on the same system. The difference indicates that the deployment context has an impact on how deterministic a system is as native fluctuates roughly $40\%$ less than the Docker deployment context. Running a statistical test to understand the cause and effect relationship between the deployment context and the dependent variables resulted in a $\eta^{2}=0.504$ which relates to a medium effect size between deployment context and the dependent variables according to Cohen's D ($\eta^{2} > 0.5$). Figure \ref{fig:truck-mean-chart-noload} show that there exists no violations for the average time deadline for either of the two execution environments.
-
-
-\pgfplotstableread[col sep = semicolon]{data/truck/colsd_load.csv}\mydatanoload
-\begin{figure}[ht]
-\caption{Standard deviation of execution environments with real-life load \textit{(lower is better)}}
-\label{fig:truck-std-chart-noload}
-\begin{tikzpicture}
-\begin{axis}[
-      xbar stacked,
-      width=\textwidth*.95,
-      height=\textheight*.19,
-      xlabel={},
-      ytick=data,
-      xmin=0,
-      % xmax=1.15,
-      enlarge y limits={abs=1},
-      y dir=reverse,
-      xlabel={$ns$ std. dev.},
-      yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
-      point meta={x*100},
-      legend style={
-                draw=none, % ?
-                text depth=0pt,
-                at={(0.5,-0.38)},
-                anchor=north,
-                legend columns=-1,
-                % default spacing:
-                column sep=1cm,
-                % the space between legend image and text:
-                /tikz/every odd column/.append style={column sep=0cm},
-            }
-        ] %first axis
-
-\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
-\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
-\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
-\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
-
-\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
-\end{axis}
-\end{tikzpicture}
-\end{figure}
-
-
-\pgfplotstableread[col sep = semicolon]{data/truck/colsum_load.csv}\mydatanoload
-\begin{figure}[ht]
-\caption{Mean consumed of time-slice with use-case load \textit{(closer to 100\% is better)}}
-\label{fig:truck-mean-chart-noload}
-\begin{tikzpicture}
-\begin{axis}[
-        xbar stacked,
-        width=\textwidth*.95,
-        height=\textheight*.19,
-        xlabel={},
-        ytick=data,
-        xmin=0,
-        xmax=1.15,
-        y dir=reverse,
-        xlabel={$\%$ of time-slice},
-        enlarge y limits={abs=1},
-        yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
-          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
-        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
-        point meta={x*100},
-        legend style={
-                draw=none, % ?
-                text depth=0pt,
-                at={(0.5,-0.35)},
-                legend cell align=left,
-                anchor=north,
-                legend columns=-1,
-                % default spacing:
-                column sep=1cm,
-                % the space between legend image and text:
-                /tikz/every odd column/.append style={column sep=0cm},
-            }
-        ] %first axis
-
-
-\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
-\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
-\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
-\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
-\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
-
-\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
-\end{axis}
-\end{tikzpicture}
-\end{figure}

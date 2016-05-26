@@ -1,16 +1,20 @@
 \iffalse \bibliography{include/backmatter/magnus,include/backmatter/philip} \fi
-\chapter{Data Analysis}\label{section:data-analysis}
+\chapter{Results and Data Analysis}\label{section:data-analysis}
 
-The conducted experiments results in a series of datasets which are used to answer the research questions separately. This section seek to present the statistical analysis of all data captured. Each of the components is presented separately for the research question they individually seek to answer. Section \ref{section:analysis-picomponent} presents the processed data intended for answering research question 1 and its corresponding hypotheses. While section \ref{section:analysis-piiocomponent} aims to answer the second research question and its corresponding hypotheses. Initially the hypotheses will be answered by the conducted methods where further in depth analysis will be presented to uncover details not answered by the hypotheses. Throughout this chapter the three treatments will be presented in the tables and charts. These treatments are: 1) \textit{Deployment Context} – running the experimental unit in Docker or natively; 2) \textit{Kernel} – running the experimental unit using a generic kernel or an RT enabled kernel; 3) \textit{Load} – running the experimental unit with simulated CPU load or without load. To extend the understanding of the impact between the treatments and dependent variables, an effect size ($\eta^{2}$) is presented. Cohen's D suggests that a large effect is attained when the $\eta^{2}$ value is above 0.80, medium above 0.50, and small above 0.20 \cite{jackson2013statistics}.
+This section seeks to present the results from the two conducted experiments. Section \ref{section:results-controlled-experiment} provides the results and data analyses which intend to answer the research questions in regards to the research goals. Section \ref{section:results-usecase-experiment} seeks to present the extracted data from running the use-case experiment on the self-driving truck. The data presented in section \ref{section:results-usecase-experiment} is further used for discussing how the experimental unit Pi Component behaves within a realistic runtime environment and how that compares to the controlled environment.\\
 
+\section{Controlled Experiment}
+\label{section:results-controlled-experiment}
 
-\section{Pi Component}
+The conducted controlled experiments results in a series of datasets which are used to answer the research questions separately. This section seek to present the statistical analysis of all data captured. Each of the components are presented separately for the research question they individually seek to answer. Section \ref{section:analysis-picomponent} presents the processed data intended for answering research question 1 and its corresponding hypotheses. Section \ref{section:analysis-piiocomponent} aims to answer the second research question and its corresponding hypotheses. Initially the hypotheses will be answered by the conducted methods where further in depth analysis will be presented to uncover details not answered by the hypotheses. Throughout this chapter the three treatments will be presented in the tables and charts. These treatments are: 1) \textit{Deployment Context} – running the experimental unit in Docker or natively; 2) \textit{Kernel} – running the experimental unit using a generic kernel or an RT enabled kernel; 3) \textit{Load} – running the experimental unit with simulated CPU load or without load. To extend the understanding of the impact between the treatments and dependent variables, an effect size ($\eta^{2}$) is presented. Cohen's D suggests that a large effect is attained when the $\eta^{2}$ value is above 0.80, medium above 0.50, and small above 0.20 \cite{jackson2013statistics}.
+
+\subsection{Pi Component}
 \label{section:analysis-picomponent}
 
 The Pi Component aims to answer the first research question with a series of data points extracted during the experiment. The data presented in this section is extracted by running the experimental unit in $100hz$.
 
 
-\subsection{Descriptive Statistics}
+\subsubsection{Descriptive Statistics}
 \label{section:analysis-picomponent-desc}
 
 This section provides an overview of the collected data used for answering the hypotheses and research question 1. Table \ref{tab:desc-table-pi} presents the variables used for the statistical analysis conducted with their mean and standard deviation. The dependent variables are categorical variables thus the lack of mean and standard deviation. Table \ref{fig:pi-std-chart-load} displays all standard deviations between the execution environments with load, while table \ref{fig:pi-std-chart-noload} displays the same data however the execution environments are running on a system without load. It is worth noting that the $x$ axis for both the charts have scientific notations in the bottom right corner. E.g. the execution environment of running the application natively on a vanilla kernel has a $Std. dev.$ of $\sim7\ 000\ 000ns$. While the same environment without load has a $Std. dev.$ of $\sim16\ 000ns$. A lower standard deviation imply a more deterministic execution environment. The charts indicate that the most deterministic environment is running the application on an RT kernel in Docker or natively. Comparing \texttt{Docker} with \texttt{Native} a similar result is shown between the two deployment contexts, whereas a large difference between the two load type groups is seen where \texttt{No Load} presents a very low standard deviation in comparison with running the application with \texttt{CPU Load}.
@@ -216,7 +220,7 @@ In figure \ref{fig:pi-mean-chart-load} the scheduling precision for each respect
 \end{figure}
 
 
-\subsection{Hypothesis Testing}
+\subsubsection{Hypothesis Testing}
 
 Table \ref{tbl:hypothesispi} presents the resulting P-values $Pr(>F)$ of the conducted MANOVA. Scheduling precision is referenced as all the collected dependent variables. The P-value gathered for each of the hypotheses is far below our significance level of $\alpha = 0.001$ and thus showing a significant impact on the scheduling precision from all of the treatments and rejecting the null hypothesis. To better understand what that impact is, an effect size value has been extracted. Table \ref{tbl:manova-pi} is the result of running the MANOVA and a $\eta^{2}$ measurement on the data. While the P-value for all of the treatments indicate a significant impact on the dependent variables, the $\eta^{2}$, Pillai's trace, and Wilks $\lambda$ indicate that there is a difference between the treatments impact on the dependent variables. As \textit{deployment context} has a smaller value compared to the other treatments which suggests that the deployment context does not impact the scheduling precision to the same extent as the other two treatments.
 
@@ -248,7 +252,7 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \textbf{kernel}                 & 1         & 0.067785  & 0.93803   & 261770  & 4   & 14 399 952  & {< 2.2e-16}   & 0.0677851134   \\
 \textbf{load}                   & 1         & 0.071642  & 0.93570   & 277812  & 4   & 14 399 952  & {< 2.2e-16}   & 0.0716416991   \\
 \textbf{deployment context:kernel}      & 1         & 0.000016  & 0.99998   & 370     & 4   & 14 399 952  & {< 2.2e-16}   & 0.0001026772   \\
-\textbf{Residuals}              & 14399955
+\textbf{Residuals}              & 14 399 955
 \end{tabu}
 \end{table}
 \begin{table}[ht]
@@ -259,10 +263,10 @@ $H_{11_{3}}$    & Scheduling Precision $\leftarrow$ Execution environment   & {<
 \begin{tabu}{r|rlrlrlrl}
 \multicolumn{1}{c}{\textbf{}} & \multicolumn{2}{c}{\textbf{Overhead \#1}} & \multicolumn{2}{c}{\textbf{Pi Algorithm}} & \multicolumn{2}{c}{\textbf{Overhead \#2}} & \multicolumn{2}{c}{\textbf{Sleep}} \\ \tabucline[2pt]{-}
 \textbf{(Intercept)}          & \multicolumn{2}{c}{24675}                 & \multicolumn{2}{c}{8034093}               & \multicolumn{2}{c}{38997}                 & \multicolumn{2}{c}{2155372}        \\
-\textbf{deployment context}           & 119                & (0,005)              & 2121               & (0,000)              & 987                & (0,025)              & -77961          & (-0,036)         \\
-\textbf{kernel}               & 7358               & (0,298)              & -48434             & (-0,006)             & -13056             & (-0,335)             & -414775         & (-0,192)         \\
-\textbf{load}                 & -9644              & (-0,391)             & 291274             & (0,036)              & -6159              & (-0,158)             & 156070          & (0,072)          \\
-\textbf{deployment context:kernel}    & -118               & (-0,005)             & 4689               & (0,001)              & -877               & (-0,022)             & 71039           & (0,033)         
+\textbf{deployment context}           & 119                & (0,005)              & 2 121               & (0,000)              & 987                & (0,025)              & -77 961          & (-0,036)         \\
+\textbf{kernel}               & 7 358               & (0,298)              & -48 434             & (-0,006)             & -13 056             & (-0,335)             & -414 775         & (-0,192)         \\
+\textbf{load}                 & -9 644              & (-0,391)             & 291 274             & (0,036)              & -6 159              & (-0,158)             & 156 070          & (0,072)          \\
+\textbf{deployment context:kernel}    & -118               & (-0,005)             & 4 689               & (0,001)              & -877               & (-0,022)             & 71 039           & (0,033)         
 \end{tabu}
 \end{table}
 \end{landscape}
@@ -278,12 +282,12 @@ The MANOVA tests suggests that \textit{deployment context} and the full \textit{
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Pi/IO Component}
+\subsection{Pi/IO Component}
 \label{section:analysis-piiocomponent}
 
 This section provides an overview of the collected data and hypothesis test results for answering research question 2. The data presented in this section is extracted by running the experimental unit in $10hz$.
 
-\subsection{Descriptive Statistics}
+\subsubsection{Descriptive Statistics}
 
 Table \ref{tab:desc-table-piio} provides an overview of the data gathered and implemented for understanding the impact of the execution environment and its treatments on the camera performance and disk performance. The independent variables are the same as Pi Component however the dependent variables are focused on the camera and disk durations.
 
@@ -481,7 +485,7 @@ The input output performance results depicted in figure \ref{fig:piio-mean-chart
 
 
 
-\subsection{Hypothesis Testing}
+\subsubsection{Hypothesis Testing}
 
 An three-way analysis of variance (ANOVA) is performed for each of the dependent variables to understand if there exists a cause and effect relationship between the independent variables and the dependent variables. Table \ref{tbl:hypothesispiio} presents the results of the ANOVA test performed, displaying that each of the treatments has a significant impact on the dependent variables. The resulted P-value is far below the chosen $\alpha = 0.001$ which rejects the null hypothesis and report that there is significant impact on the camera performance and disk performance.\\
 
@@ -505,7 +509,7 @@ $H_{12_{6}}$    & Disk Performance $\leftarrow$ Execution environment     & {0.0
 
 The \textbf{$\eta^{2}$} and F values of the treatment groups in table \ref{tbl:anova-cam} show that camera performance is mostly impacted on the chosen kernel. While load has a far lower effect on camera performance in comparison with the kernel.\\
 
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \caption{ANOVA results Camera performance}
 \label{tbl:anova-cam}
@@ -516,12 +520,12 @@ The \textbf{$\eta^{2}$} and F values of the treatment groups in table \ref{tbl:a
 \textbf{kernel}            & 1           & 2,172E+17       & 2,172E+17        & 21858,63         & \textless2E-16             & 0,0150    \\
 \textbf{load}              & 1           & 2,487E+15       & 2,487E+15        & 250,24           & \textless2E-16             & 0,0002    \\
 \textbf{deployment:kernel} & 1           & 2,946E+15       & 2,946E+15        & 296,46           & \textless2E-16             & 0,0002    \\
-\textbf{Residuals}         & 1439952     & 1,431E+19       & 9,938E+12        &                  &                            &          
+\textbf{Residuals}         & 1 439 952     & 1,431E+19       & 9,938E+12        &                  &                            &          
 \end{tabu}
 \end{table}
 
 
-\begin{table}[ht]
+\begin{table}[H]
 \centering
 \caption{ANOVA results Disk performance}
 \label{tbl:anova-disk}
@@ -529,10 +533,10 @@ The \textbf{$\eta^{2}$} and F values of the treatment groups in table \ref{tbl:a
 \begin{tabu}{r|cccccD}
                            & \textbf{Df} & \textbf{Sum Sq} & \textbf{Mean Sq} & \textbf{F value} & \textbf{Pr(\textgreater F)} & \textbf{Partial $\eta^{2}$} \\\tabucline[2pt]{-}
 \textbf{deployment}        & 1           & 2,692E+16       & 2,692E+16        & 150,95           & \textless2E-16             & 0,0001     \\
-\textbf{kernel}            & 1           & 7,063E+17       & 7,063E+17        & 3960,47          & \textless2E-16             & 0,0027     \\
-\textbf{load}              & 1           & 1,199E+18       & 1,199E+18        & 6721,91          & \textless2E-16             & 0,0046     \\
+\textbf{kernel}            & 1           & 7,063E+17       & 7,063E+17        & 3 960,47         & \textless2E-16             & 0,0027     \\
+\textbf{load}              & 1           & 1,199E+18       & 1,199E+18        & 6 721,91         & \textless2E-16             & 0,0046     \\
 \textbf{deployment:kernel} & 1           & 1,090E+15       & 1,090E+15        & 6,11             & 0,0134                     & 0,0000     \\
-\textbf{Residuals}         & 1439952     & 2,568E+20       & 1,783E+14        &                  &                            &           
+\textbf{Residuals}         & 1 439 952   & 2,568E+20       & 1,783E+14        &                  &                            &           
 
 \end{tabu}
 \end{table}
@@ -555,3 +559,126 @@ Table \ref{tbl:coef-piio} displays the coefficients of each treatment onto camer
 \textbf{deployment:kernel} & -13 590           & (-0,002)         & 140 025           & (0,081)       
 \end{tabu}
 \end{table}
+
+
+
+
+
+\section{Use-case Experiment}
+\label{section:results-usecase-experiment}
+
+This section presents the results extracted from the experiment conducted on the use-case of the self-driving truck in the Chalmers Revere Lab. The goal is to understand how the deployment context impacts the experimental units within an environment which have realistic system load.\\
+
+
+
+\subsubsection{Descriptive Statistics}
+
+\begin{table}[ht]
+\centering
+\caption{Descriptive Statistics}
+\label{tab:desc-table-pi}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabu}{L{2.4cm}lcccl}
+\parbox{2.4cm}{\centering \textbf{Type of variable}}                       & \textbf{Variable}     & \textbf{N}    & \textbf{Mean} & \parbox{1.8cm}{\centering \textbf{Std.dev. ($ns$)}}  & \parbox{1.5cm}{\centering \textbf{Scale}} \\ \tabucline[2pt]{-}
+\multirow{3}{*}[-.1em]{\parbox{2.8cm}{\centering Independent variables}}  & Deployment Context & 719 996 & N/A  & N/A & Nominal  \\ \hline
+\multirow{4}{*}[-.2em]{\parbox{2.8cm}{\centering Dependent variables}}    & Overhead \#1  & 719 996 & 29 268 & 8 506 & Ratio     \\
+                                      & Pi Algorithm          & 719 996   & 8 018 460   & 5 452 & Ratio     \\
+                                      & Overhead \#2          & 719 996   & 54 993      & 26 340    & Ratio     \\
+                                      & Sleep                 & 719 996   & 1 897 278   & 31 649 & Ratio     \\ \hline
+\end{tabu}
+\end{table}
+
+
+The results shown in figure \ref{fig:truck-std-chart-noload} show that there exists a difference between the two deployment contexts in the load environment introduced by the other components running on the same system. The difference indicates that the deployment context has an impact on how deterministic a system is as native fluctuates roughly $40\%$ less than the Docker deployment context. Running a statistical test to understand the cause and effect relationship between the deployment context and the dependent variables resulted in a $\eta^{2}=0.504$ which relates to a medium effect size between deployment context and the dependent variables according to Cohen's D ($\eta^{2} > 0.5$). Figure \ref{fig:truck-mean-chart-noload} show that there exists no violations for the average time deadline for either of the two execution environments.
+
+
+\pgfplotstableread[col sep = semicolon]{data/truck/colsd_load.csv}\mydatanoload
+\begin{figure}[ht]
+\caption{Standard deviation of execution environments with real-life load \textit{(lower is better)}}
+\label{fig:truck-std-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+      xbar stacked,
+      width=\textwidth*.95,
+      height=\textheight*.19,
+      xlabel={},
+      ytick=data,
+      xmin=0,
+      % xmax=1.15,
+      enlarge y limits={abs=1},
+      y dir=reverse,
+      xlabel={$ns$ std. dev.},
+      yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
+      point meta={x*100},
+      legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.38)},
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+\pgfplotstableread[col sep = semicolon]{data/truck/colsum_load.csv}\mydatanoload
+\begin{figure}[ht]
+\caption{Mean consumed of time-slice with use-case load \textit{(closer to 100\% is better)}}
+\label{fig:truck-mean-chart-noload}
+\begin{tikzpicture}
+\begin{axis}[
+        xbar stacked,
+        width=\textwidth*.95,
+        height=\textheight*.19,
+        xlabel={},
+        ytick=data,
+        xmin=0,
+        xmax=1.15,
+        y dir=reverse,
+        xlabel={$\%$ of time-slice},
+        enlarge y limits={abs=1},
+        yticklabels={Native [RT],Docker [RT]},ytick={1,...,2},
+          x label style={at={(axis description cs:0.5,-0.1)},anchor=north},
+        xticklabel={\scriptsize\pgfmathparse{\tick*100}\pgfmathprintnumber{\pgfmathresult}\%},
+        point meta={x*100},
+        legend style={
+                draw=none, % ?
+                text depth=0pt,
+                at={(0.5,-0.35)},
+                legend cell align=left,
+                anchor=north,
+                legend columns=-1,
+                % default spacing:
+                column sep=1cm,
+                % the space between legend image and text:
+                /tikz/every odd column/.append style={column sep=0cm},
+            }
+        ] %first axis
+
+
+\draw[black, dotted] (axis cs:1,-2) -- (axis cs:1,11);
+\addplot+[draw opacity=0,fill=orange,xbar,area legend] table[y=scenario,x=odv_oh1]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues3,xbar,area legend] table[y=scenario,x=pi_calc]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues5,xbar,area legend] table[y=scenario,x=odv_oh2]{\mydatanoload};
+\addplot+[draw opacity=0,fill=blues1,xbar,area legend] table[y=scenario,x=sleep]{\mydatanoload};
+
+\legend{\scriptsize Overhead 1,\scriptsize Pi calculation,\scriptsize Overhead 2,\scriptsize Sleep};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+
+

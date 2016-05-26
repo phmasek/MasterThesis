@@ -26,6 +26,9 @@ CPSs inherit the discipline of real-time systems requiring real-time computation
 A unit of computation that requires the allocation of processing time is referred to as a \textit{job}. Jobs can be event-driven (a specific event triggers activities in the system) or time-triggered (activities are initiated at predefined points in time). Time triggered events require strict timing behaviour and are necessary for hard real-time systems, thus being important for a CPS. When a time-triggered job is initiated, it communicates with the operating system scheduler to acquire processing time. The job enters a ready state assigned by the scheduler and starts processing. The job can then terminate (has reached the end of its processing) or become blocked which is what typically happens for time triggered jobs. A time-triggered job becomes blocked after processing the inner body of an algorithm, subsequently entering a sleep state to the scheduler. The job sleeps for a predefined amount of time: typically for how much time is left in the specified timing parameters. After the required time has elapsed, the job enters the state of being unblocked (waking the job after sleeping), hence ready to run for another execution cycle. A state machine of a scheduler, depicting all states is found in figure~\ref{scheduler}. In summary, a scheduler acts as a traffic police in a busy intersection, handling a queue of all the processes running on the system by prioritising some processes ahead of other processes. The scheduler may act and prioritise differently depending on what rules have been set for it to follow.\\         
 
 \begin{figure}[ht]
+\centering
+\caption{Operating System Scheduler \cite{sched}.}
+\label{scheduler}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
                     semithick,initial distance=1cm,every initial by arrow/.style={*->}]
 \tikzstyle{every state}=[fill=white,draw=black,text=black]
@@ -56,9 +59,6 @@ A unit of computation that requires the allocation of processing time is referre
 \path[->,label=below]			(A) edge []	node [] 	{\scriptsize Suspend} (F);
 
 \end{tikzpicture}
-\centering
-\caption{Operating System Scheduler \cite{sched}.}
-\label{scheduler}
 \end{figure}
 
 
@@ -99,9 +99,9 @@ All these activities differ in how they are executed depending on the software e
 
 \begin{figure}[ht]
 \centering
-     \includegraphics[width=1.0\textwidth]{./figure/containers.png}
       \caption{Run-time environment using Docker.}
        \label{containers}
+     \includegraphics[width=1.0\textwidth]{./figure/containers.png}
 \end{figure}
 
 Figure \ref{containers} exemplifies a deployment strategy design utilising Docker in the context of self-driving vehicles. The responsibilities are broken down into three computational nodes in which Docker containers are running instances of the code base independently. Each Docker container can run different versions of the separate nodes, where the interpretation node has three versions running separately. Version one (denoted V1) in each node represents the latest working configuration while other versions are run to test code which is still under development. Having multiple versions of a running environment allows for safe and simple roll-backs in the event of buggy code or degraded performance. Furthermore, multiple versioning of the same Docker container allows for split testing between different containers to take place. With an always functioning configuration, the development team can demonstrate a functioning version of the product to stakeholders at any point in the development cycle. The ability to demonstrate the product at any point in the development phase adds to the business value of the project, as possible investors or stakeholders can be presented a functioning product although the product is currently under development. This is possible with current deployment approaches, however the implementation of cloning systems or running virtual machines is more resource demanding \cite{vmvscontainers} and not as flexible in comparison with utilising Docker for the deployment strategy.
@@ -119,6 +119,8 @@ Docker is an open source light-weight container manager that launched in 2013 an
 
 \begin{figure}[ht]
 \centering
+\caption{Virtual Machines versus Docker \cite{whatdocker}}
+       \label{dockervm}
 \label{fig:vm-vs-docker-arch}
 \begin{tikzpicture}[
 		box/.style={%
@@ -172,8 +174,6 @@ Docker is an open source light-weight container manager that launched in 2013 an
 
 
 \end{tikzpicture}
-\caption{Virtual Machines versus Docker \cite{whatdocker}}
-       \label{dockervm}
 \end{figure}
 
 
