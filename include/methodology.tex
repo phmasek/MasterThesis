@@ -21,6 +21,8 @@ The goals of the experiment is described in table~\ref{table:exp-goals}, where t
 % deployment context: docker non-docker 
 
 \begin{table}[ht]
+\caption{Experiment Goals}
+\label{table:exp-goals}
 \renewcommand{\arraystretch}{2}
 \begin{tabu}{c|p{12cm}}
 \centering \textbf{Goal} & \centering \textbf{Description} \\ \tabucline[2pt]{-}
@@ -28,8 +30,6 @@ The goals of the experiment is described in table~\ref{table:exp-goals}, where t
 \textbf{2} 		& Analyse the input and output performance of the Pi/IO Component (section \ref{section:exp-units-piio}) for the purpose of understanding how deterministic the system is with respect to the execution environment and system load.
 \end{tabu}
 \centering
-\caption{Experiment Goals}
-\label{table:exp-goals}
 \end{table}
 
 The goals are set to identify the most deterministic execution environment, as it is crucial for CBSs to meets the specified time deadline requirements, i.e. to ensure that the CBS does not violate the designated time of its executed time-slices.
@@ -39,6 +39,8 @@ The execution environment describes the setting in which the execution of the ex
 
 
 \begin{table}[ht]
+\caption{Execution Environments}
+\label{table:exe-env}
 \renewcommand{\arraystretch}{2}
 \begin{tabu}{c|p{11cm}}
 \centering \textbf{Environment} & \centering \textbf{Description} \\ \tabucline[2pt]{-}
@@ -48,8 +50,6 @@ The execution environment describes the setting in which the execution of the ex
 \textbf{4} & Running the experimental units in a Docker container on the target system running a mainline Linux kernel patched with RT\_preempt.
 \end{tabu}
 \centering
-\caption{Execution Environments}
-\label{table:exe-env}
 \end{table}
 
 
@@ -107,6 +107,8 @@ In order for the experiment to begin, the target system needs to be prepared and
 The experiment presented in this report is executed on a AEC 6950\footnote{http://www.aaeon.com/en/p/fanless-embedded-computers-aec-6950/} embedded personal computer manufactured by Aaeon. The AEC 6950 is an industrial computer marketed for data processing, machine control and fleet management applications \cite{aaeon}. The hardware specification for the target system can be found in table~\ref{table:hardware}. The hardware used to capture measurement data from the Aaeon AEC 6950 is a Raspberry Pi SoC \cite{raspberry} computer Model 1 B+. The data is collected from the target system via RS-232 serial communication by using a serial to USB converter.  
 
 \begin{table}[ht]
+\caption{Target System Hardware Specification}
+\label{table:hardware}
 \centering
 \begin{tabular}{|l|l|}
 \hline
@@ -117,8 +119,6 @@ Storage Device     & 2.5" SATA HDD x 1                  \\ \hline
 Serial Interfaces  & \begin{tabular}[c]{@{}l@{}}USB type A x 2 for USB 2.0\\ USB type A x 2 for USB 3.0\\ DB-9 x 2 for RS-232/422/485 x 2\\ DB-9 x 4 for RS-232 x 4 \\ Isolated DB-9 x 2 for RS-232/422/485 x 2
 \end{tabular} \\ \hline
 \end{tabular}
-\caption{Target System Hardware Specification}
-\label{table:hardware}
 \end{table}
 
 
@@ -153,6 +153,9 @@ In order to build Docker images, a recipe in the form of a \texttt{DockerFile} i
 To run a image the Docker \texttt{run} command is used which instantiates a container from the image. The experimental units, run from within a image, are executed with real-time scheduling priority 49. The runtime properties for containers that execute the experimental units are specified in table~\ref{docker-parameters}.
 
 \begin{table}[ht]
+\centering
+\caption{Docker Image Runtime Properties}
+\label{docker-parameters}
 \begin{tabular}{|l|p{10cm}|}
 \hline
 \textbf{Parameter}  		 & \textbf{Description}                                            \\ \hline
@@ -162,9 +165,6 @@ To run a image the Docker \texttt{run} command is used which instantiates a cont
 \texttt{-v}					 & Mount shared filesystems from the host into the container.	   \\ \hline
 \texttt{-w}                  & The working directory to execute the experimental units.               \\ \hline
 \end{tabular}
-\centering
-\caption{Docker Image Runtime Properties}
-\label{docker-parameters}
 \end{table}
 
 
@@ -231,6 +231,8 @@ This research seeks to answer the two research questions which relates to the pe
 
 \begin{figure}[ht]
 \centering
+\caption{Measurement points for Pi scheduling precision.}
+\label{pi_measure}
 \begin{tikzpicture}[
 		box/.style={%
 			inner sep=0pt,
@@ -273,8 +275,6 @@ This research seeks to answer the two research questions which relates to the pe
 \draw[black, dashed] (13.5,.3)--(13.5,.6) node [above,fill=white] {\tiny Sleep period};
 
 \end{tikzpicture}
-      \caption{Measurement points for Pi scheduling precision.}
-       \label{pi_measure}
 \end{figure}
 
 The Pi/IO Component is an extension of the Pi Component with the addition of two measurement points for measuring camera performance and disk write performance. The duration between measurement points two and three reveal the input performance of the Pi/IO component with respect to the execution environment. The duration between measurement points three and four reveals the output performance of saving an image to disk. The duration between measurement point two and four depict the total input-output performance of the executed time-slice. The remaining measurement points are the same as used in the Pi Component which are not analysed for answering research question 2.
@@ -284,6 +284,8 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
 
 \begin{figure}[ht]
 \centering
+\caption{Measurement points for IO performance.}
+\label{piio_measure}
 \begin{tikzpicture}[
 		box/.style={%
 			inner sep=0pt,
@@ -331,8 +333,6 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
 
 
 \end{tikzpicture}
-      \caption{Measurement points for IO performance.}
-       \label{piio_measure}
 \end{figure}
 
 
@@ -394,6 +394,8 @@ The overall procedure of the experiment is to execute the experimental units in 
 
 
 \begin{figure}[ht]
+\caption{State Machine Diagram of the Execution Script }
+\label{procedure-state}
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=3cm,
                     semithick,initial distance=1cm,every initial by arrow/.style={*->}]
 \tikzstyle{every state}=[fill=white,draw=black,text=black]
@@ -408,8 +410,6 @@ The overall procedure of the experiment is to execute the experimental units in 
   		(C) edge [bend left]  node {\scriptsize switchKernel()} (A);
 \end{tikzpicture}
 \centering
-\caption{State Machine Diagram of the Execution Script }
-\label{procedure-state}
 \end{figure}
 
 	
