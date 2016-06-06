@@ -98,12 +98,105 @@ Software deployment is a crucial part of the software development, it refers to 
 All these activities differ in how they are executed depending on the software engineering paradigm utilised for the software project. Traditional software engineering practices, e.g. the waterfall model, seeks to execute the software deployment process at the end of the software's development cycle. Whereas more novel software engineering practices aim to execute the software deployment process continuously throughout the software's development cycle. In state-of-art software engineering practices such as continuous integration and continuous deployment, software is required to be deployed daily \cite{meyer2014continuous} for full adaptation. Such requirements can easily make the process of software deployment exhausting and complex, where software tools such as Docker would simplify these processes greatly. Docker simplifies processes found within each of the software deployment activities, as it provides the runtime environment before the software deployment process has begun. The development environment is a clone of the production environment thus transferring the deployment processes from the live production server to a confined secure location where the deployment process does not affect the usability of the current running software.\\
 
 
+% \begin{figure}[ht]
+% \centering
+%       \caption{Run-time environment using Docker.}
+%        \label{containers}
+%      \includegraphics[width=1.0\textwidth]{./figure/containers.png}
+% \end{figure}
+
+
+
+\tikzstyle{b} = [rectangle, draw, node distance=3cm, text width=6em, text centered, rounded corners, minimum height=4em, thick]
 \begin{figure}[ht]
-\centering
-      \caption{Run-time environment using Docker.}
-       \label{containers}
-     \includegraphics[width=1.0\textwidth]{./figure/containers.png}
+\caption{Run-time environment using Docker.}
+\label{containers}
+
+
+
+\begin{tikzpicture}
+\tikzset{adjust fit placement}
+
+
+\raggedleft
+\begin{scope}[
+		box/.style={%
+			inner sep=0pt,
+			align=center,
+			text centered
+		},scale=.9
+	]
+\node[box,draw,fit={(.3,-.5) (4.9,5.5)},fill=white,rounded corners] (perception) {};
+\node[below] at (perception.north) (perceptiontext) {\small\textbf{Perception Node}};
+
+
+\node[box,draw=black!90,fit={(1.4,1) (4.4,4)},fill=black!2] (v2per) {};
+\node[below right] at (v2per.north west) () {\scriptsize{Docker}};
+\node[below left] at (v2per.north east) () {\scriptsize\textbf{V2}};
+\node[box,draw=black!70,fit={(1,.5) (4,3.5)},fill=black!2] (v1per) {};
+\node[below right] at (v1per.north west) () {\scriptsize{Docker}};
+\node[below left] at (v1per.north east) () {\scriptsize\textbf{V1}};
+\node[draw,ellipse,dashed] at (v1per) () {\scriptsize Perception};
+
+\node[box,draw,fit={(5.2,-.5) (9.8,5.5)},fill=white,rounded corners] (interpretation) {};
+\node[below] at (interpretation.north) (interpretationtext) {\small\textbf{Interpretation Node}};
+
+\node[box,draw=black!90,fit={(6.4,1.5) (9.4,4.5)},fill=black!2] (v3int) {};
+\node[below right] at (v3int.north west) () {\scriptsize{Docker}};
+\node[below left] at (v3int.north east) () {\scriptsize\textbf{V3}};
+\node[box,draw=black!70,fit={(6,1) (9,4)},fill=black!2] (v2int) {};
+\node[below right] at (v2int.north west) () {\scriptsize{Docker}};
+\node[below left] at (v2int.north east) () {\scriptsize\textbf{V2}};
+\node[box,draw=black!50,fit={(5.6,.5) (8.6,3.5)},fill=black!2] (v1int) {};
+\node[below right] at (v1int.north west) () {\scriptsize{Docker}};
+\node[below left] at (v1int.north east) () {\scriptsize\textbf{V1}};
+\node[draw,ellipse,dashed] at (v1int) () {\scriptsize Interpretation};
+
+
+\node[box,draw,fit={(10.1,-.5) (14.7,5.5)},fill=white,rounded corners] (action) {};
+\node[below] at (action.north) (actiontext) {\small\textbf{Action Node}};
+
+
+\node[box,draw=black!90,fit={(11.2,1) (14.2,4)},fill=black!2] (v2act) {};
+\node[below right] at (v2act.north west) () {\scriptsize{Docker}};
+\node[below left] at (v2act.north east) () {\scriptsize\textbf{V2}};
+\node[box,draw=black!70,fit={(10.8,.5) (13.8,3.5)},fill=black!2] (v1act) {};
+\node[below right] at (v1act.north west) () {\scriptsize{Docker}};
+\node[below left] at (v1act.north east) () {\scriptsize\textbf{V1}};
+\node[draw,ellipse,dashed] at (v1act) () {\scriptsize Action};
+
+
+\node[box,draw,fit={(0,0) (15,-1.2)},fill=black!2] (big) {\scriptsize Computational Nodes Cluster};
+
+
+
+\path[draw,-latex',thick] (v1per) -- (v1int);
+\path[draw,-latex',thick] (v2per.east) -| ++(0.7,1.2) -- ++(.9,0);
+\path[draw,-latex',thick] (v1per.east) ++(0,0.9) -| ++(0.7,1.35) -- ++(1.7,0);
+\path[draw,-latex',thick] (v1int) -- (v1act);
+\path[draw,-latex',thick] (v3int.east) ++(0,1.2) -| ++(0.5,-.4) -- ++(1.3,0);
+
+
+\path[draw,-latex',thick] (v2per.north) ++(-.7,0) |-  ++(-1.6,.4) |-  ++(0,-1.5) |- ++(.395,0) ;
+
+\node[fit={(0.3,4.3) (2.4,5)}] {\scalebox{.6}{\Centerstack{A/B testing}}};
+\end{scope}
+
+
+
+
+\begin{scope}[line cap=round,line join=round,>=triangle 45,scale=0.2,xshift=-5cm,yshift=6.4cm]
+\fill[line width=0.pt,fill=black,fill opacity=1.0] (0.,4.) -- (3.,4.) -- (3.,1.) -- (0.,1.) -- (0.,2.) -- (-1.,1.) -- (-1.,4.) -- (0.,3.) -- cycle node (camera) {};
+
+\node[fit={(0,0) (7.6,3)},xshift=-.3cm,yshift=.95cm,align=left, inner sep=0.1ex] {\scalebox{.6}{\Centerstack{Camera\\Input Data}}};
+\path[draw,-latex',thick] (camera.east) ++(0,.5) -- (v1per.west);
+\end{scope}
+
+
+\end{tikzpicture}
 \end{figure}
+
+
 
 Figure \ref{containers} exemplifies a deployment strategy design utilising Docker in the context of self-driving vehicles. The responsibilities are broken down into three computational nodes in which Docker containers are running instances of the code base independently. Each Docker container can run different versions of the separate nodes, where the interpretation node has three versions running separately. Version one (denoted V1) in each node represents the latest working configuration while other versions are run to test code which is still under development. Having multiple versions of a running environment allows for safe and simple roll-backs in the event of buggy code or degraded performance. Furthermore, multiple versioning of the same Docker container allows for split testing between different containers to take place. With an always functioning configuration, the development team can demonstrate a functioning version of the product to stakeholders at any point in the development cycle. The ability to demonstrate the product at any point in the development phase adds to the business value of the project, as possible investors or stakeholders can be presented a functioning product although the product is currently under development. This is possible with current deployment approaches, however the implementation of cloning systems or running virtual machines is more resource demanding \cite{p6} and not as flexible in comparison with utilising Docker for the deployment strategy.
 
