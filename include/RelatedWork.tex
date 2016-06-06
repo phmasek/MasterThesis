@@ -34,14 +34,101 @@ The snowballing search approach for systematic literature studies is used to fin
 
 The guidelines for conducting a snowballing search approach, presented by Wohlin \cite{Wohlin} are followed for the search procedure. The steps to conduct a snowballing procedure, depicted in figure~\ref{snow}, involve (i) selecting a set of papers referred to as the start set, (ii) apply forward snowballing and (iii) apply backward snowballing on each paper identified in the set respectively. This process iterates until no new papers are found. To identify a start set of papers, keywords are extracted from the research questions, taking synonyms into account. Formulating a search-string from keywords that are broad and cover multiple areas of research may result in collecting large amounts of literature that span different subject domains. For that reason, broad keywords should be broken down into more specific and detailed keywords specific to the study. The search string is then applied to a database that preferably searches multiple publishers in order to avoid publisher bias. The papers resulting from the database search are then screened and included based on an inclusion and exclusion criteria. An exclusion criteria could state that all online material be excluded. \\
 
-\begin{figure}[ht]
-\centering
-     \includegraphics[width=0.8\textwidth]{./figure/snowballing.png}
-      \caption{Snowballing procedure \cite{Wohlin}.}
-       \label{snow}
-\end{figure}
+% \begin{figure}[ht]
+% \centering
+%      \includegraphics[width=1\textwidth]{./figure/snowballing.png}
+%       \caption{Snowballing procedure \cite{Wohlin}.}
+%        \label{snow}
+% \end{figure}
 
 Backward and forward snowballing is then conducted on the start set. Backward snowballing is the process of studying the reference list to identify new papers. Looking at the place of reference and reading the title and abstract of the paper is a good starting point for inclusion, however, final inclusion states that the entire paper must be read \cite{Wohlin}. Subsequently, forward snowballing is the process of identifying papers that cite the paper under inspection. The same process of reading the title, abstract and place of reference is applied in order to include new literature that is found during the procedure. \\
+
+
+\usetikzlibrary{arrows.meta}
+\tikzset{>={Latex[width=2mm,length=2mm]}}
+\begin{figure}[H]
+\centering
+\caption{Snowballing procedure \cite{Wohlin}.}
+\label{snow}
+\begin{tikzpicture}[
+		box/.style={%
+			inner sep=8pt,
+			align=center,
+			text centered,
+			text width=3cm,
+			draw,
+			scale=.85
+		}
+	]
+\tikzset{adjust fit placement}
+
+
+
+
+\node[box,minimum height=6.5cm,text width=4cm] (CA) {\parbox{4cm}{\small\centering
+	\textbf{Backward:}\\
+	\raggedright
+	\textit{Iterate:}\\[.2cm]
+    {\begin{varwidth}{\linewidth}\begin{enumerate}[leftmargin=0.5cm,nolistsep]
+        \item Look at title in reference list
+        \item Look at the place of reference
+    \end{enumerate}\end{varwidth}}\\[.5cm]
+    \textit{End iterate:}\\[.2cm]
+    {\begin{varwidth}{\linewidth}\begin{enumerate}[leftmargin=0.5cm,nolistsep]
+    	\setcounter{enumi}{2}
+        \item Look at title in reference list
+        \item Look at the place of reference
+    \end{enumerate}\end{varwidth}}
+    }
+    };
+
+\node[box,minimum height=6.5cm,text width=4cm,right=0.2cm of CA] (CB) {\parbox{4cm}{\small\centering
+	\textbf{Forward:}\\
+	\raggedright
+	\textit{Iterate:}\\[.2cm]
+    {\begin{varwidth}{\linewidth}\begin{enumerate}[leftmargin=0.5cm,nolistsep]
+        \item Look at title of the paper citing
+        \item Look at the abstract of the paper citing
+        \item Look at the place of the citation in the paper
+        \item Look at the full paper citing
+    \end{enumerate}\end{varwidth}}
+    }
+    };
+
+\node[box,text width=8.8cm,below=0.2cm of CA,xshift=2.4cm] (CC) {In each step in both backward and forward snowballing, it is possible to decide to exclude or tentatively include a paper for further consideration.};
+
+
+
+\node[draw, fit=(CA) (CB) (CC)] (snowballing) {};
+\node[draw, text width=7.98cm,text centered,fill=white, above=-0.01cm] at (snowballing.north) {\small\textbf{Snowballing}};
+
+
+\node[box, above left=-0.53cm and 0.6cm of snowballing.north west] (A) {\small Start literature search};
+
+\node[box,left=0.6cm of snowballing] (B) {\small Identify a tentative start set of papers and evaluate the papers for inclusions and exclusions. Included papers enter the snowballing procedure.};
+
+
+
+\node[box,text width=9.2cm,below=0.6cm of snowballing] (D) {Final inclusion of a paper should be done based on the full paper, i.e. before the paper can be included in a new set of papers that goes into the snowballing procedure.};
+
+
+\node[box,above left=0cm and 0.6cm of D.south west] (E) {If no new papers are found then the snowballing procedure is finsihed.};
+
+\node[box,right=0.6cm of snowballing] (F) {Iterate until no new papers are found.};
+
+
+
+
+\draw[->] (A) -- (B);
+\draw[->] (B) -- (snowballing);
+\draw[->] (snowballing) -- (D);
+\draw[->] (D.west) -- (-2.71,-6.87);
+\draw[->] (D.east) -| (F);
+\draw[->] (F) -- (snowballing);
+
+\end{tikzpicture}
+\end{figure}
+
 
 \section{Results}
 To gather a start set of papers, a database search on Scopus \cite{scopus} is performed to identify papers from multiple publishers: the precise search string, in the required syntax for Scopus is: \\
