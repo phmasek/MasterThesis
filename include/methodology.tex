@@ -298,7 +298,7 @@ The Pi/IO Component is an extension of the Pi Component with the addition of two
 
 
 
-\node[box,draw,fit={(0,0) (15,-.8)},fill=black!5] (total) {\scriptsize 1 execution ($100ms$)};
+\node[box,draw,fit={(0,0) (15,-.8)},fill=black!5] (total) {\scriptsize 1 execution ($10ms$)};
 
 
 
@@ -391,7 +391,7 @@ In this controlled experiment a Quasi experiment design is used. A Quasi experim
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Procedure}% How will the experiment (i.e data collection) be performed? What instruments, materials, tools will be used and how
-The overall procedure of the experiment is to execute the experimental units in 8 different scenarios. The scenarios consist of alternating two Linux kernels (vanilla and RT\_preempt patched kernel), alternating two deployment contexts (executing in a Docker container or natively) and alternating between applying load and applying no-load to the target system. Executing the experiment run for each scenario is controlled from a  script. The script is started automatically when booting the system and is responsible for selecting a scenario, configuring the system for that particular scenario and executing the experimental unit. The experimental units are executed five times per scenario, totalling 80 runs for the entire experiment: \(2_{e} \times 2_{d} \times{} 2_{k}  \times{} 2_{l} \times{} 5 \) where $_{e}$ represents the two experiment units, $_{d}$ represents the deployment context, $_{k}$ represents the two kernels and $_{l}$ represents the two types of load. An overview of the procedure carried out by the execution script is depicted in figure~\ref{procedure-state}.
+The overall procedure of the experiment is to execute the experimental units in 8 different scenarios. Each scenario is run for $3\ 600s$ with an execution frequency of $100$ executions per second for the Pi Component experimental unit and $10$ executions per second for the Pi/IO Component experimental unit. The scenarios consist of alternating two Linux kernels (vanilla and RT\_preempt patched kernel), alternating two deployment contexts (executing in a Docker container or natively) and alternating between applying load and applying no-load to the target system. Executing the experiment run for each scenario is controlled from a  script. The script is started automatically when booting the system and is responsible for selecting a scenario, configuring the system for that particular scenario and executing the experimental unit. The experimental units are executed five times per scenario, totalling 80 runs for the entire experiment: \(2_{e} \times 2_{d} \times{} 2_{k}  \times{} 2_{l} \times{} 5 \) where $_{e}$ represents the two experiment units, $_{d}$ represents the deployment context, $_{k}$ represents the two kernels and $_{l}$ represents the two types of load. An overview of the procedure carried out by the execution script is depicted in figure~\ref{procedure-state}.
 
 
 \begin{figure}[ht]
@@ -413,11 +413,11 @@ The overall procedure of the experiment is to execute the experimental units in 
 \centering
 \end{figure}
 
-	
+
 
 %%%%%%%%%%%%%%%%%%%%%%
 \section{Analysis Procedure}
-The dependent variables are the duration between time measurement points within all executed time-slices using a measurement unit of \texttt{nanoseconds}. The procedure for processing the raw data captured from the target system, is achieved using a script\footnote{https://github.com/docker-rt-research/experimental-material}. The script calculates the duration between two time-stamps using the equation shown in \ref{eq:calculate-duration} and stores the specific duration into a comma-separated values (\textit{.csv}) file together with the connected execution environment variables for the specific scenario run. The \textit{.csv} table structure and data types for each of the experimental units is presented in table \ref{tbl:csv-structure}. All the results, data, and R scripts are available online\footnote{https://github.com/docker-rt-research/experimental-material/tree/master/data\_analysis}.
+The dependent variables are the duration between time measurement points within all executed time-slices using a measurement unit of \texttt{nanoseconds}. There is a total of $14\ 399\ 960$ data-points for the Pi Component experimental unit and $1\ 439\ 960$ data-points for the Pi/IO Component experimental unit. The procedure for processing the raw data captured from the target system, is achieved using a script\footnote{https://github.com/docker-rt-research/experimental-material}. The script calculates the duration between two time-stamps using the equation shown in \ref{eq:calculate-duration} and stores the specific duration into a comma-separated values (\textit{.csv}) file together with the connected execution environment variables for the specific scenario run. The \textit{.csv} table structure and data types for each of the experimental units is presented in table \ref{tbl:csv-structure}. All the results, data, and R scripts are available online\footnote{https://github.com/docker-rt-research/experimental-material/tree/master/data\_analysis}.
 
 \begin{equation} 
 \label{eq:calculate-duration}
