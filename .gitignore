@@ -20,3 +20,7 @@
 *.sty
 .DS_Store
 Icon?
+
+*.gz(busy)
+
+Main.synctex.gz(busy)
