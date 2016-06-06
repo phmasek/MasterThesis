@@ -107,6 +107,9 @@ All these activities differ in how they are executed depending on the software e
 
 
 
+
+\usetikzlibrary{arrows.meta}
+\tikzset{>={Latex[width=2mm,length=2mm]}}
 \tikzstyle{b} = [rectangle, draw, node distance=3cm, text width=6em, text centered, rounded corners, minimum height=4em, thick]
 \begin{figure}[ht]
 \caption{Run-time environment using Docker.}
@@ -150,7 +153,7 @@ All these activities differ in how they are executed depending on the software e
 \node[box,draw=black!50,fit={(5.6,.5) (8.6,3.5)},fill=black!2] (v1int) {};
 \node[below right] at (v1int.north west) () {\scriptsize{Docker}};
 \node[below left] at (v1int.north east) () {\scriptsize\textbf{V1}};
-\node[draw,ellipse,dashed] at (v1int) () {\scriptsize Interpretation};
+\node[draw,ellipse,dashed,text width=1.7cm, minimum height=0.8cm,text centered,inner sep=0pt] at (v1int) () {\scriptsize Interpretation};
 
 
 \node[box,draw,fit={(10.1,-.5) (14.7,5.5)},fill=white,rounded corners] (action) {};
@@ -170,14 +173,14 @@ All these activities differ in how they are executed depending on the software e
 
 
 
-\path[draw,-latex',thick] (v1per) -- (v1int);
-\path[draw,-latex',thick] (v2per.east) -| ++(0.7,1.2) -- ++(.9,0);
-\path[draw,-latex',thick] (v1per.east) ++(0,0.9) -| ++(0.7,1.35) -- ++(1.7,0);
-\path[draw,-latex',thick] (v1int) -- (v1act);
-\path[draw,-latex',thick] (v3int.east) ++(0,1.2) -| ++(0.5,-.4) -- ++(1.3,0);
+\draw[->] (v1per) -- (v1int);
+\draw[->] (v2per.east) -| ++(0.7,1.2) -- ++(.9,0);
+\draw[->] (v1per.east) ++(0,0.9) -| ++(0.7,1.35) -- ++(1.7,0);
+\draw[->] (v1int) -- (v1act);
+\draw[->] (v3int.east) ++(0,1.2) -| ++(0.5,-.4) -- ++(1.3,0);
 
 
-\path[draw,-latex',thick] (v2per.north) ++(-.7,0) |-  ++(-1.6,.4) |-  ++(0,-1.5) |- ++(.395,0) ;
+\draw[->] (v2per.north) ++(-.7,0) |-  ++(-1.6,.4) |-  ++(0,-1.5) |- ++(.395,0) ;
 
 \node[fit={(0.3,4.3) (2.4,5)}] {\scalebox{.6}{\Centerstack{A/B testing}}};
 \end{scope}
@@ -189,7 +192,7 @@ All these activities differ in how they are executed depending on the software e
 \fill[line width=0.pt,fill=black,fill opacity=1.0] (0.,4.) -- (3.,4.) -- (3.,1.) -- (0.,1.) -- (0.,2.) -- (-1.,1.) -- (-1.,4.) -- (0.,3.) -- cycle node (camera) {};
 
 \node[fit={(0,0) (7.6,3)},xshift=-.3cm,yshift=.95cm,align=left, inner sep=0.1ex] {\scalebox{.6}{\Centerstack{Camera\\Input Data}}};
-\path[draw,-latex',thick] (camera.east) ++(0,.5) -- (v1per.west);
+\draw[->] (camera.east) ++(0,.5) -- (v1per.west);
 \end{scope}
 
 
@@ -246,7 +249,7 @@ Docker is an open source light-weight container manager that launched in 2013 an
 \node[box,fit={ (0,0) (5.635,1.2)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\scriptsize Computer Hardware};
 
 
-\node[box,fit={ (0,0) (5.635,.8)},fill=orange] (dockerengine) [right=1.6 of hypervisor] {\scriptsize Docker Engine};
+\node[box,fit={ (0,0) (5.635,.8)},fill=black!50] (dockerengine) [right=1.6 of hypervisor] {\scriptsize Docker Engine};
 \node[box,fit={ (0,0) (5.635,.8)},fill=black!30] (vmhost) [below=0.1 of dockerengine] {\scriptsize Host Operating System};
 \node[box,fit={ (0,0) (5.635,1.2)},fill=black!40] (vmhw) [below=0.1 of vmhost] {\scriptsize Computer Hardware};
 
